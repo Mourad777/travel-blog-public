@@ -2,11 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import './SearchInput.css'
 import { Icon } from 'semantic-ui-react'
 import { getSearchInputStyle } from '../utility';
-import PostIcon from './../../../public/assets/icons/post-icon.jpg'
-import PhotoIcon from './../../../public/assets/icons/photo-icon.jpg'
-import VideoIcon from './../../../public/assets/icons/video-icon.jpg'
-import CountryIcon from './../../../public/assets/icons/country-icon.jpg'
-import CategoryIcon from './../../../public/assets/icons/category-icon.jpg'
 import { useHistory } from 'react-router-dom';
 import countryCodes from '../Countries/country-codes.json'
 
@@ -184,21 +179,21 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }
                         filteredResultsWithoutDuplicates.map(res => {
                             let image;
                             if (res.type === 'country') {
-                                image = (countryThumbnails.find(t => t.country === res.id) || {}).image || CountryIcon;
+                                image = (countryThumbnails.find(t => t.country === res.id) || {}).image || '/assets/icons/countryZ-icon.jpg';
                             }
                             if (res.type === 'category') {
                                 image =
                                     // countryThumbnails.find(t => t.country === res.id)||
-                                    CategoryIcon;
+                                    '/assets/icons/category-icon.jpg';
                             }
                             if (res.type === 'post') {
-                                image = res.image || PostIcon;
+                                image = res.image || '/assets/icons/post-icon.jpg';
                             }
                             if (res.type === 'photo') {
-                                image = res.image || PhotoIcon;
+                                image = res.image || '/assets/icons/photo-icon.jpg';
                             }
                             if (res.type === 'video') {
-                                image = res.image || VideoIcon;
+                                image = res.image || '/assets/icons/video-icon.jpg';
                             }
                             return (
                                 <div onClick={() => handleResult({ type: res.type, selectedResult: res.id })} key={`search-result[${res.id}][${res.type}]`} style={{ display: 'flex', alignItems: 'center', padding: 5, cursor: 'pointer' }}>

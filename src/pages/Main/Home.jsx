@@ -23,10 +23,8 @@ import HeroSectionContent from "./HeroSectionContent";
 import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
-// import notepad from '../../public/assets/map-notepad-desk-md.jpg'
-import notepad from './../../../public/assets/images/notepad.webp'
 import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
-
+//innerhe
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 // gsap.ticker.fps(30)
@@ -148,7 +146,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
             // const startY = innerHeight / 10;
             const startY = 0;
             // const finishDistance = innerHeight / 5;
-            const finishDistancePath = innerHeight * 2;
+            const finishDistancePath =window.innerHeight * 2;
             const finishDistanceHeroPicOne = 200;
             // const finishDistanceHeroBackgroundPiece = innerHeight / 2;
             // Listen to the scroll event
@@ -164,10 +162,10 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
             function update() {
                 // Update our animation
-                tlPath.progress((scrollY - startY) / finishDistancePath);
+                tlPath.progress((window.scrollY - startY) / finishDistancePath);
                 // tlHeroPicOne.progress((scrollY - startY) / finishDistanceHeroPicOne);
-                handleScrollPosition(scrollY)
-                tlHeroPicOneEnd.progress((scrollY - startY) / finishDistanceHeroPicOne);
+                handleScrollPosition(window.scrollY)
+                tlHeroPicOneEnd.progress((window.scrollY - startY) / finishDistanceHeroPicOne);
 
 
                 // tlHeroBackgroundPieceOne.progress((scrollY - startY) / finishDistanceHeroBackgroundPiece);
@@ -335,7 +333,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
                 <div id="container" style={{ position: "relative" }}>
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
-                            <StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src={notepad} />
+                            <StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
                             {/* <ImgNextGen
                                 styles={
                                     {

@@ -3,7 +3,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
 import { BrowserRouter, withRouter } from "react-router-dom";
-// import Home from './pages/Main/Home'
+import Home from './pages/Main/Home'
 import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
 import _ from "lodash";
@@ -67,7 +67,7 @@ const App = () => {
                     </Route> */}
                     <Route path="/">
                      
-                        {/* <Home winSize={winSize} scrollWidth={scrollWidth} height={height} /> */}
+                        <Home winSize={winSize} scrollWidth={scrollWidth} height={height} />
                     </Route>
                 </Switch>
             </React.Suspense>
@@ -78,8 +78,7 @@ const App = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-      <h1>hey this is my fast travel blog</h1>
-    {/* <App /> */}
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

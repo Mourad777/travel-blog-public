@@ -6,17 +6,11 @@ import {
     getHeroSectionPicStyle,
     getHeroSectionNameStyle,
     getHeroSectionTextStyle,
-    getSearchInputStyle,
     getHeroSectionButtonOneStyle,
     getHeroSectionButtonTwoStyle
 } from "../utility";
 import Search from './SearchResults';
 import { gsap } from 'gsap/all'
-import welcomeBackground from './../../../public/assets/images/welcome-background.webp';
-
-import herSectionPieceOne from './../../../public/assets/images/welcome-section-piece-1.webp'
-import herSectionPieceTwo from './../../../public/assets/images/welcome-section-piece-2.webp'
-import herSectionPieceThree from './../../../public/assets/images/welcome-section-piece-3.webp';
 
 const HeroSectionContent = ({
     winSize,
@@ -44,7 +38,7 @@ const HeroSectionContent = ({
             <Search photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
 
             <img
-                src={welcomeBackground}
+                src='/public/assets/images/welcome-background.webp'
                 id="hero-pic-main"
                 ref={heroPicMainRef}
                 onLoad={()=>onImageLoad('welcome-background')}
@@ -54,9 +48,9 @@ const HeroSectionContent = ({
                 }} />
             {["One", "Two", "One"].map((piece, i) => {
                 let image;
-                if (i + 1 === 1) image = herSectionPieceOne;
-                if (i + 1 === 2) image = herSectionPieceTwo;
-                if (i + 1 === 3) image = herSectionPieceThree;
+                if (i + 1 === 1) image = '/assets/images/welcome-section-piece-1.webp';
+                if (i + 1 === 2) image = '/assets/images/welcome-section-piece-2.webp';
+                if (i + 1 === 3) image = '/assets/images/welcome-section-piece-3.webp';
                 return (
                     <img
                         onLoad={() => onImageLoad(`piece[${i + 1}]`)}

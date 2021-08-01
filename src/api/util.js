@@ -231,7 +231,7 @@ export const getVideo = async (id, setVideo, setIsLoading) => {
 
 //posts api
 export const getPosts = async (setPosts, setIsLoading) => {
-    let res;
+    let res = {};
     setIsLoading(true)
     try {
         res = await axios.get(`${AppUrl}api/posts`);
@@ -242,6 +242,6 @@ export const getPosts = async (setPosts, setIsLoading) => {
     }
     console.log('Fetch posts response', res)
     const posts = res.data;
-    setPosts(posts);
+    setPosts(posts||[]);
     setIsLoading(false)
 }
