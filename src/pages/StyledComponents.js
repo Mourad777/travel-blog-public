@@ -51,13 +51,6 @@ display: flex;
 box-sizing: border-box;
 `;
 
-export const StyledContactSection = styled.section`
-    height:100vh;
-    background-color:#daad86;
-    position:relative;
-    
-`;
-
 export const StyledMap = styled.img`
 height: auto;
 width: ${props => props.width}%;

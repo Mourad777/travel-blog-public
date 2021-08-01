@@ -6,7 +6,7 @@ import { processComments } from '../helper-functions'
 //comments api
 export const getComments = async (docId, docType, setComments, setIsLoading) => {
     setIsLoading(true)
-    let res;
+    let res = {};
     try {
         res = await axios.get(`${AppUrl}api/comments/${docType}/${docId}`);
     } catch (e) {
@@ -21,7 +21,7 @@ export const getComments = async (docId, docType, setComments, setIsLoading) => 
 
 export const getDocument = async (docId, docType, setDocument, setIsLoading) => {
     setIsLoading(true)
-    let res;
+    let res = {};
     try {
         res = await axios.get(`${AppUrl}api/${docType}s/${docId}`);
     } catch (e) {
@@ -39,7 +39,7 @@ export const getDocument = async (docId, docType, setDocument, setIsLoading) => 
 
 export const getCountryThumbnails = async (setCountryThumbnails, setIsLoading) => {
     setIsLoading(true)
-    let fetchCountryThumbnailsResponse;
+    let fetchCountryThumbnailsResponse = {};
     try {
         fetchCountryThumbnailsResponse = await axios.get(`${AppUrl}api/countries`);
     } catch (e) {
@@ -53,7 +53,7 @@ export const getCountryThumbnails = async (setCountryThumbnails, setIsLoading) =
 
 //categories api
 export const getCategories = async () => {
-    let categoriesResponse;
+    let categoriesResponse = {};
     try {
         categoriesResponse = await axios.get(`${AppUrl}api/categories`);
     } catch (e) {
@@ -71,7 +71,7 @@ export const getCategoryContent = async (countryIso, selectedCategory, setPosts,
     if (selectedCategory) {
         url = `${AppUrl}api/categories/${selectedCategory}`
     }
-    let contentResponse;
+    let contentResponse = {};
     try {
         contentResponse = await axios.get(url);
     } catch (e) {
@@ -90,7 +90,7 @@ export const updateOrder = async (items, galleryType) => {
     const order = items.map(item => item.id);
     const configFormData = new FormData();
     configFormData.append(galleryType, JSON.stringify(order));
-    let resUpdateOrder;
+    let resUpdateOrder = {};
     try {
         resUpdateOrder = await axios.post(updateOrderUrl, configFormData,
             {
@@ -105,7 +105,7 @@ export const updateOrder = async (items, galleryType) => {
 
 export const getPhotos = async (setItems, setIsLoading) => {
     const fetchPhotosUrl = `${AppUrl}api/photos`;
-    let resFetchPhotos;
+    let resFetchPhotos = {};
     setIsLoading(true);
     try {
         resFetchPhotos = await axios.get(fetchPhotosUrl);
@@ -119,7 +119,7 @@ export const getPhotos = async (setItems, setIsLoading) => {
     console.log('Fetch photos response', resFetchPhotos);
 
     const fetchConfigUrl = `${AppUrl}api/configurations`;
-    let resFetchConfigurations;
+    let resFetchConfigurations = {};
     try {
         resFetchConfigurations = await axios.get(fetchConfigUrl);
 
@@ -132,7 +132,7 @@ export const getPhotos = async (setItems, setIsLoading) => {
     console.log('Fetch config response', resFetchConfigurations);
 
     setIsLoading(false)
-    const formattedPhotos = resFetchPhotos.data.map(item => {
+    const formattedPhotos = (resFetchPhotos.data||[]).map(item => {
         return {
             ...item,
             src: item.src,
@@ -142,7 +142,7 @@ export const getPhotos = async (setItems, setIsLoading) => {
         }
     });
 
-    if (resFetchConfigurations.data !== 'no_config') {
+    if (resFetchConfigurations.data !== 'no_config' && resFetchConfigurations.data) {
         const order = JSON.parse(resFetchConfigurations.data.photo_gallery_order);
         const orderedFormattedPhotos = [];
         order.forEach(number => {
@@ -164,7 +164,7 @@ export const getPhotos = async (setItems, setIsLoading) => {
 export const getVideos = async (setItems, setIsLoading) => {
     const fetchVideosUrl = `${AppUrl}api/videos`;
     setIsLoading(true);
-    let resFetchVideos;
+    let resFetchVideos = {};
     try {
         resFetchVideos = await axios.get(fetchVideosUrl);
     } catch (e) {
@@ -175,7 +175,7 @@ export const getVideos = async (setItems, setIsLoading) => {
     console.log('Fetch videos response', resFetchVideos);
 
     const fetchConfigUrl = `${AppUrl}api/configurations`;
-    let resFetchConfigurations;
+    let resFetchConfigurations ={};
     try {
         resFetchConfigurations = await axios.get(fetchConfigUrl);
     } catch (e) {
@@ -185,7 +185,7 @@ export const getVideos = async (setItems, setIsLoading) => {
     console.log('Fetch config response', resFetchConfigurations);
 
     setIsLoading(false)
-    const formattedVideos = resFetchVideos.data.map(item => {
+    const formattedVideos = (resFetchVideos.data||[]).map(item => {
         return {
             ...item,
             src: item.thumbnail || '/assets/video-icon.jpg',
@@ -197,7 +197,7 @@ export const getVideos = async (setItems, setIsLoading) => {
         }
     });
 
-    if (resFetchConfigurations.data !== 'no_config') {
+    if (resFetchConfigurations.data !== 'no_config' && resFetchConfigurations.data) {
         const order = JSON.parse(resFetchConfigurations.data.video_gallery_order);
         const orderedFormattedVideos = [];
         order.forEach(number => {
@@ -215,7 +215,7 @@ export const getVideos = async (setItems, setIsLoading) => {
 
 export const getVideo = async (id, setVideo, setIsLoading) => {
     setIsLoading(true);
-    let videoResponse;
+    let videoResponse = {};
     try {
         videoResponse = await axios.get(`${AppUrl}api/videos/${id}`);
     } catch (e) {
@@ -242,6 +242,6 @@ export const getPosts = async (setPosts, setIsLoading) => {
     }
     console.log('Fetch posts response', res)
     const posts = res.data;
-    setPosts(posts||[]);
+    setPosts(posts || []);
     setIsLoading(false)
 }

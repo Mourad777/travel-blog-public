@@ -3,7 +3,7 @@ import { StyledInputGroup, StyledInputLabel, StyledTextInput, StyledTextareaInpu
 import { AppUrl } from '../utility';
 import axios from 'axios';
 
-const ContactForm = ({ isLargeMobileLandscape,scrollWidth,height }) => {
+const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -51,7 +51,11 @@ const ContactForm = ({ isLargeMobileLandscape,scrollWidth,height }) => {
     }
 
     return (
-        <Fragment>
+        <div id="contact-section" ref={reference} style={{
+            height: '100vh',
+            backgroundColor: '#daad86',
+            position: 'relative',
+        }}>
             <p style={titleStyle}>Get In Touch</p>
             {isLoading &&
                 <div
@@ -89,7 +93,7 @@ const ContactForm = ({ isLargeMobileLandscape,scrollWidth,height }) => {
                     Submit
                 </StyledContactFormSubmitButton>
             </div>
-        </Fragment>
+        </div  >
     )
 
 }

@@ -8,12 +8,10 @@ import { gsap, ScrollTrigger, ScrollToPlugin } from 'gsap/all'
 import { animate } from './gsapAnimations'
 import PhotosSection from "../Photos/PhotosSection";
 import VideosSection from "../Videos/VideosSection";
-import { AppUrl, getMapPosition } from "../utility";
+import { getMapPosition } from "../utility";
 import {
     StyledMap,
-    StyledMapOverlay,
     StyledHeroSection,
-    StyledContactSection,
 } from '../StyledComponents'
 import MapPath from "./MapPath";
 import ContactForm from "../Contact/ContactSection";
@@ -146,7 +144,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
             // const startY = innerHeight / 10;
             const startY = 0;
             // const finishDistance = innerHeight / 5;
-            const finishDistancePath =window.innerHeight * 2;
+            const finishDistancePath = window.innerHeight * 2;
             const finishDistanceHeroPicOne = 200;
             // const finishDistanceHeroBackgroundPiece = innerHeight / 2;
             // Listen to the scroll event
@@ -182,17 +180,20 @@ const Home = (({ scrollWidth, winSize, height }) => {
     }, [refSection2, refSection3, refSection4, refSection5, refSectionX, isAssetLoaded])
 
     useEffect(() => {
-       const assetsLoaded = [
+        const assetsLoaded = [
             isheroSectionBackgroundLoaded,
             isheroSectionBackgroundPieceOneLoaded,
             isheroSectionBackgroundPieceTwoLoaded,
             isheroSectionBackgroundPieceThreeLoaded
         ]
-        .filter(item=>item)
-        .length;
-
-        console.log('assets loaded: ',assetsLoaded)
-        if(assetsLoaded === 4){
+            .filter(item => item)
+            .length;
+        console.log(isheroSectionBackgroundLoaded,
+            isheroSectionBackgroundPieceOneLoaded,
+            isheroSectionBackgroundPieceTwoLoaded,
+            isheroSectionBackgroundPieceThreeLoaded)
+        console.log('assets loaded: ', assetsLoaded)
+        if (assetsLoaded === 4) {
             setIsAssetLoaded(true)
         }
     }, [
@@ -228,19 +229,19 @@ const Home = (({ scrollWidth, winSize, height }) => {
     }
 
     const handleImageLoad = (image) => {
-        if(image === 'welcome-background'){
+        if (image === 'welcome-background') {
             setIsHeroSectionBackgroundLoaded(true)
         }
-        if(image === 'piece[1]'){
+        if (image === 'piece[1]') {
             setIsHeroSectionBackgroundPieceOneLoaded(true)
         }
-        if(image === 'piece[2]'){
+        if (image === 'piece[2]') {
             setIsHeroSectionBackgroundPieceTwoLoaded(true)
         }
-        if(image === 'piece[3]'){
+        if (image === 'piece[3]') {
             setIsHeroSectionBackgroundPieceThreeLoaded(true)
         }
-        
+
     }
 
     return (
@@ -381,18 +382,16 @@ const Home = (({ scrollWidth, winSize, height }) => {
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
                     <PostsSection scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
 
-                    <WorldMap reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape}  postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
+                    <WorldMap reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape} postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
                     {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
 
-                    <PhotosSection photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize}  height={height} scrollWidth={scrollWidth} />
+                    <PhotosSection photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize} height={height} scrollWidth={scrollWidth} />
                     {/* <PhotosSectionDetail reference={refSectionPhotos}/> */}
 
                     <VideosSection videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <StyledContactSection id="contact-section">
-                        <ContactForm isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
-                    </StyledContactSection>
+                    <ContactForm reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
                 </div>
 
                 {/* floating rotating icons */}

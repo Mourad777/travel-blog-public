@@ -38,7 +38,7 @@ const HeroSectionContent = ({
             <Search photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
 
             <img
-                src='/public/assets/images/welcome-background.webp'
+                src='/assets/images/welcome-background.webp'
                 id="hero-pic-main"
                 ref={heroPicMainRef}
                 onLoad={()=>onImageLoad('welcome-background')}
