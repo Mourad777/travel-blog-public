@@ -1,15 +1,5 @@
 import styled from "styled-components";
-// import map  from '../../../../public/assets/map-2-black-min.jpg'
-// import map from '../../../../public/assets/map-3-black.jpg'
-// import mapLowRes from '../../../../public/assets/map-low-res-3-black.jpg'
-import mapLowRes from '../../../../public/assets/map-notepad-white-md.jpg'
-// import mapLowRes from '../../../../public/assets/map-sketch.jpg'
-//Styledpath StyledDestinationsSection
-//styledmapover postsinner
-//430px StyledPostRow
-//StyledLatestPostsTitle contactformcont
-//StyledLatestPostsSection styledcontactsec
-//font contact styledthumb contact StyledLatestPostsOuterWrapper StyledLatestPostsInnerWrapper StyledInputGroup
+
 export const StyledPostRow = styled.div`
 border: rgba(218, 173, 134) solid;
 border-width: ${props => props.isLargeMobileLandscape ? 20 : props.index === 0 ? "40" : "20"

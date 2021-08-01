@@ -7,8 +7,8 @@ import { Replies } from '../Posts/Post';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton } from '../StyledComponents';
 import Avatar from 'react-avatar';
-import { getCountryThumbnails, getComments, getVideo } from '../../admin/util/api';
-
+import { getCountryThumbnails, getComments, getVideo } from '../../api/util';
+import axios from 'axios';
 
 const Video = ({ winSize }) => {
     const params = useParams();

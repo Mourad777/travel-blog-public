@@ -1,18 +1,3 @@
-// import herSectionPic from '../../../../public/assets/hero-section-blur-1-min.png'
-import welcomeBackground from '../../../../public/assets/images/welcome-background.webp'
-import { v1 } from "uuid";
-
-
-export const getFileName = (filename) => {
-
-    const extension = filename.split('.').pop();
-
-    const newFileName = v1() + Date.now() + '.' + extension;
-
-    return newFileName;
-}
-
-
 export const getWindowSizeInteger = windowWidth => {
     let widthInteger;
     if (windowWidth > 0 && windowWidth < 600) widthInteger = 1; //mobile
@@ -256,7 +241,9 @@ export const getHeroSectionPicStyle = (windowWidth, windowHeight) => {
         height = 1800;
     }
     return {
-        src: welcomeBackground,
+        src:'/assets/images/welcome-background.webp'
+        //  welcomeBackground
+         ,
         // backgroundSize: "100%",
         // backgroundRepeat: "no-repeat",
         position: "fixed",
@@ -574,6 +561,6 @@ export const getPlaneStyle = windowWidth => {
     };
 };
 export let AppUrl = 'http://stormy-forest-71570.herokuapp.com/';
-if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
     AppUrl = 'http://localhost:8000/';
 }

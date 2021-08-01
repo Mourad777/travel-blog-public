@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate';
-import '../../../pages/blog/global-styles/pagination.css'
+import '../../pages/global-styles/pagination.css'
 
 const Paginate = ({ page, totalPages, handlePageClick }) => (
     <ReactPaginate

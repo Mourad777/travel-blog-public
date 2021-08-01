@@ -7,8 +7,8 @@ import { ScrollTrigger } from 'gsap/all';
 import Photos from './Photos'
 import countryCodes from '../Countries/country-codes.json';
 import moment from 'moment';
-import { getCategoryContent, getCountryThumbnails } from '../../admin/util/api';
-import VideoIcon from '../../../../../public/assets/video-icon.jpg'
+import { getCategoryContent, getCountryThumbnails } from '../../api/util';
+import VideoIcon from './../../../public/assets/video-icon.jpg'
 
 function capitalize(str) {
     const capStr = str.charAt(0).toUpperCase() + str.slice(1);

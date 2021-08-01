@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { StyledLatestPostsTopLayer, StyledPostRow, StyledLatestPostsInnerWrapper, StyledLatestPostsOuterWrapper } from '../StyledComponents'
+import {  StyledPostRow, StyledLatestPostsInnerWrapper, StyledLatestPostsOuterWrapper } from '../StyledComponents'
 import OuterColumn from "./OuterColumns";
 import RowLayout from './RowLayout';
-import Paginate from '../../../components/blog/Paginate/Paginate';
+import Paginate from '../../components/Paginate/Paginate';
 import { gsap } from 'gsap/all';
 
 const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height,scrollWidth }) => {

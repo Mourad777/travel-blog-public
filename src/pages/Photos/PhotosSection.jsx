@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
-import Paginate from "../../../components/blog/Paginate/Paginate";
+import Paginate from "../../components/Paginate/Paginate";
 
 export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobileLandscape }) => {
 

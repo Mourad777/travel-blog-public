@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { DownArrow, Location } from "../svgs";
-import { FaWindowClose } from "react-icons/fa";
 import { useParams } from 'react-router';
 import axios from 'axios'
 import { AppUrl } from '../utility';
-import { Typography } from '@material-ui/core';
-import { countries } from '../../admin/util/countries-iso';
+import { countries } from '../Countries/countries-iso';
 import { ScrollTrigger } from 'gsap/all';
 import { Button, Checkbox } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom';
-import CameraInfo from '../../../components/blog/Photo/CameraInfo';
+import CameraInfo from '../../components/Photo/CameraInfo';
 const Photo = ({ winSize }) => {
     const params = useParams();
     const history = useHistory();
@@ -100,17 +98,17 @@ const Photo = ({ winSize }) => {
                             <div className="extra-img-info-container" style={{ color: 'white', background: '#daad86' }}>
                                 {(photo.photographer && photo.date_taken) && (
                                     <div style={{ color: "#fff4e1" }}>
-                                        <Typography style={{ fontStyle: 'italic' }} variant="subtitle1">Taken by {photo.photographer} {photo.date_taken ? ' on ' + new Date(photo.date_taken).toDateString() : ''}</Typography>
+                                        <p style={{ fontStyle: 'italic' }} >Taken by {photo.photographer} {photo.date_taken ? ' on ' + new Date(photo.date_taken).toDateString() : ''}</p>
                                     </div>
                                 )}
                                 {(!photo.photographer && photo.date_taken) && (
                                     <div style={{ color: "#fff4e1" }}>
-                                        <Typography style={{ fontStyle: 'italic' }} variant="subtitle1">Taken on {new Date(photo.date_taken).toDateString()}</Typography>
+                                        <p style={{ fontStyle: 'italic' }} >Taken on {new Date(photo.date_taken).toDateString()}</p>
                                     </div>
                                 )}
                                 {(!photo.photographer && !photo.date_taken) && (
                                     <div style={{ color: "#fff4e1" }}>
-                                        <Typography style={{ fontStyle: 'italic' }} variant="subtitle1">Taken by {photo.photographer} </Typography>
+                                        <p style={{ fontStyle: 'italic' }} >Taken by {photo.photographer} </p>
                                     </div>
                                 )}
                                 {photo.country && (
@@ -118,17 +116,17 @@ const Photo = ({ winSize }) => {
                                         onClick={() => history.push(`/destination/${photo.country}`)}
                                         style={{ display: 'flex', color: "#fff4e1", background: '#DAAD86', padding: 10, cursor: 'pointer' }}>
                                         <Location />
-                                        <Typography variant="body1">{countries.find(c => c.value === photo.country).text}</Typography>
+                                        <p >{countries.find(c => c.value === photo.country).text}</p>
 
                                     </div>
                                 )}
                                 {photo.title && (
                                     <div>
-                                        <Typography variant="h5">{photo.title}</Typography>
+                                        <p >{photo.title}</p>
                                     </div>
                                 )}
                                 <div>
-                                    <Typography variant="h6">{photo.description}</Typography>
+                                    <p >{photo.description}</p>
                                 </div>
                             </div>
                         </div>
@@ -165,7 +163,7 @@ const Photo = ({ winSize }) => {
                             >
                                 <DownArrow />
                                 <p style={{ marginLeft: 33, fontSize: '1.2em' }}>
-                                    <a style={{color:'#fff'}} href={photo.src} download >Download</a>
+                                    <a style={{ color: '#fff' }} href={photo.src} download >Download</a>
                                 </p>
                             </div>
 

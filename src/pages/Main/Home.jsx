@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "../../../components/blog/Navbar/Navbar";
+import Navigation from "../../components/Navbar/Navbar";
 import 'semantic-ui-css/semantic.min.css'
 import "./Home.module.css";
 import WorldMap from "../Countries/WorldMap";
@@ -22,13 +22,11 @@ import PostsSection from "../Posts/Posts";
 import HeroSectionContent from "./HeroSectionContent";
 import { Fragment } from "react";
 import _ from "lodash";
-import VideoIcon from '../../../../../public/assets/video-icon.jpg'
 import { useHistory } from "react-router-dom";
-// import notepad from '../../../../../public/assets/map-notepad-desk-md.jpg'
-import notepad from '../../../../../public/assets/images/notepad.webp'
-import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../admin/util/api";
-import ImgNextGen from "../../../components/blog/NextGenImg/NextGenImg";
-import { useCallback } from "react";
+// import notepad from '../../public/assets/map-notepad-desk-md.jpg'
+import notepad from './../../../public/assets/images/notepad.webp'
+import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
+
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 // gsap.ticker.fps(30)

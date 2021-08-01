@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import ScrollDownArrow from '../../../components/blog/ScrollDownArrow/ScrollDownArrow';
+import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
 import { heroTextPathOne } from '../svgs';
 import {
     getHeroSectionPicPiecesStyle,
@@ -12,11 +12,11 @@ import {
 } from "../utility";
 import Search from './SearchResults';
 import { gsap } from 'gsap/all'
-import welcomeBackground from '../../../../../public/assets/images/welcome-background.webp';
+import welcomeBackground from './../../../public/assets/images/welcome-background.webp';
 
-import herSectionPieceOne from '../../../../../public/assets/images/welcome-section-piece-1.webp'
-import herSectionPieceTwo from '../../../../../public/assets/images/welcome-section-piece-2.webp'
-import herSectionPieceThree from '../../../../../public/assets/images/welcome-section-piece-3.webp';
+import herSectionPieceOne from './../../../public/assets/images/welcome-section-piece-1.webp'
+import herSectionPieceTwo from './../../../public/assets/images/welcome-section-piece-2.webp'
+import herSectionPieceThree from './../../../public/assets/images/welcome-section-piece-3.webp';
 
 const HeroSectionContent = ({
     winSize,

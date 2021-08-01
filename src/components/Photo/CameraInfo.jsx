@@ -1,5 +1,5 @@
 import React from 'react'
-import {  Camera, Aperture, ShutterSpeed, Iso, Lens, FocalLength } from "../../../pages/blog/svgs";
+import {  Camera, Aperture, ShutterSpeed, Iso, Lens, FocalLength } from "../../pages/svgs";
 const CameraInfo = ({ photo }) => (
     <div style={{
         position: 'absolute',
