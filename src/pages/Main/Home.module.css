@@ -1,0 +1,305 @@
+* {
+  box-sizing: border-box;
+}
+
+@keyframes appearOne {
+    0% {
+        opacity: 0;
+        transform: translateY(25%);
+    }
+
+    /* 1% {
+        visibility: visible;
+    } */
+
+    100% {
+        opacity: 1;
+        transform: translateY(20%);
+        visibility: visible;
+        
+    }
+  }
+
+  @keyframes appearTwo {
+    0% {
+        opacity: 0;
+        /* top:-800px; */
+        transform: translateY(-25%);
+    }
+
+    1% {
+        visibility: visible;
+    }
+    
+
+    100% {
+        opacity: 1;
+        /* top:-350px; */
+        transform: translateY(20%);
+        visibility: visible;
+    }
+  }
+
+  @keyframes appearOneSmall {
+    0% {
+        opacity: 0;
+        transform: translateY(5%);
+    }
+
+    1% {
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(2%);
+        visibility: visible;
+        
+    }
+  }
+
+  @keyframes appearTwoSmall {
+    0% {
+        opacity: 0;
+        /* top:-800px; */
+        transform: translateY(-2%);
+    }
+
+    1% {
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 1;
+        /* top:-350px; */
+        transform: translateY(2%);
+        visibility: visible;
+    }
+  }
+
+  @keyframes appearSlowly {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    /* 1% {
+        visibility: visible;
+    } */
+
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+  }
+
+  @keyframes drawHeroText {
+    0% {
+        stroke-dashoffset: 180;
+    }
+
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+  }
+  
+
+  @keyframes drawHeroTextFillOne {
+    0% {
+        fill:rgba(0, 146, 228,0);
+    }
+
+
+    100% {
+        /* fill:rgba(0, 146, 228,1); */
+        fill:rgba(255,255,255,1);
+    }
+  }
+
+  @keyframes drawHeroTextFillTwoSmall {
+    0% {
+        fill:rgba(255,255,255,0);
+    }
+
+
+    100% {
+        fill:rgba(255,255,255,1);
+    }
+  }
+
+  @keyframes drawHeroTextFillTwoLarge {
+    0% {
+        fill:rgba(255,255,255,0);
+    }
+
+
+    100% {
+        /* fill:rgba(0, 146, 228,1); */
+        fill:rgba(255,255,255,1);
+    }
+  }
+
+  @keyframes drawHeroTextFillThree {
+    0% {
+        fill:rgba(255,255,255,0);
+    }
+
+
+    100% {
+        fill:rgba(255,255,255,1);
+    }
+  }
+ 
+
+ /* .HeroPicPieceOne {
+    animation: appearOne 3s ease-in-out forwards;
+    animation-delay: 1.5s;
+ }
+
+ .HeroPicPieceTwo {
+    animation: appearTwo 3s ease-in-out forwards;
+    animation-delay: 1.5s;
+ }
+
+ .HeroPicBlur {
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 1s;
+ } */
+
+ .hero-text-line-1 {
+     visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 0.25s;
+}
+.hero-text-line-2 {
+    visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 0.5s;
+}
+.hero-text-line-3 {
+    visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 0.75s;
+}
+.hero-text-line-4 {
+    visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 1s;
+}
+.hero-text-line-5 {
+    visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 1.25s;
+}
+.hero-text-line-6 {
+    visibility: hidden;
+    animation: appearSlowly 3s ease-in-out forwards;
+    animation-delay: 1.5s;
+}
+
+ .HeroTextAnimationOne {
+    animation: drawHeroText 3s ease-in-out forwards, drawHeroTextFillOne 5s ease-in-out forwards;
+ }
+
+ .HeroTextAnimationTwo {
+    animation: drawHeroText 3s ease-in-out forwards, drawHeroTextFillTwoLarge 5s ease-in-out forwards;
+ }
+
+ .HeroTextAnimationThree {
+    animation: drawHeroText 3s ease-in-out forwards, drawHeroTextFillThree 5s ease-in-out forwards;
+ }
+
+ @media only screen and (max-width: 600px) {
+    .HeroTextAnimationTwo {
+        animation: drawHeroText 3s ease-in-out forwards, drawHeroTextFillTwoSmall 5s ease-in-out forwards;
+     }
+
+    /* .HeroPicPieceOne {
+        animation: appearOneSmall 3s ease-in-out forwards;
+     }
+
+     .HeroPicPieceTwo {
+        animation: appearTwoSmall 3s ease-in-out forwards;
+     }
+
+     .HeroPicPieceThree {
+        animation: appearTwoSmall 3s ease-in-out forwards;
+     } */
+  }
+
+  /* icons */
+
+  .rotating-icon {
+    animation:rotation 30s linear infinite;
+  }
+
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+
+  /*loader*/
+
+  .lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+  
