@@ -1,6 +1,17 @@
-import { gsap } from "gsap/all";
+export const mapsContainerAnimations = [
+    {
+        target: '#map-pics-container',
+        trigger: '#main',
+        start: 'top top',
+        end: '40% bottom',
+        properties: {
+            zIndex: 0,
+        }
+    },
+]
 
-const animations = [
+
+export const heroSectionAnimations = [
     {
         target: '.scroll-down-arrow',
         trigger: '#main',
@@ -18,17 +29,7 @@ const animations = [
         properties: {
             opacity: -30,
         }
-    }, 
-    // {
-    //     target: '#myline',
-    //     trigger: '#spacer',
-    //     start: 'top top',
-    //     end: 'center bottom',
-    //     strokeDashoffset: 0,
-    //     properties: {
-    //         strokeDashoffset: 0,
-    //     }
-    // },
+    },
 
     {
         target: '#hero-pic-main',
@@ -40,15 +41,7 @@ const animations = [
             opacity: -1,
         }
     },
-    {
-        target: '#map-pics-container',
-        trigger: '#main',
-        start: 'top top',
-        end: '40% bottom',
-        properties: {
-            zIndex:0,
-        }
-    },
+
     {
         target: '.HeroPicPieceTwo',
         trigger: '#main',
@@ -75,8 +68,8 @@ const animations = [
         start: 'top top',
         end: "center bottom",
         properties: {
-            opacity: -10,
-            fill: 'rgba(0, 146, 228,0)',
+            opacity: -30,
+            // fill: 'rgba(255, 255, 255,0)',
         }
     },
     {
@@ -91,19 +84,7 @@ const animations = [
     },
 ]
 
-export const animate = () => {
 
-    animations.forEach(ani => {
-        gsap.to(ani.target, {
-            ...ani.properties,
-            ease: "ease-in",
-            scrollTrigger: {
-                trigger: ani.trigger,
-                start: ani.start,
-                end: ani.end,
-                scrub: true,
-                delay: 1,
-            }
-        });
-    })
-}
+
+// gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 1 });
+// gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })

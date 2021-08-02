@@ -1,3 +1,5 @@
+import { gsap } from 'gsap/all'
+
 export const getWindowSizeInteger = windowWidth => {
     let widthInteger;
     if (windowWidth > 0 && windowWidth < 600) widthInteger = 1; //mobile
@@ -560,6 +562,25 @@ export const getPlaneStyle = windowWidth => {
 
     };
 };
+
+export const animate = (animations) => {
+
+    animations.forEach(ani => {
+        gsap.to(ani.target, {
+            ...ani.properties,
+            ease: "ease-in",
+            scrollTrigger: {
+                trigger: ani.trigger,
+                start: ani.start,
+                end: ani.end,
+                scrub: true,
+                delay: 1,
+            }
+        });
+    })
+}
+
+
 export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
 if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
     // AppUrl = 'http://localhost:8000/';

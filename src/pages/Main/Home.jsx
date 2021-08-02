@@ -2,26 +2,31 @@ import React, { useEffect, useState } from "react";
 import Navigation from "../../components/Navbar/Navbar";
 import 'semantic-ui-css/semantic.min.css'
 import "./Home.module.css";
-import WorldMap from "../Countries/WorldMap";
 import Loader from "./Loader";
 import { gsap, ScrollTrigger, ScrollToPlugin } from 'gsap/all'
-import { animate } from './gsapAnimations'
-import PhotosSection from "../Photos/PhotosSection";
-import VideosSection from "../Videos/VideosSection";
+import { animate } from '../utility'
 import { getMapPosition } from "../utility";
 import {
     StyledMap,
     StyledHeroSection,
 } from '../StyledComponents'
 import MapPath from "./MapPath";
-import ContactForm from "../Contact/ContactSection";
 import { useRef } from "react";
-import PostsSection from "../Posts/Posts";
-import HeroSectionContent from "./HeroSectionContent";
 import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
+import loadable from '@loadable/component';
+import { mapsContainerAnimations } from "./gsapAnimations";
+const HeroSection = loadable(() => import('./HeroSectionContent'))
+const PostsSection = loadable(() => import('../Posts/Posts'))
+
+const DestinationsSection = loadable(() => import('../Countries/WorldMap'))
+const PhotosSection = loadable(() => import('../Photos/PhotosSection'))
+const VideosSection = loadable(() => import('../Videos/VideosSection'))
+
+const ContactSection = loadable(() => import('../Contact/ContactSection'))
+
 //innerhe
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
@@ -39,14 +44,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
     const refSectionX = useRef(null)
     const heroPicMainRef = useRef(null);
 
-    const [isAssetLoaded, setIsAssetLoaded] = useState(false);
-
-    const [isheroSectionBackgroundPieceOneLoaded, setIsHeroSectionBackgroundPieceOneLoaded] = useState(false);
-    const [isheroSectionBackgroundPieceTwoLoaded, setIsHeroSectionBackgroundPieceTwoLoaded] = useState(false);
-    const [isheroSectionBackgroundPieceThreeLoaded, setIsHeroSectionBackgroundPieceThreeLoaded] = useState(false);
-
-    const [isheroSectionBackgroundLoaded, setIsHeroSectionBackgroundLoaded] = useState(false);
-
+    const [isInitialLoader, setIsInitialLoader] = useState(true);
     const [postsFromDB, setPostsFromDB] = useState([]);
     const [photos, setPhotos] = useState([]);
     const [videos, setVideos] = useState([]);
@@ -54,171 +52,115 @@ const Home = (({ scrollWidth, winSize, height }) => {
     const [scrollSection, setScrollSection] = useState(0);
     const [isLoading, setIsLoading] = useState(0);
     const [countryThumbnails, setCountryThumbnails] = useState([])
+    const [searchInputIsTouched, setSearchInputIsTouched] = useState(false)
+    const [isInitialDataFetched, setIsInitialDataFetched] = useState(false)
 
     const handleScrollPosition = (value) => {
         setScrollPostion(value)
     }
+
+    const handleSearchInputTouch = (value) => {
+        setSearchInputIsTouched(true)
+    }
+
     const history = useHistory()
 
     useEffect(() => {
         setScrollSection(0)
         if (window.scrollY > window.innerHeight / 4) {
-            // do something 
             setScrollSection(winSize > 2 ? 2 : 1)
         }
         if (window.scrollY > window.innerHeight * 1 + window.innerHeight / 2) {
-            // do something 
             setScrollSection(2)
         }
         if (window.scrollY > window.innerHeight * 2 + window.innerHeight / 2) {
-            // do something 
             setScrollSection(3)
         }
         if (window.scrollY > window.innerHeight * 3 + window.innerHeight / 2) {
-            // do something 
             setScrollSection(4)
         }
         if (window.scrollY > window.innerHeight * 4 + window.innerHeight / 2) {
-            // do something 
             setScrollSection(5)
         }
         if (window.scrollY > window.innerHeight * 5 + window.innerHeight / 2) {
-            // do something 
             setScrollSection(6)
         }
-
     }, [scrollPosition, scrollWidth, winSize])
 
     useEffect(() => {
-        getInitialData()
+        if ((scrollPosition > 0 || !!searchInputIsTouched) && !isInitialDataFetched) {
+            getInitialData();
+        }
+    }, [scrollPosition, searchInputIsTouched]);
+
+    const handleFadeOutEnd = () => {
+        console.log('end')
+        gsap.to('#initial-loader', { zIndex: -3, duration: 1 })
+
+    }
+
+    useEffect(() => {
+        // setTimeout(() => {
+        //     gsap.to('#initial-loader', { opacity: 0 }, { duration: 1 })
+        // }, 1000)
+        // setTimeout(() => {
+        //     setIsInitialLoader(false)
+        // }, 2000)
+
+        gsap.to('#initial-loader', { opacity: 0, onComplete: handleFadeOutEnd, duration: 1 })
+        // gsap.to('#initial-loader', { zIndex:-1 }, { duration: 7 })
     }, [])
 
     const getInitialData = async () => {
+        setIsInitialDataFetched(true)
         await getPosts(setPostsFromDB, setIsLoading);
         await getPhotos(setPhotos, setIsLoading);
         await getVideos(setVideos, setIsLoading);
         await getCountryThumbnails(setCountryThumbnails, setIsLoading);
     }
 
+
+
     useEffect(() => {
         const triggers = ScrollTrigger.getAll();
         triggers.forEach(tr => {
             tr.kill()
         });
-        if (isAssetLoaded) {
-            const sections = [refSection2, refSection3, refSection4, refSection5, refSectionX].filter(i => i);
-            sections.forEach((pan, i) => {
-                if (!pan) return;
+        const sections = [refSection2, refSection3, refSection4, refSection5, refSectionX].filter(i => i);
+        sections.forEach((pan, i) => {
+            if (!pan) return;
 
-                ScrollTrigger.create({
-                    trigger: pan.current,
-                    start: "top top",
-                    // end:() => "+=" + (panelsContainer.offsetHeight - innerHeight),
-                    // endTrigger:panel,
-                    scrub: 0.5,
-                    snap: true,
-                    // markers: true,
-                    pin: false,
-                });
-
+            ScrollTrigger.create({
+                trigger: pan.current,
+                start: "top top",
+                scrub: 0.5,
+                snap: true,
+                pin: false,
             });
 
-            //////////
-            ///////////////////////////////////////////////////////////////
+        });
 
-
-            // 0% {
-            //     fill:rgba(0, 146, 228,0);
-            // }
-
-
-            // 100% {
-            //     /* fill:rgba(0, 146, 228,1); */
-            //     fill:rgba(255,255,255,1);
-            // }
-
-            gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 3 });
-            gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 5 })
-
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            // the animation to use
-            const tlPath = gsap.timeline({ paused: true });
-            const tlHeroPicOne = gsap.timeline({ paused: true });
-            const tlHeroPicOneEnd = gsap.timeline({ paused: true });
-            // const tlHeroPicTwo = gsap.timeline({ paused: true });
-            // const tlHeroPicThree = gsap.timeline({ paused: true });
-
-            tlPath.to("#myline", { strokeDashoffset: 2850 });
-            tlHeroPicOne.to("#hero-pic-1", { scale: 1, rotate: '10deg', opacity: 1 });
-            // tlHeroPicOneEnd.to("#hero-pic-1", { scale: 0, rotate: '0deg', opacity: 0, });
-            // tlHeroPicTwo.to("#hero-pic-1", { opacity: 1 });
-            // tlHeroPicOne.to("#hero-pic-1", { opacity: 1 });
-
-            let requestId;
-            // The start and end positions in terms of the page scroll
-            // const startY = innerHeight / 10;
-            const startY = 0;
-            // const finishDistance = innerHeight / 5;
-            const finishDistancePath = window.innerHeight * 2;
-            const finishDistanceHeroPicOne = 200;
-            // const finishDistanceHeroBackgroundPiece = innerHeight / 2;
-            // Listen to the scroll event
-            // _.throttle()
-            document.addEventListener("scroll", _.throttle(function () {
-                // Prevent the update from happening too often (throttle the scroll event)
-                if (!requestId) {
-                    requestId = requestAnimationFrame(update);
-                }
-            }, 200, {}));
-
-            update();
-
-            function update() {
-                // Update our animation
-                tlPath.progress((window.scrollY - startY) / finishDistancePath);
-                // tlHeroPicOne.progress((scrollY - startY) / finishDistanceHeroPicOne);
-                handleScrollPosition(window.scrollY)
-                tlHeroPicOneEnd.progress((window.scrollY - startY) / finishDistanceHeroPicOne);
-
-
-                // tlHeroBackgroundPieceOne.progress((scrollY - startY) / finishDistanceHeroBackgroundPiece);
-                // tlHeroBackgroundPieceTwo.progress((scrollY - startY) / finishDistanceHeroBackgroundPiece);
-                // Let the scroll event fire again
-                requestId = null;
+        // the animation to use
+        const tlPath = gsap.timeline({ paused: true });
+        tlPath.to("#myline", { strokeDashoffset: 2850 });
+        let requestId;
+        const startY = 0;
+        const finishDistancePath = window.innerHeight * 2;
+        document.addEventListener("scroll", _.throttle(function () {
+            if (!requestId) {
+                requestId = requestAnimationFrame(update);
             }
-
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            animate()
+        }, 200, {}));
+        update();
+        function update() {
+            tlPath.progress((window.scrollY - startY) / finishDistancePath);
+            handleScrollPosition(window.scrollY)
+            requestId = null;
         }
-    }, [refSection2, refSection3, refSection4, refSection5, refSectionX, isAssetLoaded])
-
-    useEffect(() => {
-        const assetsLoaded = [
-            isheroSectionBackgroundLoaded,
-            isheroSectionBackgroundPieceOneLoaded,
-            isheroSectionBackgroundPieceTwoLoaded,
-            isheroSectionBackgroundPieceThreeLoaded
-        ]
-            .filter(item => item)
-            .length;
-        console.log(isheroSectionBackgroundLoaded,
-            isheroSectionBackgroundPieceOneLoaded,
-            isheroSectionBackgroundPieceTwoLoaded,
-            isheroSectionBackgroundPieceThreeLoaded)
-        console.log('assets loaded: ', assetsLoaded)
-        if (assetsLoaded === 4) {
-            setIsAssetLoaded(true)
-        }
-    }, [
-        isheroSectionBackgroundLoaded,
-        isheroSectionBackgroundPieceOneLoaded,
-        isheroSectionBackgroundPieceTwoLoaded,
-        isheroSectionBackgroundPieceThreeLoaded
-    ]);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        animate(mapsContainerAnimations)
+    }, [refSection2, refSection3, refSection4, refSection5, refSectionX])
 
     const transformStyles1 = scrollPosition >= 100 && scrollPosition < 1000 ? {
         opacity: 1,
@@ -245,28 +187,13 @@ const Home = (({ scrollWidth, winSize, height }) => {
         isLargeMobileLandscape = true
     }
 
-    const handleImageLoad = (image) => {
-        if (image === 'welcome-background') {
-            setIsHeroSectionBackgroundLoaded(true)
-        }
-        if (image === 'piece[1]') {
-            setIsHeroSectionBackgroundPieceOneLoaded(true)
-        }
-        if (image === 'piece[2]') {
-            setIsHeroSectionBackgroundPieceTwoLoaded(true)
-        }
-        if (image === 'piece[3]') {
-            setIsHeroSectionBackgroundPieceThreeLoaded(true)
-        }
-
-    }
-
     return (
         <Fragment>
             <div id="main" style={{ overflow: 'hidden' }}>
-                <Loader isAssetLoaded={isAssetLoaded} />
+                {isInitialLoader && <Loader />}
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
+                        getInitialData={getInitialData}
                         scrollSection={scrollSection}
                         componentReferences={
                             {
@@ -351,34 +278,17 @@ const Home = (({ scrollWidth, winSize, height }) => {
                 <div id="container" style={{ position: "relative" }}>
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
-                            <StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
-                            {/* <ImgNextGen
-                                styles={
-                                    {
-                                        width: `${getMapPosition(winSize, height).width}%`,
-                                        height: 'auto',
-                                        backgroundRepeat: 'no-repeat',
-                                        zIndex: -3,
-                                        position: 'absolute',
-                                        left: '50%',
-                                        top: '50%',
-                                        transform: 'translateX(-50%) translateY(-50%)',
-                                    }
-                                }
-                                srcWebp={notepad}
-                                srcJrx={notepad}
-                                srcJp2={notepad}
-                                fallback={notepad}
-                                alt="Map of north america"
-                            /> */}
-                            {/* path drawing on world map svg */}
+
+                            {scrollPosition > 0 && < StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />}
+
+
                             <MapPath winSize={winSize} />
 
                         </div>
                     </div>
 
                     <StyledHeroSection ref={refSection1} id="hero-section">
-                        <HeroSectionContent
+                        <HeroSection
                             height={height}
                             posts={postsFromDB}
                             photos={photos}
@@ -388,18 +298,18 @@ const Home = (({ scrollWidth, winSize, height }) => {
                             categories={[]}
                             heroPicMainRef={heroPicMainRef}
                             winSize={winSize}
-                            isAssetLoaded={isAssetLoaded}
                             refPosts={refSection2}
                             refVideos={refSection5}
                             isLargeMobileLandscape={isLargeMobileLandscape}
-                            onImageLoad={handleImageLoad}
+                            isInitialLoader={isInitialLoader}
+                            handleSearchInputTouch={handleSearchInputTouch}
                         />
                     </StyledHeroSection>
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
                     <PostsSection scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
 
-                    <WorldMap reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape} postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
+                    <DestinationsSection reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape} postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
                     {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
 
                     <PhotosSection photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize} height={height} scrollWidth={scrollWidth} />
@@ -408,7 +318,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
                     <VideosSection videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <ContactForm reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
+                    <ContactSection reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
                 </div>
 
                 {/* floating rotating icons */}

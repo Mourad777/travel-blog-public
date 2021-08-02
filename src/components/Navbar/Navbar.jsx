@@ -51,7 +51,7 @@ const LinkWrapper = styled.div`
 `;
 
 
-export default ({ scrollSection, componentReferences }) => {
+export default ({ scrollSection, componentReferences,getInitialData }) => {
     const links = [
         { name: "Welcome", id: "hero-section", ref: componentReferences.welcome },
         { name: "Posts", id: "latest-posts-section", ref: componentReferences.posts },
@@ -66,6 +66,7 @@ export default ({ scrollSection, componentReferences }) => {
     ].filter(item => item);
 
     const handleScroll = (ref) => {
+        getInitialData()
         gsap.to(window, { duration: 2, scrollTo: ref.current });
     }
 

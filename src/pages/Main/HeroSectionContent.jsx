@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
 import { heroTextPathOne } from '../svgs';
 import {
@@ -7,15 +7,16 @@ import {
     getHeroSectionNameStyle,
     getHeroSectionTextStyle,
     getHeroSectionButtonOneStyle,
-    getHeroSectionButtonTwoStyle
+    getHeroSectionButtonTwoStyle,
+    animate
 } from "../utility";
 import Search from './SearchResults';
 import { gsap } from 'gsap/all'
+import { heroSectionAnimations } from './gsapAnimations';
 
 const HeroSectionContent = ({
     winSize,
     heroPicMainRef,
-    isAssetLoaded,
     photos,
     videos,
     posts,
@@ -24,24 +25,39 @@ const HeroSectionContent = ({
     refPosts,
     refVideos,
     isLargeMobileLandscape,
-    onImageLoad,
+    isInitialLoader,
+    handleSearchInputTouch
 }) => {
+
+
+
+ 
+
+    useEffect(() => {
+        animate(heroSectionAnimations)
+        // setTimeout(() => {
+        //     gsap.to('#initial-loader', { opacity: 0 }, { duration: 1 })
+        // }, 1000)
+        // setTimeout(() => {
+        //     setIsInitialLoader(false)
+        // }, 2000)
+        gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 1 });
+        gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
+    }, [])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
     }
 
-    console.log('isAssetLoaded----------------------------------------------------',isAssetLoaded)
     return (
         <Fragment>
 
-            <Search photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
+            <Search handleSearchInputTouch={handleSearchInputTouch} photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
 
             <img
                 src='/assets/images/welcome-background.webp'
                 id="hero-pic-main"
                 ref={heroPicMainRef}
-                onLoad={()=>onImageLoad('welcome-background')}
                 style={{
                     ...getHeroSectionPicStyle(winSize, height),
                     position: 'fixed'
@@ -53,7 +69,6 @@ const HeroSectionContent = ({
                 if (i + 1 === 3) image = '/assets/images/welcome-section-piece-3.webp';
                 return (
                     <img
-                        onLoad={() => onImageLoad(`piece[${i + 1}]`)}
                         src={image}
                         className={`HeroPicPiece${piece}`}
                         key={`[Heropic]${i}`}
@@ -71,9 +86,10 @@ const HeroSectionContent = ({
             <svg
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
-                    opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1, transition: 'opacity 0.3s ease-in'
+                    opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
+                    transition: 'opacity 0.3s ease-in',
+                    zIndex: isInitialLoader ? 45 : -1,
                 }}
-                className={isAssetLoaded ? "HeroTextAnimationOne" : ""}
                 viewBox="0 0 120 50"
                 id="heroTextMainPath"
             >

@@ -1,18 +1,19 @@
 import React from "react";
 
-export default ({ isAssetLoaded }) => (
+export default ({ }) => (
     <div
+        id="initial-loader"
         style={{
             width: "100%",
             height: "100%",
             backgroundColor: "black",
             position: "fixed",
-            opacity: isAssetLoaded ? 0 : 1,
-            zIndex: isAssetLoaded ? -10 : 30,
-            transition: "opacity 1s ease-out"
+            // opacity: isAssetLoaded ? 0 : 1,
+            zIndex:  30,
+            transition: "all 1s ease-out"
         }}
     >
-        <p
+        {/* <p
             style={{
                 color: "white",
                 fontFamily: "Waiting for the sunrise, sans-serif",
@@ -26,7 +27,7 @@ export default ({ isAssetLoaded }) => (
         >
             Leave nothing but footprints, take nothing but photos, kill nothing
             but time.
-        </p>
+        </p> */}
         <div
             className="lds-ellipsis"
             style={{ top: "50%", margin: "auto", display: "block" }}
