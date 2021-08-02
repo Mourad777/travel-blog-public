@@ -1,12 +1,21 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useHistory } from 'react-router-dom';
 import geo from "./geo.json"
-const geoUrl =
-    "https://raw.githubusercontent.com/zcreat";
+import { ScrollTrigger } from 'gsap/all'
 
 const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos, isLargeMobileLandscape, scrollWidth }) => {
     const history = useHistory();
+    useEffect(() => {
+        ScrollTrigger.create({
+            trigger: reference.current,
+            start: "top top",
+            scrub: 0.5,
+            snap: true,
+            pin: false,
+            
+        });
+    }, [reference])
     const handleClick = (geo) => () => {
         const highlightedCountries = [...postsFromDB.map(p => p.country), ...photos.map(p => p.country), ...videos.map(p => p.country)];
         if (highlightedCountries.includes(geo.ISO_A2)) {

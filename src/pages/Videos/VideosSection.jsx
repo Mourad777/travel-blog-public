@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
+import { ScrollTrigger } from 'gsap/all'
 
 
 export default ({ reference, videos, winSize,height, isLargeMobileLandscape,scrollWidth }) => {
@@ -21,6 +22,17 @@ export default ({ reference, videos, winSize,height, isLargeMobileLandscape,scro
         width = '40%'
         margin = '3.33%'
     }
+
+    useEffect(() => {
+        ScrollTrigger.create({
+            trigger: reference.current,
+            start: "top top",
+            scrub: 0.5,
+            snap: true,
+            pin: false,
+            
+        });
+    }, [reference])
 
     const getData = async () => {
         const slice = videos.slice(offset === 1 || offset === 0 ? 0 : offset * perPage - perPage, offset === 0 ? perPage : offset * perPage);

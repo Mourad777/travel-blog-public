@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import {  StyledPostRow, StyledLatestPostsInnerWrapper, StyledLatestPostsOuterWrapper } from '../StyledComponents'
+import { StyledPostRow, StyledLatestPostsInnerWrapper, StyledLatestPostsOuterWrapper } from '../StyledComponents'
 import OuterColumn from "./OuterColumns";
 import RowLayout from './RowLayout';
 import Paginate from '../../components/Paginate/Paginate';
-import { gsap } from 'gsap/all';
-
-const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height,scrollWidth }) => {
+import { ScrollTrigger, gsap } from 'gsap/all'
+const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height, scrollWidth }) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [posts, setPosts] = useState([]);
@@ -20,6 +19,17 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
     // useEffect(() => {
     //     getData()
     // }, [offset, winSize, postsFromDB]);
+
+    useEffect(() => {
+        ScrollTrigger.create({
+            trigger: reference.current,
+            start: "top top",
+            scrub: 0.5,
+            snap: true,
+            pin: false,
+            
+        });
+    }, [reference])
 
     useEffect(() => {
         gsap.fromTo(".post-text-1", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });

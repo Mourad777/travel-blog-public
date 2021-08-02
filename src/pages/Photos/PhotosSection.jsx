@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
 import Paginate from "../../components/Paginate/Paginate";
+import { ScrollTrigger } from 'gsap/all'
 
 export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobileLandscape }) => {
 
@@ -10,6 +11,17 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
     const [selectedPage, setSelectedPage] = useState(0);
     const [gridWidth, setGridWidth] = useState(0);
     const history = useHistory();
+
+    useEffect(() => {
+        ScrollTrigger.create({
+            trigger: reference.current,
+            start: "top top",
+            scrub: 0.5,
+            snap: true,
+            pin: false,
+            
+        });
+    }, [reference])
 
     const getData = async () => {
         const slice = photos.slice((selectedPage + 1) * perPage - perPage, (selectedPage + 1) * perPage);

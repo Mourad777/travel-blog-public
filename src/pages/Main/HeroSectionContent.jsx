@@ -11,7 +11,7 @@ import {
     animate
 } from "../utility";
 import Search from './SearchResults';
-import { gsap } from 'gsap/all'
+import {  gsap } from 'gsap/all'
 import { heroSectionAnimations } from './gsapAnimations';
 
 const HeroSectionContent = ({
@@ -31,7 +31,7 @@ const HeroSectionContent = ({
 
 
 
- 
+
 
     useEffect(() => {
         animate(heroSectionAnimations)
@@ -43,6 +43,15 @@ const HeroSectionContent = ({
         // }, 2000)
         gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 1 });
         gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
+
+        // ScrollTrigger.create({
+        //     trigger: heroPicMainRef.current,
+        //     start: "top top",
+        //     scrub: 0.5,
+        //     snap: true,
+        //     pin: false,
+        //     markers:true,
+        // });
     }, [])
 
     const handleScroll = (ref) => {

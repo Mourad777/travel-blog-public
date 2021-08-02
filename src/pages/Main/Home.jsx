@@ -126,7 +126,9 @@ const Home = (({ scrollWidth, winSize, height }) => {
         triggers.forEach(tr => {
             tr.kill()
         });
-        const sections = [refSection2, refSection3, refSection4, refSection5, refSectionX].filter(i => i);
+        const sections = [
+            // refSection2, refSection3, refSection4, refSection5, 
+            refSectionX].filter(i => i);
         sections.forEach((pan, i) => {
             if (!pan) return;
 
@@ -136,6 +138,8 @@ const Home = (({ scrollWidth, winSize, height }) => {
                 scrub: 0.5,
                 snap: true,
                 pin: false,
+                markers:true,
+
             });
 
         });
@@ -160,7 +164,9 @@ const Home = (({ scrollWidth, winSize, height }) => {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         animate(mapsContainerAnimations)
-    }, [refSection2, refSection3, refSection4, refSection5, refSectionX])
+    }, [
+        refSection2, refSection3, refSection4, refSection5, 
+        refSectionX])
 
     const transformStyles1 = scrollPosition >= 100 && scrollPosition < 1000 ? {
         opacity: 1,
