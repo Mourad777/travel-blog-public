@@ -8,6 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
 import _ from "lodash";
 import Loader from "./pages/Main/Loader";
+import './bootstrap.min.css'
 
 const Post = React.lazy(() => import("./pages/Posts/Post"));
 // const Category = React.lazy(() => import("./pages/Category/Category"));
