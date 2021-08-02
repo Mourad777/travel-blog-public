@@ -31,7 +31,7 @@ const HeroSectionContent = ({
         gsap.to(window, { duration: 3, scrollTo: ref.current });
     }
 
-
+    console.log('isAssetLoaded----------------------------------------------------',isAssetLoaded)
     return (
         <Fragment>
 

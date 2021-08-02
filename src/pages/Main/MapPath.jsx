@@ -1,12 +1,8 @@
 import React from 'react'
-import { StyledSvgPath, StyledPath, StyledCircle } from '../StyledComponents'
-import {
-    lineLargeDevice,
-    lineSmallDevice,
-} from "../svgs";
+import { mapLine } from "../svgs";
 import { getMapPosition } from '../utility';
 
-const MapPath = ({ 
+const MapPath = ({
     winSize,
     winHeight,
 }) => (
@@ -16,7 +12,7 @@ const MapPath = ({
         viewBox="0 0 1000 1000" preserveAspectRatio="none"
         // windowWidth={winSize}
         style={{
-            width: `${getMapPosition(winSize,winHeight).width}%`,
+            width: `${getMapPosition(winSize, winHeight).width}%`,
             // paddingBottom: '42%',
             height: 'auto',
             overflow: 'visible',
@@ -24,9 +20,9 @@ const MapPath = ({
             position: 'absolute',
             top: '50%',
             left: '50%',
-            transform:'translateX(-50%) translateY(-50%)',
-            display:'block',
-            margin:'auto',
+            transform: 'translateX(-50%) translateY(-50%)',
+            display: 'block',
+            margin: 'auto',
         }}
     >
         <defs>
@@ -36,7 +32,7 @@ const MapPath = ({
                     className="st0 mask-style"
                     strokeDasharray="15,9"
                     strokeLinecap="round"
-                    d={lineLargeDevice}
+                    d={mapLine}
                 />
             </mask>
         </defs>
@@ -49,13 +45,13 @@ const MapPath = ({
             strokeMiterlimit: 10,
             strokeDasharray: 3255,
             zIndex: 1,
-            transition:'all 0.3s ease-in'
+            transition: 'all 0.3s ease-in'
         }}
             id="myline"
             strokeLinecap="round"
             className="st0"
             mask="url(#dash-mask)"
-            d={lineLargeDevice}
+            d={mapLine}
         />
     </svg >
 )
