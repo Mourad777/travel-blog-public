@@ -111,7 +111,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
     useEffect(() => {
 
-        gsap.to(initialLoaderRef.current, { opacity: 0 })
+        gsap.to(initialLoaderRef.current, { opacity: 0,duration:3 })
         // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
 
 

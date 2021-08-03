@@ -39,10 +39,6 @@ const HeroSectionContent = ({
     const buttonTwoRef = useRef(null);
     const scrollIconsWrapperRef = useRef(null);
 
-    const handleWelcomeAnimationEnd = () => {
-        gsap.to(heroPrimaryTextRef.current, { zIndex: -1 })
-    }
-
     useEffect(() => {
 
         if (mainContainerRef &&
@@ -70,8 +66,8 @@ const HeroSectionContent = ({
                     scrollIconsWrapperRef,
                 }
             ))
-            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 1, onComplete: handleWelcomeAnimationEnd });
-            gsap.fromTo(heroPrimaryTextRef.current, { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
+            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 1, });
+            gsap.to(heroPrimaryTextRef.current, {  fill: 'rgba(255,255,255,1)', duration: 3 })
         }
 
 
