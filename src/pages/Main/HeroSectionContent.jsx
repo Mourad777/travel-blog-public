@@ -11,10 +11,10 @@ import {
     animate
 } from "../utility";
 import Search from './SearchResults';
-import { ScrollTrigger, gsap, ScrollToPlugin } from 'gsap/all';
+import { gsap } from 'gsap/all';
 import { heroSectionAnimations } from './gsapAnimations';
-gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(ScrollToPlugin);
+
+
 const HeroSectionContent = ({
     winSize,
     photos,
@@ -87,12 +87,6 @@ const HeroSectionContent = ({
         gsap.to(window, { duration: 3, scrollTo: ref.current });
     }
 
-    useEffect(() => {
-        return () => {
-            ScrollTrigger.getAll().forEach(t => t.kill());
-
-        };
-    }, [])
 
     return (
         <div style={{
