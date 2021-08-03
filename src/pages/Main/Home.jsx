@@ -138,7 +138,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
         //     tr.kill()
         // });
         const sections = [
-            // refSection2, refSection3, refSection4, refSection5, 
+            refSection2, refSection3, refSection4, refSection5, 
             refSectionX].filter(i => i);
         sections.forEach((pan, i) => {
             if (!pan) return;
