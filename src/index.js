@@ -11,8 +11,8 @@ import Loader from "./pages/Main/Loader";
 import './bootstrap.min.css'
 
 const Post = React.lazy(() => import("./pages/Posts/Post"));
-// const Category = React.lazy(() => import("./pages/Category/Category"));
-// const Photo = React.lazy(() => import("./pages/Photos/Photo"));
+const Category = React.lazy(() => import("./pages/Category/Category"));
+const Photo = React.lazy(() => import("./pages/Photos/Photo"));
 const Video = React.lazy(() => import("./pages/Videos/Video"));
 
 const ScrollToTop = withRouter(({ history }) => {
@@ -36,6 +36,9 @@ const App = () => {
 
     useEffect(() => {
        window.addEventListener("resize", _.throttle(getWindowSize, 200), { passive: true });
+       return () => {
+           window.removeEventListener("resize",getWindowSize)
+       }
     }, []);
 
     const getWindowSize = () => {
@@ -54,7 +57,7 @@ const App = () => {
                     <Route path="/post/:postId">
                         <Post winSize={winSize} />
                     </Route>
-                    {/* <Route path="/destination/:country">
+                    <Route path="/destination/:country">
                         <Category winSize={winSize} height={height} />
                     </Route>
                     <Route path="/category/:categoryId">
@@ -65,7 +68,7 @@ const App = () => {
                     </Route>
                     <Route path="/video/:videoId">
                         <Video winSize={winSize} />
-                    </Route> */}
+                    </Route>
                     <Route path="/">
                      
                         <Home winSize={winSize} scrollWidth={scrollWidth} height={height} />

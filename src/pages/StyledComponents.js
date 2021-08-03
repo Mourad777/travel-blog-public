@@ -11,11 +11,6 @@ padding-left: ${props => props.index % 2 === 0 && !(props.winSize === 1) ? '50px
 margin-right: ${props => props.index % 2 === 0 && !(props.winSize === 1) ? '-50px' : 0};
 `;
 
-export const StyledHeroSection = styled.section`
-height:100vh;
-position:relative;
-`;
-
 
 export const StyledHeroSectionTextContainer = styled.div`
 height:100vh;

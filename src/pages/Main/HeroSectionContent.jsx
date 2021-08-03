@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
 import { heroTextPathOne } from '../svgs';
 import {
@@ -11,12 +11,12 @@ import {
     animate
 } from "../utility";
 import Search from './SearchResults';
-import {  gsap } from 'gsap/all'
+import { ScrollTrigger, gsap, ScrollToPlugin } from 'gsap/all';
 import { heroSectionAnimations } from './gsapAnimations';
-
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollToPlugin);
 const HeroSectionContent = ({
     winSize,
-    heroPicMainRef,
     photos,
     videos,
     posts,
@@ -26,40 +26,83 @@ const HeroSectionContent = ({
     refVideos,
     isLargeMobileLandscape,
     isInitialLoader,
-    handleSearchInputTouch
+    handleSearchInputTouch,
+    mainContainerRef,
 }) => {
+    const heroPicMainRef = useRef(null);
+    const heroPicPieceOneRef = useRef(null);
+    const heroPicPieceTwoRef = useRef(null);
+    const heroPicPieceThreeRef = useRef(null);
+    const heroPrimaryTextRef = useRef(null);
+    const heroSecondaryTextRef = useRef(null);
+    const buttonOneRef = useRef(null);
+    const buttonTwoRef = useRef(null);
+    const scrollIconsWrapperRef = useRef(null);
 
-
-
-
+    const handleWelcomeAnimationEnd = () => {
+        gsap.to(heroPrimaryTextRef.current, { zIndex: -1 })
+    }
 
     useEffect(() => {
-        animate(heroSectionAnimations)
-        // setTimeout(() => {
-        //     gsap.to('#initial-loader', { opacity: 0 }, { duration: 1 })
-        // }, 1000)
-        // setTimeout(() => {
-        //     setIsInitialLoader(false)
-        // }, 2000)
-        gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 1 });
-        gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
 
-        // ScrollTrigger.create({
-        //     trigger: heroPicMainRef.current,
-        //     start: "top top",
-        //     scrub: 0.5,
-        //     snap: true,
-        //     pin: false,
-        //     markers:true,
-        // });
-    }, [])
+        if (mainContainerRef &&
+            heroPicMainRef &&
+            heroPicPieceOneRef &&
+            heroPicPieceTwoRef &&
+            heroPicPieceThreeRef &&
+            heroPrimaryTextRef &&
+            heroSecondaryTextRef &&
+            buttonOneRef &&
+            buttonTwoRef &&
+            scrollIconsWrapperRef) {
+
+            animate(heroSectionAnimations(
+                {
+                    mainContainerRef,
+                    heroPicMainRef,
+                    heroPicPieceOneRef,
+                    heroPicPieceTwoRef,
+                    heroPicPieceThreeRef,
+                    heroPrimaryTextRef,
+                    heroSecondaryTextRef,
+                    buttonOneRef,
+                    buttonTwoRef,
+                    scrollIconsWrapperRef,
+                }
+            ))
+            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 1, onComplete: handleWelcomeAnimationEnd });
+            gsap.fromTo(heroPrimaryTextRef.current, { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
+        }
+
+
+
+    }, [mainContainerRef,
+        heroPicMainRef,
+        heroPicPieceOneRef,
+        heroPicPieceTwoRef,
+        heroPicPieceThreeRef,
+        heroPrimaryTextRef,
+        heroSecondaryTextRef,
+        buttonOneRef,
+        buttonTwoRef,
+        scrollIconsWrapperRef])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
     }
 
+    useEffect(() => {
+        return () => {
+            ScrollTrigger.getAll().forEach(t => t.kill());
+
+        };
+    }, [])
+
     return (
-        <Fragment>
+        <div style={{
+            height: '100vh',
+            position: 'relative',
+        }}>
 
             <Search handleSearchInputTouch={handleSearchInputTouch} photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
 
@@ -76,28 +119,31 @@ const HeroSectionContent = ({
                 if (i + 1 === 1) image = '/assets/images/welcome-section-piece-1.webp';
                 if (i + 1 === 2) image = '/assets/images/welcome-section-piece-2.webp';
                 if (i + 1 === 3) image = '/assets/images/welcome-section-piece-3.webp';
+                let ref;
+                if (i === 0) ref = heroPicPieceOneRef;
+                if (i === 1) ref = heroPicPieceTwoRef;
+                if (i === 2) ref = heroPicPieceThreeRef;
                 return (
                     <img
+                        ref={ref}
                         src={image}
                         className={`HeroPicPiece${piece}`}
                         key={`[Heropic]${i}`}
                         style={getHeroSectionPicPiecesStyle(winSize, height, i + 1,)
                         }
                     />
-                    // <div
-                    //     className={`HeroPicPiece${piece}`}
-                    //     key={`[Heropic]${i}`}
-                    //     style={getHeroSectionPicPiecesStyle(winSize, i + 1, height)}
-                    // />
                 )
             })}
 
             <svg
+
+                ref={heroPrimaryTextRef}
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
                     opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
                     transition: 'opacity 0.3s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
+                    pointerEvents: 'none'
                 }}
                 viewBox="0 0 120 50"
                 id="heroTextMainPath"
@@ -107,7 +153,7 @@ const HeroSectionContent = ({
                 </g>
             </svg>
 
-            <div style={{
+            <div ref={heroSecondaryTextRef} style={{
                 ...getHeroSectionTextStyle(winSize, height),
                 opacity: (winSize === 1 && height < 430) || (isLargeMobileLandscape && height < 200) ? 0 : 1, transition: 'opacity 0.3s ease-in'
             }} >
@@ -123,31 +169,29 @@ const HeroSectionContent = ({
                     travel tips with you from around the world!
                 </p>
             </div>
-            <button onClick={() => handleScroll(refPosts)} id="hero-button-1" className="hero-button" style={{
+            <button ref={buttonOneRef} onClick={() => handleScroll(refPosts)} style={{
                 ...getHeroSectionButtonOneStyle(winSize, height),
                 opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1, transition: 'opacity 0.3s ease-in'
 
                 // background:'blue'
 
             }}>Read my Blog</button>
-            <button onClick={() => handleScroll(refVideos)} id="hero-button-2" className="hero-button" style={{
+            <button ref={buttonTwoRef} onClick={() => handleScroll(refVideos)} style={{
                 ...getHeroSectionButtonTwoStyle(winSize, height),
                 opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1, transition: 'opacity 0.3s ease-in'
 
 
             }}>Watch my Videos</button>
+            <div ref={scrollIconsWrapperRef}>
+                <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, left: isLargeMobileLandscape ? '15%' : '50%', transform: `translateX(${isLargeMobileLandscape ? -15 : -50}%)`, height: 70 }}>
+                    <ScrollDownArrow />
+                </div>
 
-            <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, left: isLargeMobileLandscape ? '15%' : '50%', transform: `translateX(${isLargeMobileLandscape ? -15 : -50}%)`, height: 70 }}>
-                <ScrollDownArrow />
+                {isLargeMobileLandscape && <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, right: '15%', transform: 'translateX(15%)', height: 70 }}>
+                    <ScrollDownArrow />
+                </div>}
             </div>
-
-            {isLargeMobileLandscape && <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, right: '15%', transform: 'translateX(15%)', height: 70 }}>
-                <ScrollDownArrow />
-            </div>}
-            {/* <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 100, right: '5%', height: 70 }}>
-                <ScrollDownArrow />
-            </div> */}
-        </Fragment>
+        </div>
     )
 }
 

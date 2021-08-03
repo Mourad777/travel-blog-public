@@ -88,7 +88,6 @@ const Post = ({ winSize }) => {
             {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
-            .then(res => console.log('res', res.data)).catch(e => console.log('error', e));
 
         const commentsRes = await axios.get(`${AppUrl}api/comments/post/${selectedPost}`);
         setComments(commentsRes.data)
@@ -97,11 +96,8 @@ const Post = ({ winSize }) => {
         setEmail('');
         setReplyComment('');
     }
+
     useEffect(() => {
-        const triggers = ScrollTrigger.getAll();
-        triggers.forEach(tr => {
-            tr.kill()
-        })
 
         const getPost = async () => {
             const postRes = await axios.get(`${AppUrl}api/posts/${selectedPost}`);

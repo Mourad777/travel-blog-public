@@ -31,14 +31,14 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
         });
     }, [reference])
 
-    useEffect(() => {
-        gsap.fromTo(".post-text-1", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
-        gsap.fromTo(".post-image-1", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
-        gsap.fromTo(".post-text-2", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
-        gsap.fromTo(".post-image-2", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
+    // useEffect(() => {
+    //     gsap.fromTo(".post-text-1", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
+    //     gsap.fromTo(".post-image-1", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
+    //     gsap.fromTo(".post-text-2", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
+    //     gsap.fromTo(".post-image-2", { opacity: 0.3 }, { opacity: 1, duration: 0.4 });
 
 
-    }, [selectedPage]);
+    // }, [selectedPage]);
 
     useEffect(() => {
         getData()

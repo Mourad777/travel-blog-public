@@ -1,16 +1,17 @@
 import React from "react";
 
-export default ({ }) => (
+export default ({ reference }) => (
     <div
-        id="initial-loader"
+        ref={reference}
         style={{
             width: "100%",
             height: "100%",
             backgroundColor: "black",
             position: "fixed",
             // opacity: isAssetLoaded ? 0 : 1,
-            zIndex:  30,
-            transition: "all 1s ease-out"
+            zIndex: 30,
+            transition: "all 1s ease-out",
+            pointerEvents: 'none'
         }}
     >
         {/* <p

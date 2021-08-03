@@ -8,7 +8,7 @@ import Photos from './Photos'
 import countryCodes from '../Countries/country-codes.json';
 import moment from 'moment';
 import { getCategoryContent, getCountryThumbnails } from '../../api/util';
-import VideoIcon from './../../../public/assets/video-icon.jpg'
+// import VideoIcon from './../../../public/assets/video-icon.jpg'
 
 function capitalize(str) {
     const capStr = str.charAt(0).toUpperCase() + str.slice(1);
@@ -139,7 +139,7 @@ const Country = ({ winSize,height }) => {
                             onClick={() => history.push(`/video/${v.id}`)}>
                             <div style={{ position: 'relative', height: '100%', width: winSize === 1 ? '100%' : '50%' }}>
 
-                                <img src={v.thumbnail || VideoIcon} style={{ objectFit: 'cover', width: '100%', borderRadius: winSize === 1 ? '5px 5px 0 0' : '5px 0 0 5px' }} />
+                                <img src={v.thumbnail || '/public/assets/video-icon.jpg'} style={{ objectFit: 'cover', width: '100%', borderRadius: winSize === 1 ? '5px 5px 0 0' : '5px 0 0 5px' }} />
                             </div>
                             <div style={{
                                 display: 'flex',

@@ -5,6 +5,7 @@ import { getMapPosition } from '../utility';
 const MapPath = ({
     winSize,
     winHeight,
+    mapPathlineRef,
 }) => (
     <svg
         id="mySVG"
@@ -47,7 +48,7 @@ const MapPath = ({
             zIndex: 1,
             transition: 'all 0.3s ease-in'
         }}
-            id="myline"
+            ref={mapPathlineRef}
             strokeLinecap="round"
             className="st0"
             mask="url(#dash-mask)"

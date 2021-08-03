@@ -8,7 +8,6 @@ import { animate } from '../utility'
 import { getMapPosition } from "../utility";
 import {
     StyledMap,
-    StyledHeroSection,
 } from '../StyledComponents'
 import MapPath from "./MapPath";
 import { useRef } from "react";
@@ -16,25 +15,34 @@ import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
-import loadable from '@loadable/component';
 import { mapsContainerAnimations } from "./gsapAnimations";
-const HeroSection = loadable(() => import('./HeroSectionContent'))
-const PostsSection = loadable(() => import('../Posts/Posts'))
 
-const DestinationsSection = loadable(() => import('../Countries/WorldMap'))
-const PhotosSection = loadable(() => import('../Photos/PhotosSection'))
-const VideosSection = loadable(() => import('../Videos/VideosSection'))
+// const HeroSection = loadable(() => import('./HeroSectionContent'))
 
-const ContactSection = loadable(() => import('../Contact/ContactSection'))
+
+
+// import HeroSection from './HeroSectionContent'
+// import PostsSection from '../Posts/Posts'
+
+// import DestinationsSection from '../Countries/WorldMap'
+// import PhotosSection from '../Photos/PhotosSection'
+// import VideosSection from '../Videos/VideosSection'
+
+// import ContactSection from '../Contact/ContactSection'
+
+const HeroSection = React.lazy(() => import('./HeroSectionContent'));
+const PostsSection = React.lazy(() => import('../Posts/Posts'));
+const DestinationsSection = React.lazy(() => import('../Countries/WorldMap'));
+const PhotosSection = React.lazy(() => import('../Photos/PhotosSection'));
+const VideosSection = React.lazy(() => import('../Videos/VideosSection'));
+const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
+
 
 //innerhe
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
-// gsap.ticker.fps(30)
-// gsap.ticker.lagSmoothing(50,50)
-// gsap.ticker.deltaRatio(30)
-const Home = (({ scrollWidth, winSize, height }) => {
 
+const Home = (({ scrollWidth, winSize, height }) => {
     const refSection1 = useRef(null)
     const refSection2 = useRef(null)
     const refSection3 = useRef(null)
@@ -42,7 +50,10 @@ const Home = (({ scrollWidth, winSize, height }) => {
     const refSection5 = useRef(null)
     const refSection6 = useRef(null)
     const refSectionX = useRef(null)
-    const heroPicMainRef = useRef(null);
+    const mainContainerRef = useRef(null)
+    const mapsPicsContainerRef = useRef(null)
+    const initialLoaderRef = useRef(null)
+    const mapPathlineRef = useRef(null)
 
     const [isInitialLoader, setIsInitialLoader] = useState(true);
     const [postsFromDB, setPostsFromDB] = useState([]);
@@ -95,20 +106,20 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
     const handleFadeOutEnd = () => {
         console.log('end')
-        gsap.to('#initial-loader', { zIndex: -3, duration: 1 })
-
+        gsap.to(initialLoaderRef.current, { zIndex: -3, duration: 1 })
     }
 
     useEffect(() => {
-        // setTimeout(() => {
-        //     gsap.to('#initial-loader', { opacity: 0 }, { duration: 1 })
-        // }, 1000)
-        // setTimeout(() => {
-        //     setIsInitialLoader(false)
-        // }, 2000)
 
-        gsap.to('#initial-loader', { opacity: 0, onComplete: handleFadeOutEnd, duration: 1 })
-        // gsap.to('#initial-loader', { zIndex:-1 }, { duration: 7 })
+        gsap.to(initialLoaderRef.current, { opacity: 0 })
+        // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
+
+
+        return () => {
+            // ScrollTrigger.getAll().forEach(t => t.kill());
+            ScrollTrigger.getAll().forEach(ST => ST.kill());
+            gsap.globalTimeline.clear();
+        };
     }, [])
 
     const getInitialData = async () => {
@@ -122,10 +133,10 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
 
     useEffect(() => {
-        const triggers = ScrollTrigger.getAll();
-        triggers.forEach(tr => {
-            tr.kill()
-        });
+        // const triggers = ScrollTrigger.getAll();
+        // triggers.forEach(tr => {
+        //     tr.kill()
+        // });
         const sections = [
             // refSection2, refSection3, refSection4, refSection5, 
             refSectionX].filter(i => i);
@@ -138,23 +149,24 @@ const Home = (({ scrollWidth, winSize, height }) => {
                 scrub: 0.5,
                 snap: true,
                 pin: false,
-                markers:true,
 
             });
 
         });
 
-        // the animation to use
-        const tlPath = gsap.timeline({ paused: true });
-        tlPath.to("#myline", { strokeDashoffset: 2850 });
-        let requestId;
-        const startY = 0;
-        const finishDistancePath = window.innerHeight * 2;
-        document.addEventListener("scroll", _.throttle(function () {
+        const scrollAnimation = () => {
             if (!requestId) {
                 requestId = requestAnimationFrame(update);
             }
-        }, 200, {}));
+        }
+
+        // the animation to use
+        const tlPath = gsap.timeline({ paused: true });
+        tlPath.to(mapPathlineRef.current, { strokeDashoffset: 2850 });
+        let requestId;
+        const startY = 0;
+        const finishDistancePath = window.innerHeight * 2;
+        document.addEventListener("scroll", _.throttle(scrollAnimation, 200, {}));
         update();
         function update() {
             tlPath.progress((window.scrollY - startY) / finishDistancePath);
@@ -163,9 +175,14 @@ const Home = (({ scrollWidth, winSize, height }) => {
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        animate(mapsContainerAnimations)
+        animate(mapsContainerAnimations({ mainContainerRef, mapsPicsContainerRef }))
+
+        return () => {
+            window.removeEventListener("scroll", scrollAnimation)
+
+        };
     }, [
-        refSection2, refSection3, refSection4, refSection5, 
+        refSection2, refSection3, refSection4, refSection5,
         refSectionX])
 
     const transformStyles1 = scrollPosition >= 100 && scrollPosition < 1000 ? {
@@ -194,9 +211,22 @@ const Home = (({ scrollWidth, winSize, height }) => {
     }
 
     return (
+        // <Transition
+        //     unmountOnExit
+        //     in={props.show}
+        //     timeout={1000}
+        //     onEnter={node => gsap.set(node, startState)}
+        //     addEndListener={(node, done) => {
+        //         gsap.to(node, 0.5, {
+        //             autoAlpha: props.show ? 1 : 0,
+        //             y: props.show ? 0 : 50,
+        //             onComplete: done
+        //         });
+        //     }}
+        // >
         <Fragment>
-            <div id="main" style={{ overflow: 'hidden' }}>
-                {isInitialLoader && <Loader />}
+            <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
+                {isInitialLoader && <Loader reference={initialLoaderRef} />}
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         getInitialData={getInitialData}
@@ -215,7 +245,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
                 )}
 
                 {/* must use a lower resolution map for mobile devices */}
-                <div id="map-pics-container" style={{ zIndex: 5, position: 'fixed', height: '100vh', width: '100%' }}>
+                <div ref={mapsPicsContainerRef} style={{ zIndex: 5, position: 'fixed', height: '100vh', width: '100%' }}>
 
                     {(photos[0] || {}).src && <div id="hero-pic-1" style={{
                         position: 'absolute',
@@ -285,15 +315,15 @@ const Home = (({ scrollWidth, winSize, height }) => {
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
 
-                            {scrollPosition > 0 && < StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />}
+                            < StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
 
 
-                            <MapPath winSize={winSize} />
+                            <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />
 
                         </div>
                     </div>
 
-                    <StyledHeroSection ref={refSection1} id="hero-section">
+              
                         <HeroSection
                             height={height}
                             posts={postsFromDB}
@@ -302,15 +332,15 @@ const Home = (({ scrollWidth, winSize, height }) => {
                             countryThumbnails={countryThumbnails}
                             tags={[]}
                             categories={[]}
-                            heroPicMainRef={heroPicMainRef}
                             winSize={winSize}
                             refPosts={refSection2}
                             refVideos={refSection5}
                             isLargeMobileLandscape={isLargeMobileLandscape}
                             isInitialLoader={isInitialLoader}
                             handleSearchInputTouch={handleSearchInputTouch}
+                            mainContainerRef={mainContainerRef}
                         />
-                    </StyledHeroSection>
+                
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
                     <PostsSection scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
@@ -346,6 +376,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
             ))} */}
 
             </div>
+            {/* </Transition> */}
         </Fragment>
 
     );

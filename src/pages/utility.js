@@ -243,9 +243,9 @@ export const getHeroSectionPicStyle = (windowWidth, windowHeight) => {
         height = 1800;
     }
     return {
-        src:'/assets/images/welcome-background.webp'
+        src: '/assets/images/welcome-background.webp'
         //  welcomeBackground
-         ,
+        ,
         // backgroundSize: "100%",
         // backgroundRepeat: "no-repeat",
         position: "fixed",
@@ -313,7 +313,7 @@ export const getHeroSectionPicPiecesStyle = (windowWidth, windowHeight, piece) =
         top,
         right,
         height,
-        width:'auto',
+        width: 'auto',
         zIndex: -1,
     };
 };
@@ -571,8 +571,8 @@ export const animate = (animations) => {
             ease: "ease-in",
             scrollTrigger: {
                 trigger: ani.trigger,
-                start: ani.start,
-                end: ani.end,
+                start: ani.start || 'top top',
+                end: ani.end || "center bottom",
                 scrub: true,
                 delay: 1,
             }

@@ -1,90 +1,106 @@
-export const mapsContainerAnimations = [
-    {
-        target: '#map-pics-container',
-        trigger: '#main',
-        start: 'top top',
-        end: '40% bottom',
-        properties: {
-            zIndex: 0,
-        }
-    },
-]
+export const mapsContainerAnimations = ({ mainContainerRef, mapsPicsContainerRef }) => {
+
+    return [
+        {
+            target: mapsPicsContainerRef.current,
+            trigger: mainContainerRef.current,
+            start: 'top top',
+            end: '40% bottom',
+            properties: {
+                zIndex: 0,
+            }
+        },
+    ]
+}
 
 
-export const heroSectionAnimations = [
-    {
-        target: '.scroll-down-arrow',
-        trigger: '#main',
-        start: 'top top',
-        end: 'center bottom',
-        properties: {
-            opacity: -30,
-        }
-    },
-    {
-        target: '.hero-button',
-        trigger: '#main',
-        start: 'top top',
-        end: 'center bottom',
-        properties: {
-            opacity: -30,
-        }
-    },
+export const heroSectionAnimations = ({
+    mainContainerRef,
+    heroPicMainRef,
+    heroPicPieceOneRef,
+    heroPicPieceTwoRef,
+    heroPicPieceThreeRef,
+    heroPrimaryTextRef,
+    heroSecondaryTextRef,
+    buttonOneRef,
+    buttonTwoRef,
+    scrollIconsWrapperRef,
+}) => {
 
-    {
-        target: '#hero-pic-main',
-        trigger: '#main',
-        start: 'top top',
-        end: '30% bottom',
-        properties: {
-            duration: 3,
-            opacity: -1,
-        }
-    },
+    const animations = [
+        {
+            target: scrollIconsWrapperRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                opacity: -30,
+            }
+        },
+        {
+            target: buttonOneRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                opacity: -30,
+            }
+        },
+        {
+            target: buttonTwoRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                opacity: -30,
+            }
+        },
+        {
+            target: heroPicMainRef.current,
+            trigger: mainContainerRef.current,
+            end: '30% bottom',
+            properties: {
+                duration: 3,
+                opacity: -1,
+            }
+        },
 
-    {
-        target: '.HeroPicPieceTwo',
-        trigger: '#main',
-        start: 'top top',
-        end: "center bottom",
-        properties: {
-            yPercent: -100,
-            opacity: -5,
-        }
-    },
-    {
-        target: '.HeroPicPieceOne',
-        trigger: '#main',
-        start: 'top top',
-        end: "center bottom",
-        properties: {
-            yPercent: 100,
-            opacity: -5,
-        }
-    },
-    {
-        target: '#heroTextMainPath',
-        trigger: '#container',
-        start: 'top top',
-        end: "center bottom",
-        properties: {
-            opacity: -30,
-            // fill: 'rgba(255, 255, 255,0)',
-        }
-    },
-    {
-        target: '#heroTextSecondary',
-        trigger: '#main',
-        start: 'top top',
-        end: "center bottom",
-        properties: {
-            opacity: -10,
-            fill: 'rgba(0, 146, 228,0)',
-        }
-    },
-]
+        {
+            target: heroPicPieceTwoRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                yPercent: -100,
+                opacity: -5,
+            }
+        },
+        {
+            target: heroPicPieceOneRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                yPercent: 100,
+                opacity: -5,
+            }
+        },
+        {
+            target: heroPicPieceThreeRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                yPercent: 100,
+                opacity: -5,
+            }
+        },
+        {
+            target: heroPrimaryTextRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                opacity: -30,
+            }
+        },
+        {
+            target: heroSecondaryTextRef.current,
+            trigger: mainContainerRef.current,
+            properties: {
+                opacity: -10,
+                fill: 'rgba(0, 146, 228,0)',
+            }
+        },
+    ];
 
+    animations.forEach(a=>console.log('target: ',a.target,'trigger: ',a.trigger))
 
-
-// gsap.fromTo('#heroTextMainPath', { strokeDashoffset: 180, }, { strokeDashoffset: 0, duration: 1 });
-// gsap.fromTo('#heroTextMainPath', { fill: 'rgba(255, 255, 255,0)' }, { fill: 'rgba(255,255,255,1)', duration: 1 })
+    return animations;
+}
