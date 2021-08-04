@@ -138,7 +138,7 @@ const HeroSectionContent = ({
                 )
             })}
 
-            <svg
+            {/* <svg
 
                 ref={heroPrimaryTextRef}
                 style={{
@@ -154,7 +154,7 @@ const HeroSectionContent = ({
                 <g>
                     <path d={heroTextPathOne} />
                 </g>
-            </svg>
+            </svg> */}
 
             <div ref={heroSecondaryTextRef} style={{
                 ...getHeroSectionTextStyle(winSize, height),

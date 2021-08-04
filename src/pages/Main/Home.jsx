@@ -212,7 +212,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
     return (
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                {isInitialLoader && <Loader reference={initialLoaderRef} />}
+                {/* {isInitialLoader && <Loader reference={initialLoaderRef} />} */}
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}
