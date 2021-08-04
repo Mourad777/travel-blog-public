@@ -13,7 +13,7 @@ import {
 import Search from './SearchResults';
 import { gsap } from 'gsap/all';
 import { heroSectionAnimations } from './gsapAnimations';
-
+import { Helmet } from 'react-helmet';
 
 const HeroSectionContent = ({
     winSize,
@@ -67,7 +67,7 @@ const HeroSectionContent = ({
                 }
             ))
             gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 1, });
-            gsap.to(heroPrimaryTextRef.current, {  fill: 'rgba(255,255,255,1)', duration: 3 })
+            gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 3 })
         }
 
 
@@ -93,8 +93,21 @@ const HeroSectionContent = ({
             height: '100vh',
             position: 'relative',
         }}>
+            <Helmet>
+                <link rel="preload" as="image" href={'/assets/images/welcome-background.webp'} type="image/webp" />
+                <link rel="preload" as="image" href={'/assets/images/welcome-section-piece-1.webp'} type="image/webp" />
+                <link rel="preload" as="image" href={'/assets/images/welcome-section-piece-2.webp'} type="image/webp" />
+                <link rel="preload" as="image" href={'/assets/images/welcome-section-piece-3.webp'} type="image/webp" />
+            </Helmet>
 
-            <Search handleSearchInputTouch={handleSearchInputTouch} photos={photos} videos={videos} posts={posts} winSize={winSize} countryThumbnails={countryThumbnails} />
+            <Search
+                handleSearchInputTouch={handleSearchInputTouch}
+                photos={photos}
+                videos={videos}
+                posts={posts}
+                winSize={winSize}
+                countryThumbnails={countryThumbnails}
+            />
 
             <img
                 src='/assets/images/welcome-background.webp'

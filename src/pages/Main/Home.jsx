@@ -99,19 +99,16 @@ const Home = (({ scrollWidth, winSize, height }) => {
     }, [scrollPosition, scrollWidth, winSize])
 
     useEffect(() => {
-        if ((scrollPosition > 0 || !!searchInputIsTouched) && !isInitialDataFetched) {
+        // if ((scrollPosition > 0 || !!searchInputIsTouched) && !isInitialDataFetched) {
             getInitialData();
-        }
-    }, [scrollPosition, searchInputIsTouched]);
-
-    const handleFadeOutEnd = () => {
-        console.log('end')
-        gsap.to(initialLoaderRef.current, { zIndex: -3, duration: 1 })
-    }
+        // }
+    }, [
+        // scrollPosition, searchInputIsTouched
+    ]);
 
     useEffect(() => {
 
-        gsap.to(initialLoaderRef.current, { opacity: 0,duration:3 })
+        gsap.to(initialLoaderRef.current, { opacity: 0,duration:7 })
         // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
 
 
@@ -210,31 +207,19 @@ const Home = (({ scrollWidth, winSize, height }) => {
     if (winSize === 2 && height < 420) {
         isLargeMobileLandscape = true
     }
+    
 
     return (
-        // <Transition
-        //     unmountOnExit
-        //     in={props.show}
-        //     timeout={1000}
-        //     onEnter={node => gsap.set(node, startState)}
-        //     addEndListener={(node, done) => {
-        //         gsap.to(node, 0.5, {
-        //             autoAlpha: props.show ? 1 : 0,
-        //             y: props.show ? 0 : 50,
-        //             onComplete: done
-        //         });
-        //     }}
-        // >
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
                 {isInitialLoader && <Loader reference={initialLoaderRef} />}
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
-                        getInitialData={getInitialData}
+                        // getInitialData={getInitialData}
                         scrollSection={scrollSection}
                         componentReferences={
                             {
-                                welcome: refSection1,
+                                welcome: mainContainerRef,
                                 posts: refSection2,
                                 destinations: refSection3,
                                 photos: refSection4,
@@ -383,4 +368,4 @@ const Home = (({ scrollWidth, winSize, height }) => {
     );
 });
 
-export default React.memo(Home);
+export default Home;

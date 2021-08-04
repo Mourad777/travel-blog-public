@@ -92,7 +92,9 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
 
                             }}>
                             <figure style={{ margin: 0, height: '100%' }}>
-                                <img style={{
+                                <img loading="lazy" 
+                                srcSet={`${p.src} 100w`}
+                                style={{
                                     width: '100%',
                                     height: '100%',
                                     verticalAlign: 'top',
