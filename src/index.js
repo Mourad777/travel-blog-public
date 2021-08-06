@@ -34,11 +34,23 @@ const App = () => {
     const [scrollWidth, setScrollWidth] = useState(getWindowSizeInteger(window.innerWidth));
     const [height, setHeight] = useState(window.innerHeight);
 
+    const [isPageLoaded, setIsPageLoaded] = useState(false)
+
+    const handlePageLoad = () => {
+        setTimeout(() => {
+            setIsPageLoaded(true)
+        }, 5000)
+    }
+
     useEffect(() => {
-       window.addEventListener("resize", _.throttle(getWindowSize, 200), { passive: true });
-       return () => {
-           window.removeEventListener("resize",getWindowSize)
-       }
+        window.addEventListener('load',handlePageLoad)
+        // window.addEventListener('load',()=>setIsPageLoaded(false))
+        console.log('isPageLoaded', isPageLoaded)
+
+        window.addEventListener("resize", _.throttle(getWindowSize, 200), { passive: true });
+        return () => {
+            window.removeEventListener("resize", getWindowSize)
+        }
     }, []);
 
     const getWindowSize = () => {
@@ -70,8 +82,7 @@ const App = () => {
                         <Video winSize={winSize} />
                     </Route>
                     <Route path="/">
-                     
-                        <Home winSize={winSize} scrollWidth={scrollWidth} height={height} />
+                        <Home isPageLoaded={isPageLoaded} setIsPageLoaded={setIsPageLoaded} winSize={winSize} scrollWidth={scrollWidth} height={height} />
                     </Route>
                 </Switch>
             </React.Suspense>
@@ -81,10 +92,10 @@ const App = () => {
 
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

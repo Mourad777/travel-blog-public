@@ -25,7 +25,7 @@ function useOutsideAlerter(ref, handleOutsideClick) {
     }, [ref]);
 }
 
-const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize,handleSearchInputTouch }) => {
+const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }) => {
 
     const adjustedPhotos = photos.map(p => ({
         type: 'photo',
@@ -110,7 +110,6 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize,h
 
 
     const handleSearchValue = (e) => {
-        handleSearchInputTouch()
         setSearchValue(e.target.value);
     }
 
@@ -147,7 +146,6 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize,h
     }
 
 
-    console.log('search results render',posts, photos, videos, countryThumbnails, winSize)
     return (
         <div
             style={{

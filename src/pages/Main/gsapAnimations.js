@@ -100,7 +100,5 @@ export const heroSectionAnimations = ({
         },
     ];
 
-    animations.forEach(a=>console.log('target: ',a.target,'trigger: ',a.trigger))
-
     return animations;
 }

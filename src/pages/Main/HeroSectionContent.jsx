@@ -26,8 +26,9 @@ const HeroSectionContent = ({
     refVideos,
     isLargeMobileLandscape,
     isInitialLoader,
-    handleSearchInputTouch,
     mainContainerRef,
+    isPageLoaded,
+    scrollSection,
 }) => {
     const heroPicMainRef = useRef(null);
     const heroPicPieceOneRef = useRef(null);
@@ -66,11 +67,11 @@ const HeroSectionContent = ({
                     scrollIconsWrapperRef,
                 }
             ))
-            gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
-            gsap.to(heroPicPieceTwoRef.current, { opacity: 1, duration: 3, });
-            gsap.to(heroPicPieceThreeRef.current, { opacity: 1, duration: 3, });
-            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 5, });
-            gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 7 })
+            // gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
+            // gsap.to(heroPicPieceTwoRef.current, { opacity: 1, duration: 3, });
+            // gsap.to(heroPicPieceThreeRef.current, { opacity: 1, duration: 3, });
+            // gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 5, });
+            // gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 7 })
         }
 
 
@@ -104,7 +105,6 @@ const HeroSectionContent = ({
             </Helmet>
 
             <Search
-                handleSearchInputTouch={handleSearchInputTouch}
                 photos={photos}
                 videos={videos}
                 posts={posts}
@@ -135,9 +135,11 @@ const HeroSectionContent = ({
                         src={image}
                         className={`HeroPicPiece${piece}`}
                         key={`[Heropic]${i}`}
-                        style={{...getHeroSectionPicPiecesStyle(winSize, height, i + 1),opacity:0}
+                        style={{ ...getHeroSectionPicPiecesStyle(winSize, height, i + 1) }
                         }
+                    // className="fade-in"
                     />
+
                 )
             })}
 
@@ -147,10 +149,11 @@ const HeroSectionContent = ({
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
                     opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
-                    transition: 'opacity 0.3s ease-in',
+                    transition: 'opacity 1.5s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
                     pointerEvents: 'none'
                 }}
+                className={isPageLoaded ? "" : "draw"}
                 viewBox="0 0 120 50"
                 id="heroTextMainPath"
             >

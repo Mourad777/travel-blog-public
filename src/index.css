@@ -18,5 +18,36 @@ code {
     monospace;
 }
 
+/* animation on page load */
 
+@keyframes fade-in-animation {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in-animation ease-out 1s forwards;
+}
 
+@keyframes fade-out-animation {
+  0% { opacity: 1; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.fade-out {
+  animation: fade-out-animation ease-out 5s forwards;
+}
+
+@keyframes draw-animation {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+.draw {
+  animation: draw-animation ease-out 3s forwards;
+}

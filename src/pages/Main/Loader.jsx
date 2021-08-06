@@ -1,6 +1,8 @@
 import React from "react";
 
-export default ({ reference }) => (
+export default ({ reference,isPageLoaded }) => {
+    console.log('isPageLoaded',isPageLoaded)
+    return(
     <div
         ref={reference}
         style={{
@@ -8,12 +10,15 @@ export default ({ reference }) => (
             height: "100%",
             backgroundColor: "black",
             position: "fixed",
-            // opacity: isAssetLoaded ? 0 : 1,
+            opacity: isPageLoaded ? 0 : 1,
             zIndex: 30,
             transition: "all 1s ease-out",
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+        
         }}
+        className={isPageLoaded ? "" : "fade-out"}
     >
+
         {/* <p
             style={{
                 color: "white",
@@ -39,4 +44,4 @@ export default ({ reference }) => (
             <div></div>
         </div>
     </div>
-);
+)};

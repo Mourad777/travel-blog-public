@@ -17,19 +17,6 @@ import { useHistory } from "react-router-dom";
 import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
 import { mapsContainerAnimations } from "./gsapAnimations";
 
-// const HeroSection = loadable(() => import('./HeroSectionContent'))
-
-
-
-// import HeroSection from './HeroSectionContent'
-// import PostsSection from '../Posts/Posts'
-
-// import DestinationsSection from '../Countries/WorldMap'
-// import PhotosSection from '../Photos/PhotosSection'
-// import VideosSection from '../Videos/VideosSection'
-
-// import ContactSection from '../Contact/ContactSection'
-
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));
 const DestinationsSection = React.lazy(() => import('../Countries/WorldMap'));
@@ -42,7 +29,7 @@ const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 
-const Home = (({ scrollWidth, winSize, height }) => {
+const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) => {
     const refSection1 = useRef(null)
     const refSection2 = useRef(null)
     const refSection3 = useRef(null)
@@ -61,19 +48,14 @@ const Home = (({ scrollWidth, winSize, height }) => {
     const [photos, setPhotos] = useState([]);
     const [videos, setVideos] = useState([]);
     const [scrollPosition, setScrollPostion] = useState(0);
-    const [scrollSection, setScrollSection] = useState(0);
+    const [scrollSection, setScrollSection] = useState(-1);
     const [isLoading, setIsLoading] = useState(0);
     const [countryThumbnails, setCountryThumbnails] = useState([])
-    const [searchInputIsTouched, setSearchInputIsTouched] = useState(false)
-    const [isInitialDataFetched, setIsInitialDataFetched] = useState(false)
 
     const handleScrollPosition = (value) => {
         setScrollPostion(value)
     }
 
-    const handleSearchInputTouch = (value) => {
-        setSearchInputIsTouched(true)
-    }
 
     const history = useHistory()
 
@@ -100,36 +82,30 @@ const Home = (({ scrollWidth, winSize, height }) => {
     }, [scrollPosition, scrollWidth, winSize])
 
     useEffect(() => {
-        // if ((scrollPosition > 0 || !!searchInputIsTouched) && !isInitialDataFetched) {
+        // window.addEventListener('load',()=>setIsPageLoaded(true))
         getInitialData();
-        // }
-    }, [
-        // scrollPosition, searchInputIsTouched
-    ]);
+    }, []);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        gsap.to(initialLoaderRef.current, { opacity: 0, duration: 7 })
-        gsap.to(notePadMapRef.current, { opacity: 1, duration: 3 })
-        // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
+    //     gsap.to(initialLoaderRef.current, { opacity: 0, duration: 7 })
+    //     gsap.to(notePadMapRef.current, { opacity: 1, duration: 3 })
+    //     // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
 
 
-        return () => {
-            // ScrollTrigger.getAll().forEach(t => t.kill());
-            ScrollTrigger.getAll().forEach(ST => ST.kill());
-            gsap.globalTimeline.clear();
-        };
-    }, [])
+    //     return () => {
+    //         // ScrollTrigger.getAll().forEach(t => t.kill());
+    //         ScrollTrigger.getAll().forEach(ST => ST.kill());
+    //         gsap.globalTimeline.clear();
+    //     };
+    // }, [])
 
     const getInitialData = async () => {
-        setIsInitialDataFetched(true)
         await getPosts(setPostsFromDB, setIsLoading);
         await getPhotos(setPhotos, setIsLoading);
         await getVideos(setVideos, setIsLoading);
         await getCountryThumbnails(setCountryThumbnails, setIsLoading);
     }
-
-
 
     useEffect(() => {
 
@@ -153,8 +129,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
             handleScrollPosition(window.scrollY)
             requestId = null;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         animate(mapsContainerAnimations({ mainContainerRef, mapsPicsContainerRef }))
 
         return () => {
@@ -194,7 +169,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
     return (
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                <Loader reference={initialLoaderRef} />
+                <Loader reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}
@@ -283,7 +258,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
 
-                            < StyledMap ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
+                            < StyledMap className="fade-in" ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
 
 
                             <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />
@@ -305,8 +280,9 @@ const Home = (({ scrollWidth, winSize, height }) => {
                         refVideos={refSection5}
                         isLargeMobileLandscape={isLargeMobileLandscape}
                         isInitialLoader={isInitialLoader}
-                        handleSearchInputTouch={handleSearchInputTouch}
                         mainContainerRef={mainContainerRef}
+                        isPageLoaded={isPageLoaded}
+                        scrollSection={scrollSection}
                     />
 
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
