@@ -50,6 +50,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
     const refSection5 = useRef(null)
     const refSection6 = useRef(null)
     const refSectionX = useRef(null)
+    const notePadMapRef = useRef(null)
     const mainContainerRef = useRef(null)
     const mapsPicsContainerRef = useRef(null)
     const initialLoaderRef = useRef(null)
@@ -100,7 +101,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
     useEffect(() => {
         // if ((scrollPosition > 0 || !!searchInputIsTouched) && !isInitialDataFetched) {
-            getInitialData();
+        getInitialData();
         // }
     }, [
         // scrollPosition, searchInputIsTouched
@@ -108,7 +109,8 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
     useEffect(() => {
 
-        gsap.to(initialLoaderRef.current, { opacity: 0,duration:7 })
+        gsap.to(initialLoaderRef.current, { opacity: 0, duration: 7 })
+        gsap.to(notePadMapRef.current, { opacity: 1, duration: 3 })
         // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
 
 
@@ -130,27 +132,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
 
 
     useEffect(() => {
-        // const triggers = ScrollTrigger.getAll();
-        // triggers.forEach(tr => {
-        //     tr.kill()
-        // });
-        const sections = [
-            // refSection2, refSection3, refSection4, refSection5, 
-            // refSectionX
-        ].filter(i => i);
-        sections.forEach((pan, i) => {
-            if (!pan) return;
 
-            ScrollTrigger.create({
-                trigger: pan.current,
-                start: "top top",
-                scrub: 0.5,
-                snap: true,
-                pin: false,
-
-            });
-
-        });
 
         const scrollAnimation = () => {
             if (!requestId) {
@@ -207,12 +189,12 @@ const Home = (({ scrollWidth, winSize, height }) => {
     if (winSize === 2 && height < 420) {
         isLargeMobileLandscape = true
     }
-    
+
 
     return (
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                {/* {isInitialLoader && <Loader reference={initialLoaderRef} />} */}
+                <Loader reference={initialLoaderRef} />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}
@@ -301,7 +283,7 @@ const Home = (({ scrollWidth, winSize, height }) => {
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
 
-                            < StyledMap windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
+                            < StyledMap ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
 
 
                             <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />
@@ -309,24 +291,24 @@ const Home = (({ scrollWidth, winSize, height }) => {
                         </div>
                     </div>
 
-              
-                        <HeroSection
-                            height={height}
-                            posts={postsFromDB}
-                            photos={photos}
-                            videos={videos}
-                            countryThumbnails={countryThumbnails}
-                            tags={[]}
-                            categories={[]}
-                            winSize={winSize}
-                            refPosts={refSection2}
-                            refVideos={refSection5}
-                            isLargeMobileLandscape={isLargeMobileLandscape}
-                            isInitialLoader={isInitialLoader}
-                            handleSearchInputTouch={handleSearchInputTouch}
-                            mainContainerRef={mainContainerRef}
-                        />
-                
+
+                    <HeroSection
+                        height={height}
+                        posts={postsFromDB}
+                        photos={photos}
+                        videos={videos}
+                        countryThumbnails={countryThumbnails}
+                        tags={[]}
+                        categories={[]}
+                        winSize={winSize}
+                        refPosts={refSection2}
+                        refVideos={refSection5}
+                        isLargeMobileLandscape={isLargeMobileLandscape}
+                        isInitialLoader={isInitialLoader}
+                        handleSearchInputTouch={handleSearchInputTouch}
+                        mainContainerRef={mainContainerRef}
+                    />
+
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
                     <PostsSection scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />

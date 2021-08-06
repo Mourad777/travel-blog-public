@@ -66,8 +66,11 @@ const HeroSectionContent = ({
                     scrollIconsWrapperRef,
                 }
             ))
-            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 1, });
-            gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 3 })
+            gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
+            gsap.to(heroPicPieceTwoRef.current, { opacity: 1, duration: 3, });
+            gsap.to(heroPicPieceThreeRef.current, { opacity: 1, duration: 3, });
+            gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 5, });
+            gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 7 })
         }
 
 
@@ -132,13 +135,13 @@ const HeroSectionContent = ({
                         src={image}
                         className={`HeroPicPiece${piece}`}
                         key={`[Heropic]${i}`}
-                        style={getHeroSectionPicPiecesStyle(winSize, height, i + 1,)
+                        style={{...getHeroSectionPicPiecesStyle(winSize, height, i + 1),opacity:0}
                         }
                     />
                 )
             })}
 
-            {/* <svg
+            <svg
 
                 ref={heroPrimaryTextRef}
                 style={{
@@ -154,7 +157,7 @@ const HeroSectionContent = ({
                 <g>
                     <path d={heroTextPathOne} />
                 </g>
-            </svg> */}
+            </svg>
 
             <div ref={heroSecondaryTextRef} style={{
                 ...getHeroSectionTextStyle(winSize, height),

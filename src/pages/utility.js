@@ -574,7 +574,6 @@ export const animate = (animations) => {
                 start: ani.start || 'top top',
                 end: ani.end || "center bottom",
                 scrub: true,
-                delay: 1,
             }
         });
     })
