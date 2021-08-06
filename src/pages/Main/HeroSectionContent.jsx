@@ -116,6 +116,7 @@ const HeroSectionContent = ({
                 src='/assets/images/welcome-background.webp'
                 id="hero-pic-main"
                 ref={heroPicMainRef}
+                className={isPageLoaded ? "" : "fade-in"}
                 style={{
                     ...getHeroSectionPicStyle(winSize, height),
                     position: 'fixed'

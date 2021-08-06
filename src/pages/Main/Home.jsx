@@ -258,7 +258,7 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
                     <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                         <div style={{ position: 'relative', height: '100vh' }}>
 
-                            < StyledMap className="fade-in" ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
+                            < StyledMap className={isPageLoaded ? "" : "fade-in"} ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
 
 
                             <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />

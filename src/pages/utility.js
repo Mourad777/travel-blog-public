@@ -243,20 +243,12 @@ export const getHeroSectionPicStyle = (windowWidth, windowHeight) => {
         height = 1800;
     }
     return {
-        src: '/assets/images/welcome-background.webp'
-        //  welcomeBackground
-        ,
-        // backgroundSize: "100%",
-        // backgroundRepeat: "no-repeat",
         position: "fixed",
-        // backgroundPosition: "top center",
         height,
         right,
         top,
         width: 'auto',
         zIndex: -1,
-        // transform: `translateX(${5000 * scroll}px)`,
-        // transition: "transform 1s ease-out",
     };
 };
 
