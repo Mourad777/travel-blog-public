@@ -35,7 +35,7 @@ const App = () => {
     const [height, setHeight] = useState(window.innerHeight);
 
     const [isPageLoaded, setIsPageLoaded] = useState(false)
-
+    const [initialDataPercentage,setInitialDataPercentage] = useState(0);
     const handlePageLoad = () => {
         setTimeout(() => {
             setIsPageLoaded(true)
@@ -86,7 +86,7 @@ const App = () => {
                         <Video winSize={winSize} />
                     </Route>
                     <Route path="/">
-                        <Home isPageLoaded={isPageLoaded} setIsPageLoaded={setIsPageLoaded} winSize={winSize} scrollWidth={scrollWidth} height={height} />
+                        <Home setInitialDataPercentage={setInitialDataPercentage} initialDataPercentage={initialDataPercentage} isPageLoaded={isPageLoaded} setIsPageLoaded={setIsPageLoaded} winSize={winSize} scrollWidth={scrollWidth} height={height} />
                     </Route>
                 </Switch>
             </React.Suspense>

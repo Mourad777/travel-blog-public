@@ -29,7 +29,7 @@ const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 
-const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) => {
+const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,setInitialDataPercentage,initialDataPercentage }) => {
     const refSection1 = useRef(null)
     const refSection2 = useRef(null)
     const refSection3 = useRef(null)
@@ -52,7 +52,6 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
     const [isLoading, setIsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
     const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
-    const [initialDataPercentage,setInitialDataPercentage] = useState(0);
 
     const handleScrollPosition = (value) => {
         setScrollPostion(value)
