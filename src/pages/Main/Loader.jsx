@@ -19,7 +19,7 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
 
     let loaderTopPosition = 65;
     if (winSize === 2) loaderTopPosition = 50;
-    if (isLargeMobileLandscape) loaderTopPosition = 60;
+    if (isLargeMobileLandscape) loaderTopPosition = 65;
     //page load is much faster that fetching data from api so when page is loaded progress would be 20%
     //then comes 4 sets of data from the api: posts, photos, and videos,
     //each set of data represents 20% of the progress bar
