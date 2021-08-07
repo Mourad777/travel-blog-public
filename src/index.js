@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
-import { BrowserRouter, withRouter } from "react-router-dom";
+import { BrowserRouter, withRouter, useHistory, useLocation } from "react-router-dom";
 import Home from './pages/Main/Home'
 import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
@@ -29,13 +29,13 @@ const ScrollToTop = withRouter(({ history }) => {
 })
 
 const App = () => {
-    // console.log('process.env.PUBLIC_URL',process.env.PUBLIC_URL)
+
     const [winSize, setWinSize] = useState(getWindowSizeInteger(window.innerWidth));
     const [scrollWidth, setScrollWidth] = useState(getWindowSizeInteger(window.innerWidth));
     const [height, setHeight] = useState(window.innerHeight);
 
     const [isPageLoaded, setIsPageLoaded] = useState(false)
-    const [initialDataPercentage,setInitialDataPercentage] = useState(0);
+    const [initialDataPercentage, setInitialDataPercentage] = useState(0);
     const handlePageLoad = () => {
         setTimeout(() => {
             setIsPageLoaded(true)
@@ -43,7 +43,7 @@ const App = () => {
     }
 
     useEffect(() => {
-        window.addEventListener('load',handlePageLoad)
+        window.addEventListener('load', handlePageLoad)
         // window.addEventListener('load',()=>setIsPageLoaded(false))
         console.log('isPageLoaded', isPageLoaded)
 

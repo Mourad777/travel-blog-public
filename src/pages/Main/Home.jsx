@@ -177,7 +177,10 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
                 <Loader
                 initialDataPercentage={initialDataPercentage}
-                isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
+                isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} 
+                isLargeMobileLandscape={isLargeMobileLandscape}
+                winSize={winSize}
+                />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}
@@ -291,6 +294,7 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
                         mainContainerRef={mainContainerRef}
                         isPageLoaded={isPageLoaded}
                         scrollSection={scrollSection}
+                        initialDataPercentage={initialDataPercentage}
                     />
 
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}

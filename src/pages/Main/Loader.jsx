@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from "react";
 import './loader.css'
 import Circle from 'react-circle'
-export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPercentage }) => {
-    console.log('isPageLoaded', isPageLoaded)
+export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPercentage, winSize, isLargeMobileLandscape }) => {
+    console.log('isLargeMobileLandscape', isLargeMobileLandscape)
     console.log('isInitialDataLoaded', isInitialDataLoaded)
-    console.log('initialDataPercentage',initialDataPercentage)
+    console.log('initialDataPercentage', initialDataPercentage)
     let percentageLoaded = 0;
     const [isDomReady, setIsDomReady] = useState(false);
     const handlePageLoad = () => {
         setIsDomReady(true)
     }
-    useEffect(()=>{
-        window.addEventListener('load',handlePageLoad)
-    },[])
+    useEffect(() => {
+        window.addEventListener('load', handlePageLoad)
+    }, [])
     if (isDomReady) percentageLoaded = 20;
     if (initialDataPercentage > 20) percentageLoaded = initialDataPercentage;
     if (initialDataPercentage === 100) percentageLoaded = 100;
+
+    let loaderTopPosition = 65;
+    if (winSize === 2) loaderTopPosition = 50;
+    if (isLargeMobileLandscape) loaderTopPosition = 60;
     //page load is much faster that fetching data from api so when page is loaded progress would be 20%
     //then comes 4 sets of data from the api: posts, photos, and videos,
     //each set of data represents 20% of the progress bar
@@ -61,7 +65,7 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
                 <div></div>
             </div> */}
             <div
-                style={{ top: "65%", margin: "auto", display: "block",width:200,position:'absolute',left:'50%',transform:'translate(-50%)' }}
+                style={{ top: `${loaderTopPosition}%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translate(-50%)' }}
             >
                 <Circle
                     progress={percentageLoaded}

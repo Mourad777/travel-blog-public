@@ -29,6 +29,7 @@ const HeroSectionContent = ({
     mainContainerRef,
     isPageLoaded,
     scrollSection,
+    initialDataPercentage,
 }) => {
     const heroPicMainRef = useRef(null);
     const heroPicPieceOneRef = useRef(null);
@@ -52,6 +53,7 @@ const HeroSectionContent = ({
             buttonOneRef &&
             buttonTwoRef &&
             scrollIconsWrapperRef) {
+                console.log('running animations again')
 
             animate(heroSectionAnimations(
                 {
@@ -60,7 +62,8 @@ const HeroSectionContent = ({
                     heroPicPieceOneRef,
                     heroPicPieceTwoRef,
                     heroPicPieceThreeRef,
-                    heroPrimaryTextRef,
+                    // heroPrimaryTextRef:heroPrimaryTextRef,
+                    heroPrimaryTextRef: isPageLoaded ? heroPrimaryTextRef : null,
                     heroSecondaryTextRef,
                     buttonOneRef,
                     buttonTwoRef,
@@ -85,7 +88,9 @@ const HeroSectionContent = ({
         heroSecondaryTextRef,
         buttonOneRef,
         buttonTwoRef,
-        scrollIconsWrapperRef])
+        scrollIconsWrapperRef,
+        isPageLoaded,
+    ])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
@@ -145,7 +150,6 @@ const HeroSectionContent = ({
             })}
 
             <svg
-
                 ref={heroPrimaryTextRef}
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),

@@ -84,7 +84,7 @@ export const heroSectionAnimations = ({
             }
         },
         {
-            target: heroPrimaryTextRef.current,
+            target: (heroPrimaryTextRef||{}).current,
             trigger: mainContainerRef.current,
             properties: {
                 opacity: -30,
@@ -98,7 +98,7 @@ export const heroSectionAnimations = ({
                 fill: 'rgba(0, 146, 228,0)',
             }
         },
-    ];
+    ].filter(item=>item.target);
 
     return animations;
 }
