@@ -51,7 +51,7 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
             Leave nothing but footprints, take nothing but photos, kill nothing
             but time.
         </p> */}
-            <div
+            {/* <div
                 className="lds-ellipsis"
                 style={{ top: "70%", margin: "auto", display: "block" }}
             >
@@ -59,9 +59,9 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
                 <div></div>
                 <div></div>
                 <div></div>
-            </div>
+            </div> */}
             <div
-                style={{ top: "70%", margin: "auto", display: "block",width:200 }}
+                style={{ top: "65%", margin: "auto", display: "block",width:200,position:'absolute',left:'50%',transform:'translate(-50%)' }}
             >
                 <Circle
                     progress={percentageLoaded}
