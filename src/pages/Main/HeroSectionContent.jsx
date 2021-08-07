@@ -63,7 +63,7 @@ const HeroSectionContent = ({
                     heroPicPieceTwoRef,
                     heroPicPieceThreeRef,
                     // heroPrimaryTextRef:heroPrimaryTextRef,
-                    heroPrimaryTextRef: isPageLoaded ? heroPrimaryTextRef : null,
+                    heroPrimaryTextRef: initialDataPercentage === 100 ? heroPrimaryTextRef : null,
                     heroSecondaryTextRef,
                     buttonOneRef,
                     buttonTwoRef,
@@ -89,7 +89,7 @@ const HeroSectionContent = ({
         buttonOneRef,
         buttonTwoRef,
         scrollIconsWrapperRef,
-        isPageLoaded,
+        initialDataPercentage,
     ])
 
     const handleScroll = (ref) => {
@@ -154,7 +154,7 @@ const HeroSectionContent = ({
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
                     opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
-                    transition: 'opacity 1.5s ease-in',
+                    transition: 'opacity .3s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
                     pointerEvents: 'none'
                 }}
