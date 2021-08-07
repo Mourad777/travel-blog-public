@@ -49,8 +49,9 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
     const [videos, setVideos] = useState([]);
     const [scrollPosition, setScrollPostion] = useState(0);
     const [scrollSection, setScrollSection] = useState(-1);
-    const [isLoading, setIsLoading] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
+    const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
 
     const handleScrollPosition = (value) => {
         setScrollPostion(value)
@@ -105,6 +106,7 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
         await getPhotos(setPhotos, setIsLoading);
         await getVideos(setVideos, setIsLoading);
         await getCountryThumbnails(setCountryThumbnails, setIsLoading);
+        setIsInitialDataLoaded(true)
     }
 
     useEffect(() => {
@@ -169,7 +171,7 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
     return (
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                <Loader reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
+                <Loader isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}

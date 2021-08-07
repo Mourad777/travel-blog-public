@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ reference,isPageLoaded }) => {
+export default ({ reference,isPageLoaded,isInitialDataLoaded }) => {
     console.log('isPageLoaded',isPageLoaded)
     return(
     <div
@@ -16,7 +16,7 @@ export default ({ reference,isPageLoaded }) => {
             pointerEvents: 'none',
         
         }}
-        className={isPageLoaded ? "" : "fade-out"}
+        className={isInitialDataLoaded ? isPageLoaded ? "" : "fade-out" : ""}
     >
 
         {/* <p
