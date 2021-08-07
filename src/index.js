@@ -39,7 +39,7 @@ const App = () => {
     const handlePageLoad = () => {
         setTimeout(() => {
             setIsPageLoaded(true)
-        }, 15000)
+        }, 25000)
     }
 
     useEffect(() => {

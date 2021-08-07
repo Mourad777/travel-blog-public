@@ -52,6 +52,7 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
     const [isLoading, setIsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
     const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
+    const [initialDataPercentage,setInitialDataPercentage] = useState(0);
 
     const handleScrollPosition = (value) => {
         setScrollPostion(value)
@@ -103,9 +104,13 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
 
     const getInitialData = async () => {
         await getPosts(setPostsFromDB, setIsLoading);
+        setInitialDataPercentage(40)
         await getPhotos(setPhotos, setIsLoading);
+        setInitialDataPercentage(60)
         await getVideos(setVideos, setIsLoading);
+        setInitialDataPercentage(80)
         await getCountryThumbnails(setCountryThumbnails, setIsLoading);
+        setInitialDataPercentage(100)
         setIsInitialDataLoaded(true)
     }
 
@@ -171,7 +176,9 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded }) 
     return (
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                <Loader isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
+                <Loader
+                initialDataPercentage={initialDataPercentage}
+                isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
                         // getInitialData={getInitialData}
