@@ -61,10 +61,14 @@ const App = () => {
         setWinSize(windowSizeWidthInt);
     };
 
+    const SuspenseFallback = () => (
+        <div></div>
+    )
+
     return (
         <BrowserRouter>
             <ScrollToTop />
-            <React.Suspense fallback={<Loader />}>
+            <React.Suspense fallback={<SuspenseFallback />}>
                 <Switch>
                     <Route path="/post/:postId">
                         <Post winSize={winSize} />
