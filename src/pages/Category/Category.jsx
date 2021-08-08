@@ -8,6 +8,7 @@ import Photos from './Photos'
 import countryCodes from '../Countries/country-codes.json';
 import moment from 'moment';
 import { getCategoryContent, getCountryThumbnails } from '../../api/util';
+import Loader from '../../components/Loader/Loader';
 // import VideoIcon from './../../../public/assets/video-icon.jpg'
 
 function capitalize(str) {
@@ -15,7 +16,7 @@ function capitalize(str) {
     return capStr
 }
 
-const Country = ({ winSize,height }) => {
+const Country = ({ winSize, height }) => {
     const params = useParams();
     const countryIso = params.country;
     const selectedCategory = params.categoryId;
@@ -27,7 +28,7 @@ const Country = ({ winSize,height }) => {
     const [countryThumbnails, setCountryThumbnails] = useState([])
 
     const getInitialData = async () => {
-        if(countryIso) {
+        if (countryIso) {
             await getCountryThumbnails(setCountryThumbnails, setIsLoading);
         }
         await getCategoryContent(countryIso, selectedCategory, setPosts, setPhotos, setVideos);
@@ -65,7 +66,14 @@ const Country = ({ winSize,height }) => {
         postColumns = 'repeat(1, 1fr)';
         gridWidth = 300;
     }
-    const countryThumbnail = (countryThumbnails.find(t=>t.country === countryIso)||{}).image
+    const countryThumbnail = (countryThumbnails.find(t => t.country === countryIso) || {}).image
+
+    if (isLoading) {
+        return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
+            <Loader color="#daad86" />
+        </div>
+        )
+    }
     return (
         <div style={{ height: '100%', width: '100%', background: '#ece7e2', minHeight: '100vh', paddingBottom: 20 }}>
             <div style={{ position: 'relative', width: '100%', height: 300, overflow: 'hidden' }}>
@@ -91,7 +99,7 @@ const Country = ({ winSize,height }) => {
                     gridGap: '3rem',
                     gridTemplateColumns: postColumns,
                 }}>
-                    {posts.map(p => <div key={p.title} onClick={() => history.push(`/post/${p.id}`)} style={{ borderRadius: 5, background: '#fff', height: '50vh',minHeight:330, cursor: 'pointer', }}>
+                    {posts.map(p => <div key={p.title} onClick={() => history.push(`/post/${p.id}`)} style={{ borderRadius: 5, background: '#fff', height: '50vh', minHeight: 330, cursor: 'pointer', }}>
                         <div style={{ height: '25%', padding: 10 }}><p style={{
                             fontFamily: 'Mulish',
                             fontWeight: 600,
@@ -106,9 +114,9 @@ const Country = ({ winSize,height }) => {
                         <div style={{ height: '40%', background: '#e2e2e2' }}>
                             <img src={p.image} style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
                         </div>
-                        <span style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10,textAlign:'center' }}>{moment(new Date(p.created_at).getTime()).format("MMMM DD YYYY")}</span>
+                        <span style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10, textAlign: 'center' }}>{moment(new Date(p.created_at).getTime()).format("MMMM DD YYYY")}</span>
                         <div style={{ padding: 10 }}>
-                            {!!p.summary&&<p style={{fontFamily:'Mulish'}}> {`${p.summary.substring(0, 100)} ${p.summary.length > 99 ?'...' : ''}`}</p>}
+                            {!!p.summary && <p style={{ fontFamily: 'Mulish' }}> {`${p.summary.substring(0, 100)} ${p.summary.length > 99 ? '...' : ''}`}</p>}
                         </div>
                     </div>)}
                 </div>

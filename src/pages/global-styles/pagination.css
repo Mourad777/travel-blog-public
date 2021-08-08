@@ -4,6 +4,7 @@
     list-style: none;
     outline: none;
     color: white;
+    padding:0;
   }
   .pagination > .active > a{
     background-color: white ;

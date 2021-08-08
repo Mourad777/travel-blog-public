@@ -17,9 +17,9 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
     if (initialDataPercentage > 20) percentageLoaded = initialDataPercentage;
     if (initialDataPercentage === 100) percentageLoaded = 100;
 
-    let loaderTopPosition = 65;
-    if (winSize === 2) loaderTopPosition = 50;
-    if (isLargeMobileLandscape) loaderTopPosition = 65;
+    let bottom = 5;
+    if (winSize === 2) bottom = 5;
+    if (isLargeMobileLandscape) bottom = 5;
     //page load is much faster that fetching data from api so when page is loaded progress would be 20%
     //then comes 4 sets of data from the api: posts, photos, and videos,
     //each set of data represents 20% of the progress bar
@@ -65,7 +65,7 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
                 <div></div>
             </div> */}
             <div
-                style={{ top: `${loaderTopPosition}%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translate(-50%)' }}
+                style={{ bottom: `${bottom}%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
             >
                 <Circle
                     progress={percentageLoaded}
@@ -73,8 +73,8 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
                     responsive={true} // Boolean: Make SVG adapt to parent size
                     size={150} // Number: Defines the size of the circle.
                     lineWidth={5} // Number: Defines the thickness of the circle's stroke. 
-                    progressColor="#daad86"  // String: Color of "progress" portion of circle.
-                    bgColor="whitesmoke" // String: Color of "empty" portion of circle.
+                    progressColor="#fff"  // String: Color of "progress" portion of circle.
+                    bgColor="rgb(255,255,255,0)" // String: Color of "empty" portion of circle.
                     textColor="white" // String: Color of percentage text color.
                     textStyle={{
                         font: 'bold 5rem Mulish, Arial, sans-serif' // CSSProperties: Custom styling for percentage.

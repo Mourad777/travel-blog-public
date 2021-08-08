@@ -4,7 +4,8 @@ import OuterColumn from "./OuterColumns";
 import RowLayout from './RowLayout';
 import Paginate from '../../components/Paginate/Paginate';
 import { ScrollTrigger, gsap } from 'gsap/all'
-const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height, scrollWidth }) => {
+import Loader from '../../components/Loader/Loader';
+const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height, scrollWidth, isPostsLoading }) => {
 
     const [pageCount, setPageCount] = useState(0);
     const [posts, setPosts] = useState([]);
@@ -27,7 +28,7 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
             scrub: 0.5,
             snap: true,
             pin: false,
-            
+
         });
     }, [reference])
 
@@ -75,7 +76,7 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
     }
 
     return (<div ref={reference} style={{ height: '100vh', overflow: 'hidden', zIndex: 6, position: 'relative' }}>
-
+        {isPostsLoading && <div style={{position:'absolute',top:'30%',left:'50%',transform:'translate(-50%)'}}><Loader /></div>}
         <p style={titleStyle}>Posts</p>
 
         <div style={{

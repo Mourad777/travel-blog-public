@@ -7,6 +7,8 @@ import '../global-styles/tinymceReadonly.css'
 import Avatar from 'react-avatar';
 import { useHistory, useParams } from 'react-router';
 import { ScrollTrigger } from 'gsap/all';
+import Loader from '../../components/Loader/Loader';
+import { getComments, getPost } from '../../api/util';
 
 export const Replies = ({ comment, setReplyComment }) => {
     return (
@@ -65,6 +67,7 @@ const Post = ({ winSize }) => {
     const [content, setComment] = useState('');
     const [email, setEmail] = useState('');
     const [replyComment, setReplyComment] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const handleName = (e) => {
         setName(e.target.value)
     }
@@ -98,23 +101,31 @@ const Post = ({ winSize }) => {
     }
 
     useEffect(() => {
-
-        const getPost = async () => {
-            const postRes = await axios.get(`${AppUrl}api/posts/${selectedPost}`);
-            console.log('postRes', postRes);
-            setPost(postRes.data)
-        }
-        getPost()
-
-        const getComments = async () => {
-            const commentsRes = await axios.get(`${AppUrl}api/comments/post/${selectedPost}`);
-            console.log('commentsRes.data', commentsRes.data)
-            setComments(commentsRes.data);
-        }
-        getComments()
+        // setIsLoading(true)
+        // const getPost = async () => {
+        //     const postRes = await axios.get(`${AppUrl}api/posts/${selectedPost}`);
+        //     console.log('postRes', postRes);
+        //     setPost(postRes.data)
+        // }
+        getPost(selectedPost, setPost, setIsLoading)
+        getComments(selectedPost, 'post', setComments, setIsLoading)
+        // const getComments = async () => {
+        //     const commentsRes = await axios.get(`${AppUrl}api/comments/post/${selectedPost}`);
+        //     console.log('commentsRes.data', commentsRes.data)
+        //     setComments(commentsRes.data);
+        // }
+        // getComments()
+        // setIsLoading(false)
     }, []);
 
     const history = useHistory();
+
+    if (isLoading || !post) {
+        return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
+            <Loader color="#daad86" />
+        </div>
+        )
+    }
 
     return (
         <Fragment>
@@ -131,7 +142,7 @@ const Post = ({ winSize }) => {
 
             <div ref={postContainer} style={{ width: '100%', height: '100%', background: '#fff', padding: '40px 20px', maxWidth: 600, margin: 'auto' }}>
                 <Button content='Home' onClick={() => { history.push('/') }} />
-                <p style={{ textAlign: 'center', margin: '20px 0', fontSize: '1.5em', fontFamily: "Merriweather", color: '#afafaf' }}>{`Posted on ${new Date(post.created_at).toLocaleDateString()} ${!!post.author ? 'by ' + post.author : ''}`}</p>
+                <p style={{ textAlign: 'center', margin: '20px 0', fontSize: '1.5em', fontFamily: "Merriweather", color: '#afafaf' }}>{!!post.created_at ? `Posted on ${new Date(post.created_at).toLocaleDateString()} ${!!post.author ? 'by ' + post.author : ''}` : ''}</p>
                 <div dangerouslySetInnerHTML={{
                     __html: `<style>
             @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');

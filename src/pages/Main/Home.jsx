@@ -29,8 +29,15 @@ const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(ScrollToPlugin);
 
-const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,setInitialDataPercentage,initialDataPercentage }) => {
-    const refSection1 = useRef(null)
+const Home = (({
+    scrollWidth,
+    winSize,
+    height,
+    isPageLoaded,
+    setInitialDataPercentage,
+    initialDataPercentage
+}) => {
+    // const refSection1 = useRef(null)
     const refSection2 = useRef(null)
     const refSection3 = useRef(null)
     const refSection4 = useRef(null)
@@ -49,7 +56,10 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
     const [videos, setVideos] = useState([]);
     const [scrollPosition, setScrollPostion] = useState(0);
     const [scrollSection, setScrollSection] = useState(-1);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isPostsLoading, setIsPostsLoading] = useState(false);
+    const [isPhotosLoading, setIsPhotosLoading] = useState(false);
+    const [isVideosLoading, setIsVideosLoading] = useState(false);
+    const [isCountryThumbnailsLoading, setIsCountryThumbnailsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
     const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
 
@@ -102,13 +112,18 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
     // }, [])
 
     const getInitialData = async () => {
-        await getPosts(setPostsFromDB, setIsLoading);
+        setIsPostsLoading(true)
+        setIsPhotosLoading(true)
+        setIsVideosLoading(true)
+        setIsCountryThumbnailsLoading(true)
+
+        await getPosts(setPostsFromDB, setIsPostsLoading);
         setInitialDataPercentage(40)
-        await getPhotos(setPhotos, setIsLoading);
+        await getPhotos(setPhotos, setIsPhotosLoading);
         setInitialDataPercentage(60)
-        await getVideos(setVideos, setIsLoading);
+        await getVideos(setVideos, setIsVideosLoading);
         setInitialDataPercentage(80)
-        await getCountryThumbnails(setCountryThumbnails, setIsLoading);
+        await getCountryThumbnails(setCountryThumbnails, setIsCountryThumbnailsLoading);
         setInitialDataPercentage(100)
         setIsInitialDataLoaded(true)
     }
@@ -176,10 +191,10 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
         <Fragment>
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
                 <Loader
-                initialDataPercentage={initialDataPercentage}
-                isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded} 
-                isLargeMobileLandscape={isLargeMobileLandscape}
-                winSize={winSize}
+                    initialDataPercentage={initialDataPercentage}
+                    isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded}
+                    isLargeMobileLandscape={isLargeMobileLandscape}
+                    winSize={winSize}
                 />
                 {(winSize > 1 && !isLargeMobileLandscape) && (
                     <Navigation
@@ -299,15 +314,15 @@ const Home = (({ scrollWidth, winSize, height, setIsPageLoaded, isPageLoaded,set
 
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
-                    <PostsSection scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
+                    <PostsSection isPostsLoading={isPostsLoading} scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
 
                     <DestinationsSection reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape} postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
                     {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
 
-                    <PhotosSection photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize} height={height} scrollWidth={scrollWidth} />
+                    <PhotosSection isPhotosLoading={isPhotosLoading} photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize} height={height} scrollWidth={scrollWidth} />
                     {/* <PhotosSectionDetail reference={refSectionPhotos}/> */}
 
-                    <VideosSection videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
+                    <VideosSection isVideosLoading={isVideosLoading} videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
                     <ContactSection reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />

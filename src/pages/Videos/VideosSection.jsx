@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import { ScrollTrigger } from 'gsap/all'
+import Loader from "../../components/Loader/Loader";
 
 
-export default ({ reference, videos, winSize,height, isLargeMobileLandscape,scrollWidth }) => {
+export default ({ reference, videos, winSize, height, isLargeMobileLandscape, scrollWidth,isVideosLoading }) => {
     const history = useHistory();
     const [offset, setOffset] = useState(0);
     const [data, setData] = useState([]);
@@ -30,7 +31,7 @@ export default ({ reference, videos, winSize,height, isLargeMobileLandscape,scro
             scrub: 0.5,
             snap: true,
             pin: false,
-            
+
         });
     }, [reference])
 
@@ -67,6 +68,8 @@ export default ({ reference, videos, winSize,height, isLargeMobileLandscape,scro
 
     return (
         <div style={{ paddingTop: 50, height: '100vh', background: 'rgb(236, 231, 226)', width: '100%', position: 'relative' }} ref={reference}>
+            {isVideosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
+
             <p style={titleStyle}>Videos</p>
             <div
                 style={{

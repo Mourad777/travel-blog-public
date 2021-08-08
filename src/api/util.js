@@ -158,6 +158,20 @@ export const getPhotos = async (setItems, setIsLoading) => {
     }
 }
 
+export const getPhoto = async (id, setPhoto, setIsLoading) => {
+    setIsLoading(true);
+    let photoResponse = {};
+    try {
+        photoResponse = await axios.get(`${AppUrl}api/photo/${id}`);
+    } catch (e) {
+        console.log('Fetch Photo Error', e)
+        setIsLoading(false)
+    }
+    console.log('Fetch Photo Response', photoResponse);
+    setPhoto(photoResponse.data);
+    setIsLoading(false);
+}
+
 
 
 
@@ -226,6 +240,21 @@ export const getVideo = async (id, setVideo, setIsLoading) => {
     setVideo(videoResponse.data);
     setIsLoading(false);
 }
+
+export const getPost = async (id, setPost, setIsLoading) => {
+    setIsLoading(true);
+    let postResponse = {};
+    try {
+        postResponse = await axios.get(`${AppUrl}api/posts/${id}`);
+    } catch (e) {
+        console.log('Fetch Post Error', e)
+        setIsLoading(false)
+    }
+    console.log('Fetch Post Response', postResponse);
+    setPost(postResponse.data);
+    setIsLoading(false);
+}
+
 
 
 

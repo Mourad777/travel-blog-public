@@ -7,7 +7,7 @@ import Home from './pages/Main/Home'
 import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
 import _ from "lodash";
-import Loader from "./pages/Main/Loader";
+import Loader from "./components/Loader/Loader";
 import './bootstrap.min.css'
 
 const Post = React.lazy(() => import("./pages/Posts/Post"));
@@ -62,7 +62,11 @@ const App = () => {
     };
 
     const SuspenseFallback = () => (
-        <div></div>
+        <div style={{ height: '100vh', width: '100%', background: 'black', position: 'fixed' }}>
+            <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
+                <Loader />
+            </div>
+        </div>
     )
 
     return (

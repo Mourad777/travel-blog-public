@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
 import Paginate from "../../components/Paginate/Paginate";
 import { ScrollTrigger } from 'gsap/all'
+import Loader from "../../components/Loader/Loader";
 
-export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobileLandscape }) => {
+export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobileLandscape, isPhotosLoading }) => {
 
     const [data, setData] = useState([]);
     const perPage = winSize > 1 && height < 640 ? 3 : 9;
@@ -19,7 +20,7 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
             scrub: 0.5,
             snap: true,
             pin: false,
-            
+
         });
     }, [reference])
 
@@ -53,6 +54,7 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
     }
     return (
         <div style={{ height: '100vh', background: 'rgb(218, 173, 134)', width: '100%', overflow: 'hidden', position: 'relative' }} ref={reference}>
+            {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
             <p style={titleStyle}>Photos</p>
 
@@ -92,22 +94,22 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
 
                             }}>
                             <figure style={{ margin: 0, height: '100%' }}>
-                                <img loading="lazy" 
-                                srcSet={`${p.src} 100w`}
-                                style={{
-                                    width: '100%',
-                                    height: '100%',
-                                    verticalAlign: 'top',
-                                    objectFit: 'cover'
-                                }} src={p.src} alt="" />
+                                <img loading="lazy"
+                                    srcSet={`${p.src} 100w`}
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        verticalAlign: 'top',
+                                        objectFit: 'cover'
+                                    }} src={p.src} alt="" />
                             </figure>
                         </div>
                     ))}
                 </div>
             </div>
-            <div style={{ display: 'flex' }}>
+            {!isPhotosLoading && <div style={{ display: 'flex' }}>
                 <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
-            </div>
+            </div>}
         </div >
     );
 };

@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { DownArrow, Location } from "../svgs";
 import { useParams } from 'react-router';
-import axios from 'axios'
-import { AppUrl } from '../utility';
 import { countries } from '../Countries/countries-iso';
 import { ScrollTrigger } from 'gsap/all';
 import { Button, Checkbox } from 'semantic-ui-react'
 import { useHistory } from 'react-router-dom';
 import CameraInfo from '../../components/Photo/CameraInfo';
+import Loader from '../../components/Loader/Loader';
+import { getPhoto } from '../../api/util';
 const Photo = ({ winSize }) => {
     const params = useParams();
     const history = useHistory();
     const [photo, setPhoto] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     const [isHideCameraInfo, setisHideCameraInfo] = useState(false);
     useEffect(() => {
-        const getPhoto = async () => {
-            const photoResponse = await axios.get(`${AppUrl}api/photo/${params.photoId}`);
-            console.log('photo response', photoResponse)
-            setPhoto(photoResponse.data);
-        }
-        getPhoto();
+
+        getPhoto(params.photoId, setPhoto, setIsLoading);
 
         const triggers = ScrollTrigger.getAll();
         triggers.forEach(tr => {
@@ -29,6 +26,13 @@ const Photo = ({ winSize }) => {
 
     const handleCameraInfo = (e) => {
         setisHideCameraInfo(!isHideCameraInfo)
+    }
+
+    if (isLoading || !photo) {
+        return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
+            <Loader color="#daad86" />
+        </div>
+        )
     }
 
     return (<div style={{ background: '#ece7e2', height: '100%', width: '100%' }}>

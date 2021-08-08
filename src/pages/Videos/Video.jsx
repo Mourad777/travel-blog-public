@@ -9,6 +9,7 @@ import { StyledFormTextInput, StyledBlueButton, StyledRedButton } from '../Style
 import Avatar from 'react-avatar';
 import { getCountryThumbnails, getComments, getVideo } from '../../api/util';
 import axios from 'axios';
+import Loader from '../../components/Loader/Loader';
 
 const Video = ({ winSize }) => {
     const params = useParams();
@@ -72,6 +73,13 @@ const Video = ({ winSize }) => {
         setName('');
         setEmail('');
         setReplyComment('');
+    }
+
+    if (isLoading || !video) {
+        return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
+            <Loader color="#daad86" />
+        </div>
+        )
     }
 
     return (
