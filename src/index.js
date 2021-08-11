@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
-import { BrowserRouter, withRouter, useHistory, useLocation } from "react-router-dom";
+import { BrowserRouter, withRouter} from "react-router-dom";
 import Home from './pages/Main/Home'
 import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
