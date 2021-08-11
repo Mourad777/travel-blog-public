@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import './loader.css'
 import Circle from 'react-circle'
 export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPercentage, winSize, isLargeMobileLandscape }) => {
-    console.log('isLargeMobileLandscape', isLargeMobileLandscape)
-    console.log('isInitialDataLoaded', isInitialDataLoaded)
-    console.log('initialDataPercentage', initialDataPercentage)
     let percentageLoaded = 0;
     const [isDomReady, setIsDomReady] = useState(false);
     const handlePageLoad = () => {
@@ -39,31 +36,6 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
             }}
             className={isInitialDataLoaded ? isPageLoaded ? "" : "fade-out" : ""}
         >
-
-            {/* <p
-            style={{
-                color: "white",
-                fontFamily: "Waiting for the sunrise, sans-serif",
-                fontSize: "1.3em",
-                display: "block",
-                margin: "auto",
-                position: "relative",
-                top: "50%",
-                width: 300
-            }}
-        >
-            Leave nothing but footprints, take nothing but photos, kill nothing
-            but time.
-        </p> */}
-            {/* <div
-                className="lds-ellipsis"
-                style={{ top: "70%", margin: "auto", display: "block" }}
-            >
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div> */}
             <div
                 style={{ bottom: `${bottom}%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
             >

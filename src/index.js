@@ -2,24 +2,43 @@ import React, { useEffect, useState } from "react";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import ReactDOM from "react-dom";
-import { BrowserRouter, withRouter} from "react-router-dom";
+import { BrowserRouter, withRouter } from "react-router-dom";
 import Home from './pages/Main/Home'
 import { Switch, Route } from "react-router-dom";
 import { getWindowSizeInteger } from "./pages/utility";
 import _ from "lodash";
 import Loader from "./components/Loader/Loader";
 import './bootstrap.min.css'
+import Pusher from "pusher-js";
 
 const Post = React.lazy(() => import("./pages/Posts/Post"));
 const Category = React.lazy(() => import("./pages/Category/Category"));
 const Photo = React.lazy(() => import("./pages/Photos/Photo"));
 const Video = React.lazy(() => import("./pages/Videos/Video"));
 
+const pusherKey = '540ea742ac9e8d6d5157';
+const pusherCluster = 'us2'
+
+const pusher = new Pusher(pusherKey, {
+    cluster: pusherCluster,
+});
+
+
 const ScrollToTop = withRouter(({ history }) => {
     useEffect(() => {
         const unlisten = history.listen(() => {
             window.scrollTo(0, 0);
         });
+
+
+        const channel = pusher.subscribe("my-channel");
+        channel.bind("BlogUpdated", (data) => {
+            // Method to be dispatched on trigger.
+            console.log('data',data)
+        });
+
+
+
         return () => {
             unlisten();
         }
