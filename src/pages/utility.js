@@ -574,8 +574,8 @@ export const animate = (animations) => {
     })
 }
 
-export let AppUrl = process.env.AppUrl;
-console.log('app url :',AppUrl)
+export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
+console.log('app url :', AppUrl)
 // export let AppUrl = 'http://localhost:8000/';
 // if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
 //     // AppUrl = 'http://localhost:8000/';
