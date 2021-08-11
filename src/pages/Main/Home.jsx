@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import "./Home.module.css";
 import Loader from "./Loader";
 import { gsap, ScrollTrigger, ScrollToPlugin } from 'gsap/all'
-import { animate } from '../utility'
+import { animate, getPusher } from '../utility'
 import { getMapPosition } from "../utility";
 import {
     StyledMap,
@@ -95,6 +95,12 @@ const Home = (({
     useEffect(() => {
         // window.addEventListener('load',()=>setIsPageLoaded(true))
         getInitialData();
+
+        const channel = getPusher().subscribe("my-channel");
+        channel.bind("BlogUpdated", (data) => {
+            console.log('data', data)
+            getInitialData();
+        });
     }, []);
 
     // useEffect(() => {

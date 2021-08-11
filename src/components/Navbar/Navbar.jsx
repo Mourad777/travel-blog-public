@@ -52,7 +52,6 @@ const LinkWrapper = styled.div`
 
 
 export default ({ scrollSection, componentReferences,getInitialData }) => {
-    console.log('componentReferences',componentReferences)
     const links = [
         { name: "Welcome", id: "hero-section", ref: componentReferences.welcome },
         { name: "Posts", id: "latest-posts-section", ref: componentReferences.posts },

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { ScrollTrigger } from 'gsap/all';
 import ReactPlayer from 'react-player'
-import { AppUrl } from '../utility';
+import { AppUrl, getPusher } from '../utility';
 import { Replies } from '../Posts/Post';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton } from '../StyledComponents';
@@ -35,7 +35,7 @@ const Video = ({ winSize }) => {
     }
 
     const getInitialData = async () => {
-        await getVideo(selectedVideo,setVideo,setIsLoading);
+        await getVideo(selectedVideo, setVideo, setIsLoading);
         await getComments(selectedVideo, 'video', setComments, setIsLoading);
     }
 
@@ -44,6 +44,16 @@ const Video = ({ winSize }) => {
         const triggers = ScrollTrigger.getAll();
         triggers.forEach(tr => {
             tr.kill()
+        });
+
+        const channel = getPusher().subscribe("my-channel");
+        channel.bind("BlogUpdated",async (data) => {
+            console.log('data', data)
+            await getVideo(selectedVideo, setVideo, setIsLoading);
+        });
+        channel.bind("CommentsUpdated",async (data) => {
+            console.log('data', data)
+            await getComments(selectedVideo, 'video', setComments, setIsLoading);
         });
     }, [])
 

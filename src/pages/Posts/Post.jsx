@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton } from '../StyledComponents';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
-import { AppUrl } from '../utility';
+import { AppUrl, getPusher } from '../utility';
 import axios from 'axios';
 import '../global-styles/tinymceReadonly.css'
 import Avatar from 'react-avatar';
 import { useHistory, useParams } from 'react-router';
-import { ScrollTrigger } from 'gsap/all';
 import Loader from '../../components/Loader/Loader';
 import { getComments, getPost } from '../../api/util';
 
@@ -60,6 +59,8 @@ const Post = ({ winSize }) => {
     const params = useParams();
     const selectedPost = params.postId;
 
+    
+
     const postContainer = useRef(null)
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState({});
@@ -101,21 +102,17 @@ const Post = ({ winSize }) => {
     }
 
     useEffect(() => {
-        // setIsLoading(true)
-        // const getPost = async () => {
-        //     const postRes = await axios.get(`${AppUrl}api/posts/${selectedPost}`);
-        //     console.log('postRes', postRes);
-        //     setPost(postRes.data)
-        // }
         getPost(selectedPost, setPost, setIsLoading)
         getComments(selectedPost, 'post', setComments, setIsLoading)
-        // const getComments = async () => {
-        //     const commentsRes = await axios.get(`${AppUrl}api/comments/post/${selectedPost}`);
-        //     console.log('commentsRes.data', commentsRes.data)
-        //     setComments(commentsRes.data);
-        // }
-        // getComments()
-        // setIsLoading(false)
+        const channel = getPusher().subscribe("my-channel");
+        channel.bind("BlogUpdated", async (data) => {
+            console.log('data', data)
+            await getPost(selectedPost, setPost, setIsLoading);
+        });
+        channel.bind("CommentsUpdated", async (data) => {
+            console.log('data', data)
+            await getComments(selectedPost, 'post', setComments, setIsLoading);
+        });
     }, []);
 
     const history = useHistory();

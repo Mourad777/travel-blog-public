@@ -9,6 +9,7 @@ import countryCodes from '../Countries/country-codes.json';
 import moment from 'moment';
 import { getCategoryContent, getCountryThumbnails } from '../../api/util';
 import Loader from '../../components/Loader/Loader';
+import { getPusher } from '../utility';
 
 function capitalize(str) {
     const capStr = str.charAt(0).toUpperCase() + str.slice(1);
@@ -39,6 +40,12 @@ const Country = ({ winSize, height }) => {
             tr.kill()
         });
         getInitialData()
+
+        const channel = getPusher().subscribe("my-channel");
+        channel.bind("BlogUpdated", async (data) => {
+            console.log('data', data)
+            getInitialData()
+        });
     }, []);
 
     let videoContainerWidth;

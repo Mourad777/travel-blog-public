@@ -1,4 +1,5 @@
 import { gsap } from 'gsap/all'
+import Pusher from "pusher-js";
 
 export const getWindowSizeInteger = windowWidth => {
     let widthInteger;
@@ -364,7 +365,7 @@ export const getHeroSectionNameStyle = (windowWidth, windowHeight) => {
         // fill: "none",
         // stroke: "rgb(0 146 228)",
         strokeDashoffset: 0,
-        fill:'rgba(255,255,255,1)',
+        fill: 'rgba(255,255,255,1)',
         stroke: "white",
         strokeWidth: -1,
         strokeMiterlimit: 10,
@@ -573,9 +574,19 @@ export const animate = (animations) => {
     })
 }
 
-export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
+export let AppUrl = process.env.AppUrl;
+console.log('app url :',AppUrl)
 // export let AppUrl = 'http://localhost:8000/';
 // if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
 //     // AppUrl = 'http://localhost:8000/';
 //     AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
 // }
+export const getPusher = () => {
+    const pusherKey = '540ea742ac9e8d6d5157';
+    const pusherCluster = 'us2'
+
+    const pusher = new Pusher(pusherKey, {
+        cluster: pusherCluster,
+    });
+    return pusher;
+}

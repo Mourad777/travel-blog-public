@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Carousel from 'react-alice-carousel';
 import { useHistory } from "react-router-dom";
 function PhotoGallery({ winSize,height, photos }) {
     const history = useHistory();
-    const [currentImage, setCurrentImage] = useState(0);
 
     const handleIndexChange = (value) => {
         // setCurrentImage(value.curIndex)

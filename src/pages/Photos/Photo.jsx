@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import CameraInfo from '../../components/Photo/CameraInfo';
 import Loader from '../../components/Loader/Loader';
 import { getPhoto } from '../../api/util';
+import { getPusher } from '../utility';
 const Photo = ({ winSize }) => {
     const params = useParams();
     const history = useHistory();
@@ -17,6 +18,12 @@ const Photo = ({ winSize }) => {
     useEffect(() => {
 
         getPhoto(params.photoId, setPhoto, setIsLoading);
+
+        const channel = getPusher().subscribe("my-channel");
+        channel.bind("BlogUpdated", async (data) => {
+            console.log('data', data)
+            await getPhoto(params.photoId, setPhoto, setIsLoading);
+        });
 
         const triggers = ScrollTrigger.getAll();
         triggers.forEach(tr => {
