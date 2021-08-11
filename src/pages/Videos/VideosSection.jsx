@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 
 
-export default ({ reference, videos, winSize, height, isLargeMobileLandscape, scrollWidth,isVideosLoading }) => {
+export default ({ reference, videos, winSize, height, isLargeMobileLandscape, scrollWidth, isVideosLoading }) => {
     const history = useHistory();
     const [offset, setOffset] = useState(0);
     const [data, setData] = useState([]);
@@ -104,7 +104,7 @@ export default ({ reference, videos, winSize, height, isLargeMobileLandscape, sc
                         }}
                     >
                         <div style={{ minHeight: 60, maxHeight: 100, height: '10vh', background: '#fff' }}><p style={{ textAlign: 'center', paddingTop: 10, fontFamily: 'Mulish', fontWeight: 'bold', fontSize: '1.2em' }}>{video.title}</p></div>
-                        <img srcSet={`${video.thumbnail} 400w`} src={video.thumbnail || '/assets/icons/video-icon.jpg'} style={{ maxHeight: 300, width: '100%', height: isLargeMobileLandscape ? '40vh' : '25vh', objectFit: !video.thumbnail && isLargeMobileLandscape ? 'scale-down' : 'cover' }} />
+                        <img srcSet={`${video.thumbnail || '/assets/icons/video-icon.jpg'} 400w`} src={video.thumbnail || '/assets/icons/video-icon.jpg'} style={{ maxHeight: 300, width: '100%', height: isLargeMobileLandscape ? '40vh' : '25vh', objectFit: !video.thumbnail && isLargeMobileLandscape ? 'scale-down' : 'cover' }} />
                         {!isLargeMobileLandscape && <div style={{ maxHeight: 200, height: '100%', background: '#fff' }}><p style={{ textAlign: 'center', paddingTop: 10 }}>{video.description}</p></div>}
                     </div>
                     // </Link>
