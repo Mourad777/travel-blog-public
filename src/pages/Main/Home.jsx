@@ -103,19 +103,6 @@ const Home = (({
         });
     }, []);
 
-    // useEffect(() => {
-
-    //     gsap.to(initialLoaderRef.current, { opacity: 0, duration: 7 })
-    //     gsap.to(notePadMapRef.current, { opacity: 1, duration: 3 })
-    //     // gsap.to(initialLoaderRef.current, { zIndex:-1 }, { duration: 7 })
-
-
-    //     return () => {
-    //         // ScrollTrigger.getAll().forEach(t => t.kill());
-    //         ScrollTrigger.getAll().forEach(ST => ST.kill());
-    //         gsap.globalTimeline.clear();
-    //     };
-    // }, [])
 
     const getInitialData = async () => {
         setIsPostsLoading(true)

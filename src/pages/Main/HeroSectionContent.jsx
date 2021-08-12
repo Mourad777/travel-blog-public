@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
-import { heroTextPathOne } from '../svgs';
+import { heroTextPieceFive, heroTextPieceFour, heroTextPieceOne, heroTextPieceSeven, heroTextPieceSix, heroTextPieceThree, heroTextPieceTwo } from '../svgs';
 import {
     getHeroSectionPicPiecesStyle,
     getHeroSectionPicStyle,
@@ -53,7 +53,7 @@ const HeroSectionContent = ({
             buttonOneRef &&
             buttonTwoRef &&
             scrollIconsWrapperRef) {
-                console.log('running animations again')
+            console.log('running animations again')
 
             animate(heroSectionAnimations(
                 {
@@ -163,7 +163,13 @@ const HeroSectionContent = ({
                 id="heroTextMainPath"
             >
                 <g>
-                    <path d={heroTextPathOne} />
+                    <path d={heroTextPieceOne} />
+                    <path d={heroTextPieceTwo} />
+                    <path d={heroTextPieceThree} />
+                    <path d={heroTextPieceFour} />
+                    <path d={heroTextPieceFive} />
+                    <path d={heroTextPieceSix} />
+                    <path d={heroTextPieceSeven} />
                 </g>
             </svg>
 
