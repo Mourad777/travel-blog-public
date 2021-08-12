@@ -53,7 +53,6 @@ const HeroSectionContent = ({
             buttonOneRef &&
             buttonTwoRef &&
             scrollIconsWrapperRef) {
-            console.log('running animations again')
 
             animate(heroSectionAnimations(
                 {
@@ -158,18 +157,18 @@ const HeroSectionContent = ({
                     zIndex: isInitialLoader ? 45 : -1,
                     pointerEvents: 'none'
                 }}
-                className={isPageLoaded ? "" : "draw"}
+                // className={isPageLoaded ? "" : "draw1"}
                 viewBox="0 0 120 50"
                 id="heroTextMainPath"
             >
                 <g>
-                    <path d={heroTextPieceOne} />
-                    <path d={heroTextPieceTwo} />
-                    <path d={heroTextPieceThree} />
-                    <path d={heroTextPieceFour} />
-                    <path d={heroTextPieceFive} />
-                    <path d={heroTextPieceSix} />
-                    <path d={heroTextPieceSeven} />
+                    <path d={heroTextPieceOne} className={isPageLoaded ? "" : "draw1"}/>
+                    <path d={heroTextPieceTwo} className={isPageLoaded ? "" : "draw2"}/>
+                    <path d={heroTextPieceThree} className={isPageLoaded ? "" : "draw3"}/>
+                    <path d={heroTextPieceFour} className={isPageLoaded ? "" : "draw4"}/>
+                    <path d={heroTextPieceFive} className={isPageLoaded ? "" : "draw5"}/>
+                    <path d={heroTextPieceSix} className={isPageLoaded ? "" : "draw6"}/>
+                    <path d={heroTextPieceSeven}className={isPageLoaded ? "" : "draw7"} />
                 </g>
             </svg>
 

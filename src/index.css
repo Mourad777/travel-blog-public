@@ -37,17 +37,151 @@ code {
   animation: fade-out-animation ease-out 5s forwards;
 }
 
-@keyframes draw-animation {
+/* @keyframes duration | easing-function | delay |
+iteration-count | direction | fill-mode | play-state | name */
+/* animation: 3s ease-in 1s 2 reverse both paused slidein; */
+
+
+@keyframes draw-animation-one {
   0% { 
     stroke-dashoffset: 180;
     fill:rgba(255,255,255,0);
    }
   /* 30% { opacity: 1; } */
+
   100% { 
     stroke-dashoffset: 0;
     fill:rgba(255,255,255,1);
   }
 }
-.draw {
-  animation: draw-animation ease-out 3s forwards;
+
+@keyframes draw-animation-two {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  12% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+@keyframes draw-animation-three {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  24% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+@keyframes draw-animation-four {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  36% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+@keyframes draw-animation-five {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  48% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+@keyframes draw-animation-six {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  60% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+@keyframes draw-animation-seven {
+  0% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+   }
+  /* 30% { opacity: 1; } */
+  72% { 
+    stroke-dashoffset: 180;
+    fill:rgba(255,255,255,0);
+  }
+
+  100% { 
+    stroke-dashoffset: 0;
+    fill:rgba(255,255,255,1);
+  }
+}
+
+
+.draw1 {
+  animation: draw-animation-one ease-out 3s forwards;
+}
+
+.draw2 {
+  animation: draw-animation-two ease-out 3s forwards;
+}
+
+.draw3 {
+  animation: draw-animation-three ease-out 3s forwards;
+}
+
+.draw4 {
+  animation: draw-animation-four ease-out 3s forwards;
+}
+
+.draw5 {
+  animation: draw-animation-five ease-out 3s forwards;
+}
+
+.draw6 {
+  animation: draw-animation-six ease-out 3s forwards;
+}
+
+.draw7 {
+  animation: draw-animation-seven ease-out 3s forwards;
 }
