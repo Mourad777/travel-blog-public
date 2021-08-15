@@ -14,7 +14,7 @@ import { useRef } from "react";
 import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
-import { getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
+import { getConfiguration, getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
 import { mapsContainerAnimations } from "./gsapAnimations";
 
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
@@ -54,12 +54,14 @@ const Home = (({
     const [postsFromDB, setPostsFromDB] = useState([]);
     const [photos, setPhotos] = useState([]);
     const [videos, setVideos] = useState([]);
+    const [configuration, setConfiguration] = useState([]);
     const [scrollPosition, setScrollPostion] = useState(0);
     const [scrollSection, setScrollSection] = useState(-1);
     const [isPostsLoading, setIsPostsLoading] = useState(false);
     const [isPhotosLoading, setIsPhotosLoading] = useState(false);
     const [isVideosLoading, setIsVideosLoading] = useState(false);
     const [isCountryThumbnailsLoading, setIsCountryThumbnailsLoading] = useState(false);
+    const [isConfigurationIsLoading, setIsConfigurationIsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
     const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
 
@@ -111,12 +113,15 @@ const Home = (({
         setIsCountryThumbnailsLoading(true)
 
         await getPosts(setPostsFromDB, setIsPostsLoading);
-        setInitialDataPercentage(40)
+        setInitialDataPercentage(33)
         await getPhotos(setPhotos, setIsPhotosLoading);
-        setInitialDataPercentage(60)
+        setInitialDataPercentage(50)
         await getVideos(setVideos, setIsVideosLoading);
-        setInitialDataPercentage(80)
+        setInitialDataPercentage(66)
         await getCountryThumbnails(setCountryThumbnails, setIsCountryThumbnailsLoading);
+        setInitialDataPercentage(83)
+        const config = await getConfiguration(setIsConfigurationIsLoading);
+        setConfiguration(config);
         setInitialDataPercentage(100)
         setIsInitialDataLoaded(true)
     }
@@ -144,7 +149,7 @@ const Home = (({
             requestId = null;
         }
 
-        animate(mapsContainerAnimations({ mainContainerRef, mapsPicsContainerRef }))
+        // animate(mapsContainerAnimations({ mainContainerRef, mapsPicsContainerRef }))
 
         return () => {
             window.removeEventListener("scroll", scrollAnimation)
@@ -207,7 +212,7 @@ const Home = (({
                 )}
 
                 {/* must use a lower resolution map for mobile devices */}
-                <div ref={mapsPicsContainerRef} style={{ zIndex: 5, position: 'fixed', height: '100vh', width: '100%' }}>
+                <div ref={mapsPicsContainerRef} style={{ zIndex: 1, position: 'fixed', height: '100vh', width: '100%' }}>
 
                     {(photos[0] || {}).src && <div id="hero-pic-1" style={{
                         position: 'absolute',
@@ -318,7 +323,7 @@ const Home = (({
                     <VideosSection isVideosLoading={isVideosLoading} videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <ContactSection reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
+                    <ContactSection configuration={configuration} reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
                 </div>
 
                 {/* floating rotating icons */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react'
-import { StyledFormTextInput, StyledBlueButton, StyledRedButton } from '../StyledComponents';
+import { StyledFormTextInput, StyledBlueButton, StyledRedButton, StyledInputError } from '../StyledComponents';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
-import { AppUrl, getPusher } from '../utility';
+import { AppUrl, getPusher, validateMessage } from '../utility';
 import axios from 'axios';
 import '../global-styles/tinymceReadonly.css'
 import Avatar from 'react-avatar';
@@ -13,7 +13,6 @@ export const Replies = ({ comment, setReplyComment }) => {
     return (
         <div>
             {(comment.replies || []).map(reply => {
-                if (!reply.is_approved) return null;
                 return (
                     <div style={{ marginLeft: 30 }} key={reply.id}>
                         <div style={{ display: 'flex', margin: '20px 0' }}>
@@ -59,16 +58,23 @@ const Post = ({ winSize }) => {
     const params = useParams();
     const selectedPost = params.postId;
 
-    
+
 
     const postContainer = useRef(null)
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState({});
     const [name, setName] = useState('');
-    const [content, setComment] = useState('');
+    const [comment, setComment] = useState('');
     const [email, setEmail] = useState('');
     const [replyComment, setReplyComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [isFormTouched, setIsFormTouched] = useState(false);
+
+    useEffect(() => {
+        setErrors(validateMessage({ name, email, message: comment }));
+    }, [name, email, comment])
+
     const handleName = (e) => {
         setName(e.target.value)
     }
@@ -79,11 +85,19 @@ const Post = ({ winSize }) => {
         setComment(e.target.value)
     }
     const submitComment = async () => {
+
+        setIsFormTouched(true);
+        const errors = validateMessage({ name, email, message: comment });
+        setErrors(errors);
+        console.log('errors', errors)
+        if (errors.name || errors.email || errors.message) {
+            return;
+        }
         const formData = new FormData();
         formData.append('name', name);
         formData.append('email', email);
         formData.append('post_id', selectedPost);
-        formData.append('content', content);
+        formData.append('content', comment);
         formData.append('comment_type', 'post');
         if (replyComment) {
             formData.append('comment_id', replyComment.id)
@@ -99,6 +113,8 @@ const Post = ({ winSize }) => {
         setName('');
         setEmail('');
         setReplyComment('');
+        setIsFormTouched(false);
+
     }
 
     useEffect(() => {
@@ -123,6 +139,8 @@ const Post = ({ winSize }) => {
         </div>
         )
     }
+
+    console.log('comments abc: ', comments)
 
     return (
         <Fragment>
@@ -152,97 +170,103 @@ const Post = ({ winSize }) => {
             </style>` + post.content
                 }} />
 
-                {comments.length > 0 && <p style={{ fontSize: '2.5em', marginTop: 30 }}>{replyComment ? 'Comment' : 'Comments'}</p>}
-                <Form style={{ paddingBottom: 20 }}>
-                    {replyComment ?
-                        <div style={{ display: 'flex', margin: '20px 0' }}>
-                            <div style={{ width: 60 }}>
-                                <Avatar
-                                    size={100}
-                                    md5Email={replyComment.encryptedEmail}
+                {post.is_comments_enabled ? <Fragment>
+                    {comments.length > 0 && <p style={{ fontSize: '2.5em', marginTop: 30 }}>{replyComment ? 'Comment' : 'Comments'}</p>}
+                    <Form style={{ paddingBottom: 20, fontSize: '1em' }}>
+                        {replyComment ?
+                            <div style={{ display: 'flex', margin: '20px 0' }}>
+                                <div style={{ width: 60 }}>
+                                    <Avatar
+                                        size={100}
+                                        md5Email={replyComment.encryptedEmail}
 
-                                />
+                                    />
+                                </div>
+                                <textarea readOnly rows="3" cols="50" style={{
+                                    fontWeight: 600,
+                                    border: 'none',
+                                    background: '#efefef',
+                                    fontFamily: 'Mulish',
+                                    fontSize: '1.1em',
+                                    lineHeight: 1.8,
+                                    marginLeft: 20
+
+                                }}>
+                                    {replyComment.content}
+                                </textarea>
+
                             </div>
-                            <textarea readOnly rows="3" cols="50" style={{
-                                fontWeight: 600,
-                                border: 'none',
-                                background: '#efefef',
-                                fontFamily: 'Mulish',
-                                fontSize: '1.1em',
-                                lineHeight: 1.8,
-                                marginLeft: 20
-
-                            }}>
-                                {replyComment.content}
-                            </textarea>
-
-                        </div>
-                        : <List>
-                            {(comments || []).map(item => {
-                                if (!item.is_approved) return null;
-                                return (<List.Item style={{ marginTop: 20 }} key={item.id}>
-                                    <div style={{ display: 'flex', marginBottom: 20 }}>
-                                        <div style={{ width: 60 }}>
-                                            <Avatar
-                                                size={60}
-                                                md5Email={item.encryptedEmail}
-                                                round={true}
-                                            />
+                            : <List>
+                                {(comments || []).filter(item => item.parent_id === null).map(item => {
+                                    return (<List.Item style={{ marginTop: 20 }} key={item.id}>
+                                        <div style={{ display: 'flex', marginBottom: 20 }}>
+                                            <div style={{ width: 60 }}>
+                                                <Avatar
+                                                    size={60}
+                                                    md5Email={item.encryptedEmail}
+                                                    round={true}
+                                                />
+                                            </div>
+                                            <div style={{ padding: '0 20px' }}>
+                                                <span style={{ display: 'block', fontSize: '1.6em', fontWeight: 'bold', marginBottom: 10, lineHeight: 1.1 }}>{item.user}</span>
+                                                <textarea readOnly rows="4" cols="50" style={{
+                                                    fontWeight: 600,
+                                                    border: 'none',
+                                                    background: '#efefef',
+                                                    fontFamily: 'Mulish',
+                                                    fontSize: '1.1em',
+                                                    lineHeight: 1.8,
+                                                }}>
+                                                    {item.content}
+                                                </textarea>
+                                            </div>
                                         </div>
-                                        <div style={{ padding: '0 20px' }}>
-                                            <span style={{ display: 'block', fontSize: '1.6em', fontWeight: 'bold', marginBottom: 10, lineHeight: 1.1 }}>{item.user}</span>
-                                            <textarea readOnly rows="4" cols="50" style={{
-                                                fontWeight: 600,
-                                                border: 'none',
-                                                background: '#efefef',
-                                                fontFamily: 'Mulish',
-                                                fontSize: '1.1em',
-                                                lineHeight: 1.8,
-                                            }}>
-                                                {item.content}
-                                            </textarea>
-                                        </div>
-                                    </div>
 
-                                    <StyledBlueButton onClick={() => setReplyComment(item)} icon="image"
-                                    >
-                                        Reply
-                                    </StyledBlueButton>
-                                    {(item.replies || []).length > 0 && (
-                                        <div style={{ marginLeft: 20, marginTop: 10 }}>
-                                            <Replies comment={item} setReplyComment={setReplyComment} />
-                                        </div>
-                                    )}
-                                </List.Item>)
-                            })}
-                        </List>}
+                                        <StyledBlueButton onClick={() => setReplyComment(item)} icon="image"
+                                        >
+                                            Reply
+                                        </StyledBlueButton>
+                                        {(item.replies || []).length > 0 && (
+                                            <div style={{ marginLeft: 20, marginTop: 10 }}>
+                                                <Replies comment={item} setReplyComment={setReplyComment} />
+                                            </div>
+                                        )}
+                                    </List.Item>)
+                                })}
+                            </List>}
 
 
-                    <div>
-                        <label style={{ fontSize: '2em', display: 'block', margin: '40px 0 30px 0' }}>{replyComment.content ? `Reply to ${replyComment.user}` : 'Leave a Comment'}</label>
-                        <TextArea value={content} onChange={handleComment} placeholder='Comment' style={{ minHeight: 100, width: '100%' }} />
-                        <div style={{ marginTop: 20 }}>
-                            <label style={{ fontSize: '1.2em' }}>Full Name</label>
-                            <StyledFormTextInput value={name} onChange={handleName} placeholder='Full Name' />
+                        <div>
+                            <label style={{ fontSize: '2em', display: 'block', margin: '40px 0 30px 0' }}>{replyComment.content ? `Reply to ${replyComment.user}` : 'Leave a Comment'}</label>
+                            <TextArea value={comment} onChange={handleComment} placeholder='Comment' style={{ minHeight: 100, width: '100%' }} />
+                            {!!isFormTouched && <StyledInputError>{errors.message}</StyledInputError>}
+                            <div style={{ marginTop: 20 }}>
+                                <label style={{ fontSize: '1.2em' }}>Full Name</label>
+                                <StyledFormTextInput value={name} onChange={handleName} placeholder='Full Name' />
+                                {!!isFormTouched && <StyledInputError>{errors.name}</StyledInputError>}
+                            </div>
+                            <div style={{ marginTop: 20 }}>
+                                <label style={{ fontSize: '1.2em' }}>E-mail</label>
+                                <StyledFormTextInput value={email} onChange={handleEmail} placeholder='E-mail' />
+                                {!!isFormTouched && <StyledInputError>{errors.email}</StyledInputError>}
+                            </div>
                         </div>
-                        <div style={{ marginTop: 20 }}>
-                            <label style={{ fontSize: '1.2em' }}>E-mail</label>
-                            <StyledFormTextInput value={email} onChange={handleEmail} placeholder='E-mail' />
-                        </div>
-                    </div>
-                    <div style={{ margin: '40px 0' }}>
-                        <StyledBlueButton onClick={submitComment} icon="image"
-                        >
-                            Submit
-                        </StyledBlueButton>
-                        {replyComment.content && (
-                            <StyledRedButton onClick={() => setReplyComment('')} icon="image"
+                        <div style={{ margin: '40px 0' }}>
+                            <StyledBlueButton onClick={submitComment} icon="image"
                             >
-                                Cancel Reply
-                            </StyledRedButton>
-                        )}
-                    </div>
-                </Form>
+                                Submit
+                            </StyledBlueButton>
+                            {replyComment.content && (
+                                <StyledRedButton onClick={() => setReplyComment('')} icon="image"
+                                >
+                                    Cancel Reply
+                                </StyledRedButton>
+                            )}
+                        </div>
+                    </Form>
+                </Fragment> : <div><h1>Comments Disabled</h1></div>}
+
+
             </div>
         </Fragment>)
 }

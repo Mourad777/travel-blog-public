@@ -20,5 +20,5 @@ export const processComments = (comments) => {
 
     getReplies(comments)
 
-    return processedComments;
+    return processedComments.filter(item=>item.content);
 }

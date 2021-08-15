@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import CameraInfo from '../../components/Photo/CameraInfo';
 import Loader from '../../components/Loader/Loader';
 import { getPhoto } from '../../api/util';
-import { getPusher } from '../utility';
+import { cameraInfoToBeDisplayed, getPusher } from '../utility';
 const Photo = ({ winSize }) => {
     const params = useParams();
     const history = useHistory();
@@ -41,6 +41,22 @@ const Photo = ({ winSize }) => {
         </div>
         )
     }
+
+    const {
+        shouldCameraInfoBeDisplayed,
+        shouldLensBeDisplayed,
+        shouldFocalLengthBeDisplayed,
+        shouldApertureBeDisplayed,
+        shutterShutterBeDisplayed,
+        shouldIsoBeDisplayed,
+    } = cameraInfoToBeDisplayed(photo);
+    const shouldDisplay =
+        shouldCameraInfoBeDisplayed ||
+        shouldLensBeDisplayed ||
+        shouldFocalLengthBeDisplayed ||
+        shutterShutterBeDisplayed ||
+        shouldApertureBeDisplayed ||
+        shouldIsoBeDisplayed;
 
     return (<div style={{ background: '#ece7e2', height: '100%', width: '100%' }}>
         <div
@@ -87,7 +103,7 @@ const Photo = ({ winSize }) => {
                         className="image-container"
                     >
                         <div className="image" style={{ display: 'flex', flexDirection: 'column', background: 'black', position: 'relative' }}>
-                            {!isHideCameraInfo && (
+                            {(!isHideCameraInfo && shouldDisplay) && (
                                 <CameraInfo photo={photo} />
                             )}
 
@@ -117,7 +133,7 @@ const Photo = ({ winSize }) => {
                                         <p style={{ fontStyle: 'italic' }} >Taken on {new Date(photo.date_taken).toDateString()}</p>
                                     </div>
                                 )}
-                                {(!photo.photographer && !photo.date_taken) && (
+                                {(photo.photographer && !photo.date_taken) && (
                                     <div style={{ color: "#fff4e1" }}>
                                         <p style={{ fontStyle: 'italic' }} >Taken by {photo.photographer} </p>
                                     </div>
@@ -161,7 +177,7 @@ const Photo = ({ winSize }) => {
                             className="photo-icon-container"
                         >
                             <div style={{ marginTop: 20, display: 'flex' }}>
-                                <Checkbox checked={isHideCameraInfo} onChange={handleCameraInfo} toggle />
+                                <Checkbox disabled={!shouldDisplay} checked={isHideCameraInfo} onChange={handleCameraInfo} toggle />
                                 <span style={{ color: '#fff', marginLeft: 10, fontSize: '1.2em' }}>Hide camera info</span>
                             </div>
                             <div

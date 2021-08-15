@@ -10,8 +10,8 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
     useEffect(() => {
         window.addEventListener('load', handlePageLoad)
     }, [])
-    if (isDomReady) percentageLoaded = 20;
-    if (initialDataPercentage > 20) percentageLoaded = initialDataPercentage;
+    if (isDomReady) percentageLoaded = 16;
+    if (initialDataPercentage > 16) percentageLoaded = initialDataPercentage;
     if (initialDataPercentage === 100) percentageLoaded = 100;
 
     let bottom = 5;

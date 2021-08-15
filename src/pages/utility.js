@@ -574,9 +574,8 @@ export const animate = (animations) => {
     })
 }
 
-export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
-console.log('app url :', AppUrl)
-// export let AppUrl = 'http://localhost:8000/';
+// export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
+export let AppUrl = 'http://localhost:8000/';
 // if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
 //     // AppUrl = 'http://localhost:8000/';
 //     AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
@@ -589,4 +588,50 @@ export const getPusher = () => {
         cluster: pusherCluster,
     });
     return pusher;
+}
+
+export const validateMessage = (values) => {
+    const errors = {}
+    const name = values.name;
+    const email = values.email;
+    const message = values.message;
+
+    const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (!emailPattern.test(email)) {
+        errors.email = 'Please enter a valid e-mail';
+    }
+    if (!email) {
+        errors.email = 'An e-mail is required';
+    }
+
+    if (!/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g.test(name)) {
+        errors.name = 'Your name can only contain letters'
+    }
+
+    if (!name) {
+        errors.name = 'Your name is required';
+    }
+
+    if (!message) {
+        errors.message = 'A message is required';
+    }
+    return errors;
+}
+
+export const cameraInfoToBeDisplayed = (photo) => {
+    const shouldCameraInfoBeDisplayed = !!photo.camera && !photo.camera.includes('undefined');
+    const shouldLensBeDisplayed = !!photo.lens && !photo.lens.includes('undefined') && photo.lens.includes('mm') && !photo.lens.includes(',') && !photo.camera.toLowerCase().includes('gopro') && !photo.lens.includes('000');
+    const shouldFocalLengthBeDisplayed = !!photo.focal_length && !photo.focal_length.includes('NaN');
+    const shouldApertureBeDisplayed = !!photo.aperture && !photo.aperture.includes('NaN') && !photo.aperture.includes('f0');
+    const shutterShutterBeDisplayed = !!photo.shutter_speed && !photo.shutter_speed.includes('undefined');
+    const shouldIsoBeDisplayed = !!photo.iso && !photo.iso.includes('undefined');
+
+    return {
+        shouldCameraInfoBeDisplayed,
+        shouldLensBeDisplayed,
+        shouldFocalLengthBeDisplayed,
+        shutterShutterBeDisplayed,
+        shouldApertureBeDisplayed,
+        shouldIsoBeDisplayed,
+    }
 }

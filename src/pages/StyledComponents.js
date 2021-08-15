@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const StyledPostRow = styled.div`
 border: rgba(218, 173, 134) solid;
 border-width: ${props => props.isLargeMobileLandscape ? 20 : props.index === 0 ? "40" : "20"
-    }px 20px ${props => props.isLargeMobileLandscape ? 20 : props.index === 2 ? "40" : "20"
-    }px 20px;
+  }px 20px ${props => props.isLargeMobileLandscape ? 20 : props.index === 2 ? "40" : "20"
+  }px 20px;
 position: relative;
 margin-left: 0;
 padding-left: ${props => props.index % 2 === 0 && !(props.winSize === 1) ? '50px' : 0};
@@ -33,8 +33,8 @@ height:100%;
 export const StyledLatestPostsInnerWrapper = styled.div`
 margin: "auto";
 flex-grow: 1;
-border-top:${props=>props.height > 1100 ? '200px solid #daad86' : ''};
-max-width: ${props=>props.isLargeMobileLandscape ? 400 : 600}px;
+border-top:${props => props.height > 1100 ? '200px solid #daad86' : ''};
+max-width: ${props => props.isLargeMobileLandscape ? 400 : 600}px;
 `;
 
 export const StyledDestinationsSection = styled.section`
@@ -75,8 +75,8 @@ z-index:0;
 position: absolute;
 top:
     ${props => props.winSize === 1
-        ? 'calc(100vh - 120px)'
-        : 'calc(100vh - 230px)'};
+    ? 'calc(100vh - 120px)'
+    : 'calc(100vh - 230px)'};
 left: ${props => props.winSize === 1 ? '48%' : '50%'};
 width: ${props => props.winSize === 1 ? '500px' : '900px'};
 transform:translateX(-33%);
@@ -108,6 +108,11 @@ padding-top:10px;
 export const StyledInputLabel = styled.span`
 color: white;
 padding-bottom:15px;
+`;
+
+export const StyledInputError = styled.span`
+color: #d10000;
+padding:10px;
 `;
 
 export const StyledTextInput = styled.input`
@@ -204,7 +209,7 @@ export const StyledBlueButton = styled.button`
     text-align: center;
     text-decoration: none;
     border-radius: .28571429rem;
-    font-size: 1rem;
+    font-size: 1em;
     color: #fff;
     &:hover {
         background-color: #1678c2;
@@ -233,7 +238,7 @@ export const StyledRedButton = styled.button`
     text-align: center;
     text-decoration: none;
     border-radius: .28571429rem;
-    font-size: 1rem;
+    font-size: 1em;
     color: #fff;
     &:hover {
         background-color: #b71c1c;
@@ -262,7 +267,7 @@ export const StyledSubmitButton = styled.button`
     text-align: center;
     text-decoration: none;
     border-radius: .28571429rem;
-    font-size: 1rem;
+    font-size: 1em;
     color: #fff;
     background-color: #21ba45;
     &:hover {
@@ -298,7 +303,7 @@ export const StyledLoader = styled.div`
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: ${props=>props.background};
+    background: ${props => props.background};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   .lds-ellipsis div:nth-child(1) {

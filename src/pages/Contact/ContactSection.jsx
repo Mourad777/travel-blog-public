@@ -1,13 +1,27 @@
-import React, { useState, Fragment } from 'react'
-import { StyledInputGroup, StyledInputLabel, StyledTextInput, StyledTextareaInput, StyledContactFormSubmitButton } from '../StyledComponents'
-import { AppUrl } from '../utility';
+import React, { useState, Fragment, useEffect } from 'react'
+import {
+    StyledInputGroup,
+    StyledInputLabel,
+    StyledTextInput,
+    StyledTextareaInput,
+    StyledContactFormSubmitButton,
+    StyledInputError
+} from '../StyledComponents'
+import { AppUrl, validateMessage } from '../utility';
 import axios from 'axios';
 
-const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference }) => {
+const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [isFormTouched, setIsFormTouched] = useState(false);
+
+    useEffect(()=>{
+        setErrors(validateMessage({ name, email, message }))
+    },[name,email,message])
+
     const setNameHandler = (value) => {
         setName(value)
     }
@@ -22,6 +36,14 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference })
 
     const submitMessageHandler = async (e) => {
         e.preventDefault();
+        setIsFormTouched(true);
+        const errors = validateMessage({ name, email, message });
+        setErrors(errors);
+        console.log('errors', errors)
+        if (errors.name || errors.email || errors.message) {
+            return;
+        }
+
         const formData = new FormData();
         formData.append('email', email);
         formData.append('name', name);
@@ -38,9 +60,10 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference })
             console.log('message error response', messageResponse);
         }
         setIsLoading(false);
-        setName('')
-        setEmail('')
-        setMessage('')
+        setName('');
+        setEmail('');
+        setMessage('');
+        setIsFormTouched(false)
         console.log('message response', messageResponse);
 
     }
@@ -50,13 +73,17 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference })
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-130px' }
     }
 
+    const isMessagesAllowed = configuration.is_messages_allowed;
+
     return (
         <div id="contact-section" ref={reference} style={{
             height: '100vh',
             backgroundColor: '#daad86',
             position: 'relative',
+            zIndex: 1,
         }}>
             <p style={titleStyle}>Get In Touch</p>
+            {!isMessagesAllowed && <p style={{ textAlign: 'center', color: 'red', fontFamily: 'Mulish' }}>Messages are disabled at the moment</p>}
             {isLoading &&
                 <div
 
@@ -77,19 +104,22 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference })
             }}>
                 <StyledInputGroup>
                     <StyledInputLabel>Full name</StyledInputLabel>
-                    <StyledTextInput disabled={isLoading} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                    <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                    {!!isFormTouched && <StyledInputError>{errors.name}</StyledInputError>}
                 </StyledInputGroup>
 
                 <StyledInputGroup>
                     <StyledInputLabel>E-mail</StyledInputLabel>
-                    <StyledTextInput disabled={isLoading} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                    <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                    {!!isFormTouched && <StyledInputError>{errors.email}</StyledInputError>}
                 </StyledInputGroup>
 
                 <StyledInputGroup>
                     <StyledInputLabel>Message</StyledInputLabel>
-                    <StyledTextareaInput disabled={isLoading} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
+                    <StyledTextareaInput disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
+                    {!!isFormTouched && <StyledInputError>{errors.message}</StyledInputError>}
                 </StyledInputGroup>
-                <StyledContactFormSubmitButton disabled={isLoading} onClick={submitMessageHandler}>
+                <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
                     Submit
                 </StyledContactFormSubmitButton>
             </div>

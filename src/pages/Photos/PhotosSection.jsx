@@ -53,7 +53,7 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-60px' }
     }
     return (
-        <div style={{ height: '100vh', background: 'rgb(218, 173, 134)', width: '100%', overflow: 'hidden', position: 'relative' }} ref={reference}>
+        <div style={{ height: '100vh', zIndex: 1, background: 'rgb(218, 173, 134)', width: '100%', overflow: 'hidden', position: 'relative' }} ref={reference}>
             {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
             <p style={titleStyle}>Photos</p>
