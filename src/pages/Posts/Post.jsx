@@ -107,7 +107,7 @@ const Post = ({ winSize }) => {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
 
-        const commentsRes = await axios.get(`${AppUrl}api/comments/post/${selectedPost}`);
+        const commentsRes = await axios.get(`${AppUrl}api/public-comments/post/${selectedPost}`);
         setComments(commentsRes.data)
         setComment('');
         setName('');
@@ -177,7 +177,8 @@ const Post = ({ winSize }) => {
                             <div style={{ display: 'flex', margin: '20px 0' }}>
                                 <div style={{ width: 60 }}>
                                     <Avatar
-                                        size={100}
+                                        
+                                        size={106}
                                         md5Email={replyComment.encryptedEmail}
 
                                     />
@@ -189,7 +190,7 @@ const Post = ({ winSize }) => {
                                     fontFamily: 'Mulish',
                                     fontSize: '1.1em',
                                     lineHeight: 1.8,
-                                    marginLeft: 20
+                                    marginLeft: 50
 
                                 }}>
                                     {replyComment.content}
