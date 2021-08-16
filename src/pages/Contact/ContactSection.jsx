@@ -18,9 +18,9 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
     const [errors, setErrors] = useState({});
     const [isFormTouched, setIsFormTouched] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         setErrors(validateMessage({ name, email, message }))
-    },[name,email,message])
+    }, [name, email, message])
 
     const setNameHandler = (value) => {
         setName(value)
@@ -73,7 +73,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-130px' }
     }
 
-    const isMessagesAllowed = configuration.is_messages_allowed;
+    const isMessagesAllowed = configuration.is_messages_allowed || configuration.is_messages_allowed === undefined;
 
     return (
         <div id="contact-section" ref={reference} style={{

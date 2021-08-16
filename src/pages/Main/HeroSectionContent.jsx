@@ -54,7 +54,7 @@ const HeroSectionContent = ({
             buttonTwoRef &&
             scrollIconsWrapperRef) {
 
-            animate(heroSectionAnimations(
+            const animations = heroSectionAnimations(
                 {
                     mainContainerRef,
                     heroPicMainRef,
@@ -68,7 +68,11 @@ const HeroSectionContent = ({
                     buttonTwoRef,
                     scrollIconsWrapperRef,
                 }
-            ))
+            );
+
+            console.log('animations',animations)
+
+            animate(animations)
             // gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
             // gsap.to(heroPicPieceTwoRef.current, { opacity: 1, duration: 3, });
             // gsap.to(heroPicPieceThreeRef.current, { opacity: 1, duration: 3, });
@@ -114,6 +118,7 @@ const HeroSectionContent = ({
                 posts={posts}
                 winSize={winSize}
                 countryThumbnails={countryThumbnails}
+                isPageLoaded={isPageLoaded}
             />
 
             <img
@@ -162,13 +167,13 @@ const HeroSectionContent = ({
                 id="heroTextMainPath"
             >
                 <g>
-                    <path d={heroTextPieceOne} className={isPageLoaded ? "" : "draw1"}/>
-                    <path d={heroTextPieceTwo} className={isPageLoaded ? "" : "draw2"}/>
-                    <path d={heroTextPieceThree} className={isPageLoaded ? "" : "draw3"}/>
-                    <path d={heroTextPieceFour} className={isPageLoaded ? "" : "draw4"}/>
-                    <path d={heroTextPieceFive} className={isPageLoaded ? "" : "draw5"}/>
-                    <path d={heroTextPieceSix} className={isPageLoaded ? "" : "draw6"}/>
-                    <path d={heroTextPieceSeven}className={isPageLoaded ? "" : "draw7"} />
+                    <path d={heroTextPieceOne} className={isPageLoaded ? "" : "draw1"} />
+                    <path d={heroTextPieceTwo} className={isPageLoaded ? "" : "draw2"} />
+                    <path d={heroTextPieceThree} className={isPageLoaded ? "" : "draw3"} />
+                    <path d={heroTextPieceFour} className={isPageLoaded ? "" : "draw4"} />
+                    <path d={heroTextPieceFive} className={isPageLoaded ? "" : "draw5"} />
+                    <path d={heroTextPieceSix} className={isPageLoaded ? "" : "draw6"} />
+                    <path d={heroTextPieceSeven} className={isPageLoaded ? "" : "draw7"} />
                 </g>
             </svg>
 

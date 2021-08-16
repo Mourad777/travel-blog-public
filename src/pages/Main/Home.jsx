@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import "./Home.module.css";
 import Loader from "./Loader";
 import { gsap, ScrollTrigger, ScrollToPlugin } from 'gsap/all'
-import { animate, getPusher } from '../utility'
+import { getPusher } from '../utility'
 import { getMapPosition } from "../utility";
 import {
     StyledMap,
@@ -15,7 +15,6 @@ import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { getConfiguration, getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
-import { mapsContainerAnimations } from "./gsapAnimations";
 
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));

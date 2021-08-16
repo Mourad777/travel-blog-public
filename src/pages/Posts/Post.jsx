@@ -28,16 +28,19 @@ export const Replies = ({ comment, setReplyComment }) => {
                             </div>
                             <div style={{ padding: '0 20px' }}>
                                 <span style={{ display: 'block', fontSize: '1.6em', fontWeight: 'bold', marginBottom: 10, lineHeight: 1.1 }}>{reply.user}</span>
-                                <textarea readOnly rows="4" cols="50" style={{
-                                    fontWeight: 600,
-                                    border: 'none',
-                                    background: '#efefef',
-                                    fontFamily: 'Mulish',
-                                    fontSize: '1.1em',
-                                    lineHeight: 1.8,
-                                }}>
-                                    {reply.content}
-                                </textarea>
+                                <textarea
+                                    defaultValue={reply.content}
+                                    readOnly
+                                    rows="4"
+                                    cols="50"
+                                    style={{
+                                        fontWeight: 600,
+                                        border: 'none',
+                                        background: '#efefef',
+                                        fontFamily: 'Mulish',
+                                        fontSize: '1.1em',
+                                        lineHeight: 1.8,
+                                    }} />
                             </div>
                         </div>
 
@@ -177,13 +180,13 @@ const Post = ({ winSize }) => {
                             <div style={{ display: 'flex', margin: '20px 0' }}>
                                 <div style={{ width: 60 }}>
                                     <Avatar
-                                        
+
                                         size={106}
                                         md5Email={replyComment.encryptedEmail}
 
                                     />
                                 </div>
-                                <textarea readOnly rows="3" cols="50" style={{
+                                <textarea defaultValue={replyComment.content} readOnly rows="3" cols="50" style={{
                                     fontWeight: 600,
                                     border: 'none',
                                     background: '#efefef',
@@ -192,9 +195,7 @@ const Post = ({ winSize }) => {
                                     lineHeight: 1.8,
                                     marginLeft: 50
 
-                                }}>
-                                    {replyComment.content}
-                                </textarea>
+                                }} />
 
                             </div>
                             : <List>
@@ -210,16 +211,18 @@ const Post = ({ winSize }) => {
                                             </div>
                                             <div style={{ padding: '0 20px' }}>
                                                 <span style={{ display: 'block', fontSize: '1.6em', fontWeight: 'bold', marginBottom: 10, lineHeight: 1.1 }}>{item.user}</span>
-                                                <textarea readOnly rows="4" cols="50" style={{
-                                                    fontWeight: 600,
-                                                    border: 'none',
-                                                    background: '#efefef',
-                                                    fontFamily: 'Mulish',
-                                                    fontSize: '1.1em',
-                                                    lineHeight: 1.8,
-                                                }}>
-                                                    {item.content}
-                                                </textarea>
+                                                <textarea
+                                                    defaultValue={item.content}
+                                                    readOnly rows="4" cols="50" style={{
+                                                        fontWeight: 600,
+                                                        border: 'none',
+                                                        background: '#efefef',
+                                                        fontFamily: 'Mulish',
+                                                        fontSize: '1.1em',
+                                                        lineHeight: 1.8,
+                                                    }} />
+
+
                                             </div>
                                         </div>
 

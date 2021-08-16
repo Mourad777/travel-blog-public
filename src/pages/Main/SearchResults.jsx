@@ -25,7 +25,7 @@ function useOutsideAlerter(ref, handleOutsideClick) {
     }, [ref]);
 }
 
-const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }) => {
+const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, isPageLoaded }) => {
 
     const adjustedPhotos = photos.map(p => ({
         type: 'photo',
@@ -104,10 +104,8 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }
         ...adjustedVideos,
         ...adjustedPosts,
         ...countries,
-        ...adjustedCategories]
-    // .filter(item=>item.id);
-
-
+        ...adjustedCategories
+    ]
 
     const handleSearchValue = (e) => {
         setSearchValue(e.target.value);
@@ -130,9 +128,9 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }
             item.content.includes(searchValue.toLowerCase())) &&
             !!searchValue.toLowerCase());
 
-    const filteredResultsWithoutDuplicates = [...filteredResults.reduce((itemsMap, item) =>                                                                   
+    const filteredResultsWithoutDuplicates = [...filteredResults.reduce((itemsMap, item) =>
         itemsMap.has(item.id && item.type) ? itemsMap : itemsMap.set(item.id, item)
-      , new Map()).values()];
+        , new Map()).values()];
 
 
 
@@ -168,8 +166,8 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize }
                 transform: 'translateX(-50%)',
                 left: '50%',
                 position: 'absolute',
-                top: 100,
-                zIndex: 10
+                top: 60,
+                zIndex: isPageLoaded ? 100 : 10,
             }}
 
             >

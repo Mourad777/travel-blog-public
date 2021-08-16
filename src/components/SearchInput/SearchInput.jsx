@@ -1,5 +1,4 @@
 import React from 'react'
-import './SearchInput.css'
 import { Icon } from 'semantic-ui-react'
 
 const SearchInput = ({ searchValue, handleSearchValue }) => {
