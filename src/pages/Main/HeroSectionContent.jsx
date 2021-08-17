@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
 import { heroTextPieceFive, heroTextPieceFour, heroTextPieceOne, heroTextPieceSeven, heroTextPieceSix, heroTextPieceThree, heroTextPieceTwo } from '../svgs';
 import {
@@ -41,6 +41,8 @@ const HeroSectionContent = ({
     const buttonTwoRef = useRef(null);
     const scrollIconsWrapperRef = useRef(null);
 
+    const [isDomReady, setIsDomReady] = useState(false);
+
     useEffect(() => {
 
         if (mainContainerRef &&
@@ -70,7 +72,7 @@ const HeroSectionContent = ({
                 }
             );
 
-            console.log('animations',animations)
+            console.log('animations', animations)
 
             animate(animations)
             // gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
@@ -93,7 +95,14 @@ const HeroSectionContent = ({
         buttonTwoRef,
         scrollIconsWrapperRef,
         initialDataPercentage,
-    ])
+    ]);
+
+    useEffect(() => {
+        document.addEventListener('DOMContentLoaded', function (event) {
+            // console.log('DOMContentLoaded in constructor:', document.getElementById('app').textContent);
+            setIsDomReady(true)
+        });
+    }, [])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
@@ -167,13 +176,13 @@ const HeroSectionContent = ({
                 id="heroTextMainPath"
             >
                 <g>
-                    <path d={heroTextPieceOne} className={isPageLoaded ? "" : "draw1"} />
-                    <path d={heroTextPieceTwo} className={isPageLoaded ? "" : "draw2"} />
-                    <path d={heroTextPieceThree} className={isPageLoaded ? "" : "draw3"} />
-                    <path d={heroTextPieceFour} className={isPageLoaded ? "" : "draw4"} />
-                    <path d={heroTextPieceFive} className={isPageLoaded ? "" : "draw5"} />
-                    <path d={heroTextPieceSix} className={isPageLoaded ? "" : "draw6"} />
-                    <path d={heroTextPieceSeven} className={isPageLoaded ? "" : "draw7"} />
+                    <path d={heroTextPieceOne} className={(isPageLoaded && isDomReady) ? "" : "draw1"} />
+                    <path d={heroTextPieceTwo} className={(isPageLoaded && isDomReady) ? "" : "draw2"} />
+                    <path d={heroTextPieceThree} className={(isPageLoaded && isDomReady) ? "" : "draw3"} />
+                    <path d={heroTextPieceFour} className={(isPageLoaded && isDomReady) ? "" : "draw4"} />
+                    <path d={heroTextPieceFive} className={(isPageLoaded && isDomReady) ? "" : "draw5"} />
+                    <path d={heroTextPieceSix} className={(isPageLoaded && isDomReady) ? "" : "draw6"} />
+                    <path d={heroTextPieceSeven} className={(isPageLoaded && isDomReady) ? "" : "draw7"} />
                 </g>
             </svg>
 
