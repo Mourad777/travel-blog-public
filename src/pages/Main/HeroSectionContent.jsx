@@ -170,7 +170,9 @@ const HeroSectionContent = ({
                     opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
                     transition: 'opacity .3s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
-                    pointerEvents: 'none'
+                    pointerEvents: 'none',
+                    strokeDashoffset:180,
+                    fill:'transparent',
                 }}
                 // className={isPageLoaded ? "" : "draw1"}
                 viewBox="0 0 120 50"

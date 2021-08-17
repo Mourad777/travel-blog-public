@@ -78,9 +78,9 @@ export const getCategoryContent = async (countryIso, selectedCategory, setPosts,
         console.log('Content response error', e)
     }
     console.log('content response', contentResponse)
-    setPosts(contentResponse.data.posts || []);
-    setPhotos(contentResponse.data.photos || []);
-    setVideos(contentResponse.data.videos || []);
+    setPosts((contentResponse.data || {}).posts || []);
+    setPhotos((contentResponse.data || {}).photos || []);
+    setVideos((contentResponse.data || {}).videos || []);
 }
 
 //updates the order of photos or videos in a gallery after
@@ -142,7 +142,7 @@ export const getPhotos = async (setItems, setIsLoading) => {
         }
     });
 
-    if (resFetchConfigurations.data !== 'no_config' && resFetchConfigurations.data.photo_gallery_order) {
+    if (resFetchConfigurations.data !== 'no_config' && (resFetchConfigurations.data || {}).photo_gallery_order) {
         const order = JSON.parse(resFetchConfigurations.data.photo_gallery_order) || [];
         const orderedFormattedPhotos = [];
         order.forEach(number => {
@@ -211,7 +211,7 @@ export const getVideos = async (setItems, setIsLoading) => {
         }
     });
 
-    if (resFetchConfigurations.data !== 'no_config' && resFetchConfigurations.data.video_gallery_order) {
+    if (resFetchConfigurations.data !== 'no_config' && (resFetchConfigurations.data || {}).video_gallery_order) {
         const order = JSON.parse(resFetchConfigurations.data.video_gallery_order) || [];
         const orderedFormattedVideos = [];
         order.forEach(number => {

@@ -159,29 +159,58 @@ iteration-count | direction | fill-mode | play-state | name */
 
 
 .draw1 {
-  animation: draw-animation-one ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-one;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw2 {
-  animation: draw-animation-two ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-two;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw3 {
-  animation: draw-animation-three ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-three;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw4 {
-  animation: draw-animation-four ease-out 2s forwards;
+  /* animation: draw-animation-four ease-out 2s forwards; */
+  animation-delay: 0.2s;
+  animation-name: draw-animation-four;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw5 {
-  animation: draw-animation-five ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-five;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw6 {
-  animation: draw-animation-six ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-six;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
 
 .draw7 {
-  animation: draw-animation-seven ease-out 2s forwards;
+  animation-delay: 0.2s;
+  animation-name: draw-animation-seven;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
 }
