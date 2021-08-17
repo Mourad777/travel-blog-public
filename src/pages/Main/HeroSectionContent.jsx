@@ -97,12 +97,12 @@ const HeroSectionContent = ({
         initialDataPercentage,
     ]);
 
-    useEffect(() => {
-        document.addEventListener('DOMContentLoaded', function (event) {
-            // console.log('DOMContentLoaded in constructor:', document.getElementById('app').textContent);
-            setIsDomReady(true)
-        });
-    }, [])
+    // useEffect(() => {
+    //     document.addEventListener('DOMContentLoaded', function (event) {
+    //         // console.log('DOMContentLoaded in constructor:', document.getElementById('app').textContent);
+    //         setIsDomReady(true)
+    //     });
+    // }, [])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
@@ -163,6 +163,7 @@ const HeroSectionContent = ({
             })}
 
             <svg
+                onLoad={()=>setIsDomReady(true)}
                 ref={heroPrimaryTextRef}
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
