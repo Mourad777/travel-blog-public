@@ -159,7 +159,6 @@ iteration-count | direction | fill-mode | play-state | name */
 
 
 .draw1 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-one;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -167,7 +166,6 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 .draw2 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-two;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -175,7 +173,6 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 .draw3 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-three;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -184,7 +181,6 @@ iteration-count | direction | fill-mode | play-state | name */
 
 .draw4 {
   /* animation: draw-animation-four ease-out 2s forwards; */
-  animation-delay: 0.2s;
   animation-name: draw-animation-four;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -192,7 +188,6 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 .draw5 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-five;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -200,7 +195,6 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 .draw6 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-six;
   animation-duration: 2s;
   animation-fill-mode: forwards;
@@ -208,7 +202,6 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 .draw7 {
-  animation-delay: 0.2s;
   animation-name: draw-animation-seven;
   animation-duration: 2s;
   animation-fill-mode: forwards;
