@@ -104,19 +104,19 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
             }}>
                 <StyledInputGroup>
                     <StyledInputLabel>Full name</StyledInputLabel>
-                    <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                    <StyledTextInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
                     {!!isFormTouched && <StyledInputError>{errors.name}</StyledInputError>}
                 </StyledInputGroup>
 
                 <StyledInputGroup>
                     <StyledInputLabel>E-mail</StyledInputLabel>
-                    <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                    <StyledTextInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
                     {!!isFormTouched && <StyledInputError>{errors.email}</StyledInputError>}
                 </StyledInputGroup>
 
                 <StyledInputGroup>
                     <StyledInputLabel>Message</StyledInputLabel>
-                    <StyledTextareaInput disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
+                    <StyledTextareaInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
                     {!!isFormTouched && <StyledInputError>{errors.message}</StyledInputError>}
                 </StyledInputGroup>
                 <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
