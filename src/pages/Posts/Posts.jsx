@@ -75,8 +75,10 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-40px' }
     }
 
-    return (<div ref={reference} style={{ height: '100vh', overflow: 'hidden', zIndex: 6, position: 'relative' }}>
-        {isPostsLoading && <div style={{position:'absolute',top:'30%',left:'50%',transform:'translate(-50%)'}}><Loader /></div>}
+    return (<div ref={reference} style={{
+        height: '100vh', overflow: 'hidden', zIndex: 6, position: 'relative', minHeight: 360,
+    }}>
+        {isPostsLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
         <p style={titleStyle}>Posts</p>
 
         <div style={{

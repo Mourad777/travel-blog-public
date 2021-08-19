@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useHistory } from 'react-router-dom';
 import geo from "./geo.json"
@@ -13,7 +13,7 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
             scrub: 0.5,
             snap: true,
             pin: false,
-            
+
         });
     }, [reference])
     const handleClick = (geo) => () => {
@@ -37,7 +37,7 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
 
 
     return (
-        <div style={{ paddingTop: isLargeMobileLandscape ? 0 : 30, background: '#ece7e2', height: '100vh', width: '100%', zIndex: 1, overflow: 'hidden', position: 'relative' }} ref={reference}>
+        <div style={{ paddingTop: isLargeMobileLandscape ? 0 : 30, background: '#ece7e2', height: '100vh', width: '100%', zIndex: 1, overflow: 'hidden', position: 'relative', minHeight: 360, }} ref={reference}>
             <p style={titleStyle}>Destinations</p>
             <ComposableMap
                 style={
