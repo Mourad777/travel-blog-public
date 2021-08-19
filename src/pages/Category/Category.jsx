@@ -9,7 +9,7 @@ import countryCodes from '../Countries/country-codes.json';
 import moment from 'moment';
 import { getCategoryContent, getCountryThumbnails } from '../../api/util';
 import Loader from '../../components/Loader/Loader';
-import { getPusher } from '../utility';
+import { getPusher, primaryColor } from '../utility';
 
 function capitalize(str) {
     const capStr = str.charAt(0).toUpperCase() + str.slice(1);
@@ -76,7 +76,7 @@ const Country = ({ winSize, height }) => {
 
     if (isLoading) {
         return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
-            <Loader color="#daad86" />
+            <Loader color={primaryColor} />
         </div>
         )
     }
@@ -95,9 +95,9 @@ const Country = ({ winSize, height }) => {
             <div style={{ padding: 20 }}>
                 <Button content='Home' onClick={() => { history.push('/') }} />
             </div>
-            {/* <p style={{ textAlign: 'center', color: 'rgb(218, 173, 134)', fontSize: '4em', fontFamily: 'Mulish', paddingTop: 30 }}>{capitalize(countryCodes[countryIso] || selectedCategory)}</p> */}
+            {/* <p style={{ textAlign: 'center', color: primaryColor, fontSize: '4em', fontFamily: 'Mulish', paddingTop: 30 }}>{capitalize(countryCodes[countryIso] || selectedCategory)}</p> */}
             {posts.length > 0 && <div className="posts-category-container" style={{ padding: 10 }}>
-                <p style={{ textAlign: 'center', color: 'rgb(218, 173, 134)', fontSize: '3em', fontFamily: 'Mulish' }}>Posts</p>
+                <p style={{ textAlign: 'center', color: primaryColor, fontSize: '3em', fontFamily: 'Mulish' }}>Posts</p>
                 <div style={{
                     display: 'grid',
                     maxWidth: gridWidth,
@@ -109,7 +109,6 @@ const Country = ({ winSize, height }) => {
                         <div style={{ height: '25%', padding: 10 }}><p style={{
                             fontFamily: 'Mulish',
                             fontWeight: 600,
-                            // color: '#daad86',
                             textAlign: 'center',
                             fontSize: '1.5em',
                             maxWidth: '100%'
@@ -134,7 +133,7 @@ const Country = ({ winSize, height }) => {
             }
             {
                 videos.length > 0 && <div className="video-category-container">
-                    <p style={{ textAlign: 'center', color: 'rgb(218, 173, 134)', fontSize: '3em', fontFamily: 'Mulish', paddingTop: 30 }}>Videos</p>
+                    <p style={{ textAlign: 'center', color: primaryColor, fontSize: '3em', fontFamily: 'Mulish', paddingTop: 30 }}>Videos</p>
                     <div>
                         {videos.map(v =>
                         (<div key={`video[${v.id}]`} style={

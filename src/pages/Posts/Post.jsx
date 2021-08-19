@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton, StyledInputError } from '../StyledComponents';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
-import { AppUrl, getPusher, validateMessage } from '../utility';
+import { AppUrl, getPusher, primaryColor, validateMessage } from '../utility';
 import axios from 'axios';
 import '../global-styles/tinymceReadonly.css'
 import Avatar from 'react-avatar';
@@ -138,7 +138,7 @@ const Post = ({ winSize }) => {
 
     if (isLoading || !post) {
         return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
-            <Loader color="#daad86" />
+            <Loader color={primaryColor} />
         </div>
         )
     }

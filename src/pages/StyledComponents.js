@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { primaryColor } from "./utility";
 
 export const StyledPostRow = styled.div`
-border: rgba(218, 173, 134) solid;
+border: ${primaryColor} solid;
 border-width: ${props => props.isLargeMobileLandscape ? 20 : props.index === 0 ? "40" : "20"
   }px 20px ${props => props.isLargeMobileLandscape ? 20 : props.index === 2 ? "40" : "20"
   }px 20px;
@@ -19,7 +20,7 @@ height:100vh;
 
 export const StyledLatestPostsTopLayer = styled.div`
 width: "100%";
-background-color: rgb(218, 173, 134);
+background-color: ${primaryColor};
 height: 80px;
 position:relative;
 `;
@@ -33,7 +34,7 @@ height:100%;
 export const StyledLatestPostsInnerWrapper = styled.div`
 margin: "auto";
 flex-grow: 1;
-border-top:${props => props.height > 1100 ? '200px solid #daad86' : ''};
+border-top:${props => props.height > 1100 ? `200px solid ${primaryColor}` : ''};
 max-width: ${props => props.isLargeMobileLandscape ? 400 : 600}px;
 `;
 

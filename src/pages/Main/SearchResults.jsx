@@ -157,7 +157,7 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, 
             ref={wrapperRef}
         >
             <div className="search-box">
-                <button className="btn-search"><Icon name="search" /></button>
+                <button className="btn-search" style={{color:'rgb(204,134,74)'}}><Icon name="search" /></button>
                 <input value={searchValue} onChange={handleSearchValue} type="text" className="input-search" placeholder="Type to Search..."></input>
             </div>
             <div style={{

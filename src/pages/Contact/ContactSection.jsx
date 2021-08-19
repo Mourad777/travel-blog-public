@@ -7,7 +7,7 @@ import {
     StyledContactFormSubmitButton,
     StyledInputError
 } from '../StyledComponents'
-import { AppUrl, validateMessage } from '../utility';
+import { AppUrl, primaryColor, validateMessage } from '../utility';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 
@@ -100,7 +100,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
     return (
         <div id="contact-section" ref={reference} style={{
             height: '100vh',
-            backgroundColor: '#daad86',
+            backgroundColor: primaryColor,
             position: 'relative',
             zIndex: isMessageFormOpen ? 100 : 1,
             minHeight: 360,

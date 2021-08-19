@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import "./navbar.module.css";
 import { gsap } from 'gsap/all'
+import { primaryColor } from "../../pages/utility";
 
 const NavText = styled.span`
     font-size: 1em;
     opacity: 0;
-    color:${props => props.section % 2 === 0 ? '#fff' : '#daad86'};
+    color:${props => props.section % 2 === 0 ? '#fff' : primaryColor};
     transition: all 0.3s ease-in;
 `;
 
@@ -14,7 +15,7 @@ const Bullet = styled.div`
     height: 10px;
     width: 10px;
     margin-right: 30px;
-    background-color: ${props => props.section % 2 === 0 ? '#fff' : '#daad86'};
+    background-color: ${props => props.section % 2 === 0 ? '#fff' : primaryColor};
     border-radius: 50%;
 
     transition: all 0.3s ease-in;

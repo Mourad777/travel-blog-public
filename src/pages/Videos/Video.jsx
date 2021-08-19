@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { ScrollTrigger } from 'gsap/all';
 import ReactPlayer from 'react-player'
-import { AppUrl, getPusher, validateMessage } from '../utility';
+import { AppUrl, getPusher, primaryColor, validateMessage } from '../utility';
 import { Replies } from '../Posts/Post';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton, StyledInputError } from '../StyledComponents';
@@ -101,7 +101,7 @@ const Video = ({ winSize }) => {
 
     if (isLoading || !video) {
         return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
-            <Loader color="#daad86" />
+            <Loader color={primaryColor} />
         </div>
         )
     }
@@ -129,7 +129,7 @@ const Video = ({ winSize }) => {
             <div style={{ padding: 20 }}>
                 <Button content='Home' onClick={() => { history.push('/') }} />
             </div>
-            {/* <p style={{ color: 'rgb(218, 173, 134)', fontSize: '4em', fontFamily: 'Mulish', textAlign: 'center', paddingTop: 56 }}>{video.title}</p> */}
+            {/* <p style={{ color: primaryColor, fontSize: '4em', fontFamily: 'Mulish', textAlign: 'center', paddingTop: 56 }}>{video.title}</p> */}
             <div style={{
                 maxWidth: 800,
                 // display: 'flex',

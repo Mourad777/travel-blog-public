@@ -5,6 +5,7 @@ import RowLayout from './RowLayout';
 import Paginate from '../../components/Paginate/Paginate';
 import { ScrollTrigger, gsap } from 'gsap/all'
 import Loader from '../../components/Loader/Loader';
+import { primaryColor } from '../utility';
 const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height, scrollWidth, isPostsLoading }) => {
 
     const [pageCount, setPageCount] = useState(0);
@@ -70,7 +71,7 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
 
     const aspectRatio = scrollWidth / height;
 
-    let titleStyle = { zIndex: 1, fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', background: '#daad86', textAlign: 'center', marginBottom: 0 }
+    let titleStyle = { zIndex: 1, fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', background: primaryColor, textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-40px' }
     }
@@ -82,7 +83,7 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
         <p style={titleStyle}>Posts</p>
 
         <div style={{
-            display: 'flex', background: '#DAAD86',
+            display: 'flex', background: primaryColor,
             height:
                 // 'calc(100vh - 760px)'
                 '100%',
@@ -103,13 +104,13 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
                     </StyledPostRow>
                 ))}
 
-                <div style={{ background: '#daad86', height: '100%' }} />
+                <div style={{ background: primaryColor, height: '100%' }} />
             </StyledLatestPostsInnerWrapper>
             {winSize > 1 && <OuterColumn isLargeMobileLandscape={isLargeMobileLandscape} />}
         </StyledLatestPostsOuterWrapper>
 
         <div style={{
-            background: '#DAAD86',
+            background: primaryColor,
         }}>
         </div>
     </div>)

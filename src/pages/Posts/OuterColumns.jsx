@@ -1,4 +1,5 @@
 import React from "react"
+import { primaryColor } from "../utility";
 
 export default ({ isLeft,isLargeMobileLandscape }) => (
     <div
@@ -11,7 +12,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className="col-1"
                 style={{
-                    background: "rgb(218, 173, 134)",
+                    background: primaryColor,
                     height: "100%",
                     padding: 0
                 }}
@@ -19,7 +20,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className="col-8"
                 style={{
-                    // background: "rgb(218, 173, 134)",
+                    // background: primaryColor,
                     padding: 0,
                     height: "100%"
                 }}
@@ -27,7 +28,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                 <div
                     style={{
                         height: 100,
-                        backgroundColor: "rgb(218, 173, 134)"
+                        backgroundColor: primaryColor
                     }}
                 ></div>
                 <div
@@ -39,7 +40,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                 <div
                     style={{
                         height:isLeft ? 111 : 11,
-                        backgroundColor: "rgb(218, 173, 134)"
+                        backgroundColor: primaryColor
                     }}
                 ></div>
             </div>
@@ -47,7 +48,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className="col-3"
                 style={{
-                    background: "rgb(218, 173, 134)",
+                    background: primaryColor,
                     height: "100%",
                     padding: 0
                 }}
@@ -60,7 +61,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className={isLeft ?"col-2" : "col-4"}
                 style={{
-                    background: "rgb(218, 173, 134)",
+                    background: primaryColor,
                     height: "100%",
                     padding: 0
                 }}
@@ -68,7 +69,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className={isLeft ?"col-8" : "col-7"}
                 style={{
-                    // background: "rgb(218, 173, 134)",
+                    // background: primaryColor,
 
                     height: "100%",
                     padding: 0
@@ -77,7 +78,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                 <div
                     style={{
                         height:isLeft ?  100 : 200,
-                        backgroundColor: "rgb(218, 173, 134)"
+                        backgroundColor: primaryColor
                     }}
                 ></div>
                 <div
@@ -90,7 +91,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                     style={{
                         // height: 430,
                         height: '100%',
-                        backgroundColor: "rgb(218, 173, 134)"
+                        backgroundColor: primaryColor
                     }}
                 ></div>
             </div>
@@ -98,7 +99,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
             <div
                 className={isLeft ?"col-2" : "col-1"}
                 style={{
-                    background: "rgb(218, 173, 134)",
+                    background: primaryColor,
                     height: "100%",
                     padding: 0
                 }}

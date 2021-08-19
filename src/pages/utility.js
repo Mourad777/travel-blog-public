@@ -635,3 +635,7 @@ export const cameraInfoToBeDisplayed = (photo) => {
         shouldIsoBeDisplayed,
     }
 }
+
+export const primaryColor = 'rgb(229, 170, 112)';
+// export const primaryColor = 'rgb(218, 160, 109)';
+

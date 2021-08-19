@@ -2,6 +2,7 @@ import React from "react";
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Carousel from 'react-alice-carousel';
 import { useHistory } from "react-router-dom";
+import { primaryColor } from "../utility";
 function PhotoGallery({ winSize,height, photos }) {
     const history = useHistory();
 
@@ -26,7 +27,7 @@ function PhotoGallery({ winSize,height, photos }) {
         isLargeMobileLandscape = true
     }
     return (
-        <div style={{ background: '#daad86', padding: 20 }}>
+        <div style={{ background: primaryColor, padding: 20 }}>
             <div style={{ position: 'relative', margin: 'auto', maxWidth:isLargeMobileLandscape ? 200 : 600 }}>
                 <p style={{ textAlign: 'center', color: 'rgb(236, 231, 226)', fontSize: '3em', fontFamily: 'Mulish', paddingTop: 30 }}>Photos</p>
                 <Carousel

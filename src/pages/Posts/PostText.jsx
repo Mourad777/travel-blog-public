@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import { primaryColor } from "../utility";
 const PostText = ({ post, isMobile, index, isLargeMobileLandscape }) => {
 
     return (
@@ -11,7 +12,9 @@ const PostText = ({ post, isMobile, index, isLargeMobileLandscape }) => {
                 className={`post-text-${index + 1}`}
                 style={{
                     width: "100%",
-                    background: "rgba(218, 173, 134,0.8)",
+                    // background: "rgba(218, 173, 134,0.8)",
+                    background:primaryColor,
+                    opacity:0.8,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",

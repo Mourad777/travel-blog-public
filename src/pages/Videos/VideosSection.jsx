@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import ReactPaginate from 'react-paginate';
 import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
+import { primaryColor } from "../utility";
 
 
 export default ({ reference, videos, winSize, height, isLargeMobileLandscape, scrollWidth, isVideosLoading }) => {
@@ -54,7 +55,7 @@ export default ({ reference, videos, winSize, height, isLargeMobileLandscape, sc
         setOffset(selectedPage + 1)
     };
     const aspectRatio = scrollWidth / height;
-    let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#daad86', textAlign: 'center', marginBottom: 0 }
+    let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: primaryColor, textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', fontSize: '4em', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-60px' }
     }

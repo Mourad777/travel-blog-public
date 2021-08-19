@@ -3,6 +3,7 @@ import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { useHistory } from 'react-router-dom';
 import geo from "./geo.json"
 import { ScrollTrigger } from 'gsap/all'
+import { primaryColor } from "../utility";
 
 const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos, isLargeMobileLandscape, scrollWidth }) => {
     const history = useHistory();
@@ -23,7 +24,7 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
         }
     }
     const aspectRatio = scrollWidth / height;
-    let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#daad86', textAlign: 'center', marginBottom: 0 }
+    let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: primaryColor, textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', fontSize: '4em', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-130px' }
     }
@@ -60,11 +61,11 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
 
                                     key={geo.rsmKey}
                                     geography={geo}
-                                    // fill={isHighlighted ? "rgb(155, 111, 72)" : "rgb(218, 173, 134)"}
+                                    // fill={isHighlighted ? "rgb(155, 111, 72)" : primaryColor}
                                     fill={
                                         isHighlighted
                                             ? "#840404"
-                                            : "rgb(218, 173, 134)"
+                                            : primaryColor
                                     }
                                     cursor={isHighlighted ? 'pointer' : 'default'}
                                     onClick={handleClick(geo.properties)}

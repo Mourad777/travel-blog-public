@@ -1,4 +1,5 @@
 import React from "react"
+import { primaryColor } from "../utility"
 
 export default () => (
     <div
@@ -6,7 +7,7 @@ export default () => (
         position: "absolute",
         height: "100%",
         background:
-            "rgb(218, 173, 134)",
+           primaryColor,
         width: 50,
         left: 0
     }}

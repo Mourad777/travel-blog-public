@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import CameraInfo from '../../components/Photo/CameraInfo';
 import Loader from '../../components/Loader/Loader';
 import { getPhoto } from '../../api/util';
-import { cameraInfoToBeDisplayed, getPusher } from '../utility';
+import { cameraInfoToBeDisplayed, getPusher, primaryColor } from '../utility';
 const Photo = ({ winSize }) => {
     const params = useParams();
     const history = useHistory();
@@ -37,7 +37,7 @@ const Photo = ({ winSize }) => {
 
     if (isLoading || !photo) {
         return (<div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}>
-            <Loader color="#daad86" />
+            <Loader color={primaryColor} />
         </div>
         )
     }
@@ -69,7 +69,7 @@ const Photo = ({ winSize }) => {
                 position: "fixed",
                 top: 0,
                 right: 0,
-                backgroundColor: "rgb(218, 173, 134)"
+                backgroundColor: primaryColor
             }}
             className="photo-preview-container"
         >
@@ -122,7 +122,7 @@ const Photo = ({ winSize }) => {
                                 src={photo.src}
                                 alt=""
                             />{" "}
-                            <div className="extra-img-info-container" style={{ color: 'white', background: '#daad86' }}>
+                            <div className="extra-img-info-container" style={{ color: 'white', background: primaryColor }}>
                                 {(photo.photographer && photo.date_taken) && (
                                     <div style={{ color: "#fff4e1" }}>
                                         <p style={{ fontStyle: 'italic' }} >Taken by {photo.photographer} {photo.date_taken ? ' on ' + new Date(photo.date_taken).toDateString() : ''}</p>
@@ -141,7 +141,7 @@ const Photo = ({ winSize }) => {
                                 {photo.country && (
                                     <div
                                         onClick={() => history.push(`/destination/${photo.country}`)}
-                                        style={{ display: 'flex', color: "#fff4e1", background: '#DAAD86', padding: 10, cursor: 'pointer' }}>
+                                        style={{ display: 'flex', color: "#fff4e1", background: primaryColor, padding: 10, cursor: 'pointer' }}>
                                         <Location />
                                         <p >{countries.find(c => c.value === photo.country).text}</p>
 
@@ -162,7 +162,7 @@ const Photo = ({ winSize }) => {
                     <div
                         style={{
                             height: "100%",
-                            backgroundColor: "rgb(218, 173, 134)",
+                            backgroundColor: primaryColor,
                             width: "100%",
                         }}
                     >
