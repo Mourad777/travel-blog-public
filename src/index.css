@@ -158,7 +158,7 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 
-.draw1 {
+/* .draw1 {
   animation: draw-animation-one ease-out 2s forwards;
 }
 
@@ -184,4 +184,4 @@ iteration-count | direction | fill-mode | play-state | name */
 
 .draw7 {
   animation: draw-animation-seven ease-out 2s forwards;
-}
+} */

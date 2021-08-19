@@ -41,6 +41,14 @@ const HeroSectionContent = ({
     const buttonTwoRef = useRef(null);
     const scrollIconsWrapperRef = useRef(null);
 
+    const heroWelcomePieceOne = useRef(null);
+    const heroWelcomePieceTwo = useRef(null);
+    const heroWelcomePieceThree = useRef(null);
+    const heroWelcomePieceFour = useRef(null);
+    const heroWelcomePieceFive = useRef(null);
+    const heroWelcomePieceSix = useRef(null);
+    const heroWelcomePieceSeven = useRef(null);
+
     const [isDomReady, setIsDomReady] = useState(false);
 
     useEffect(() => {
@@ -75,11 +83,8 @@ const HeroSectionContent = ({
             console.log('animations', animations)
 
             animate(animations)
-            // gsap.to(heroPicPieceOneRef.current, { opacity: 1, duration: 3, });
-            // gsap.to(heroPicPieceTwoRef.current, { opacity: 1, duration: 3, });
-            // gsap.to(heroPicPieceThreeRef.current, { opacity: 1, duration: 3, });
-            // gsap.to(heroPrimaryTextRef.current, { strokeDashoffset: 0, duration: 5, });
-            // gsap.to(heroPrimaryTextRef.current, { fill: 'rgba(255,255,255,1)', duration: 7 })
+
+
         }
 
 
@@ -97,12 +102,25 @@ const HeroSectionContent = ({
         initialDataPercentage,
     ]);
 
-    // useEffect(() => {
-    //     document.addEventListener('DOMContentLoaded', function (event) {
-    //         // console.log('DOMContentLoaded in constructor:', document.getElementById('app').textContent);
-    //         setIsDomReady(true)
-    //     });
-    // }, [])
+    useEffect(() => {
+        gsap.to(heroWelcomePieceOne.current, { strokeDashoffset: 0, duration: 0.9,delay:0 });
+        gsap.to(heroWelcomePieceTwo.current, { strokeDashoffset: 0, duration: 0.9,delay:0.2 });
+        gsap.to(heroWelcomePieceThree.current, { strokeDashoffset: 0, duration: 0.9,delay:0.4 });
+        gsap.to(heroWelcomePieceFour.current, { strokeDashoffset: 0, duration: 0.9,delay:0.6 });
+        gsap.to(heroWelcomePieceFive.current, { strokeDashoffset: 0, duration: 0.9,delay:0.8 });
+        gsap.to(heroWelcomePieceSix.current, { strokeDashoffset: 0, duration: 0.9,delay:1 });
+        gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9,delay:1.2 });
+        gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9,delay:1.4 });
+
+        gsap.to(heroWelcomePieceOne.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0});
+        gsap.to(heroWelcomePieceTwo.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.2 });
+        gsap.to(heroWelcomePieceThree.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.4 });
+        gsap.to(heroWelcomePieceFour.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.6 });
+        gsap.to(heroWelcomePieceFive.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.8 });
+        gsap.to(heroWelcomePieceSix.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1});
+        gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1.2 });
+        gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1.4 });
+    }, [])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
@@ -113,7 +131,7 @@ const HeroSectionContent = ({
         <div style={{
             height: '100vh',
             position: 'relative',
-            minHeight:360,
+            minHeight: 360,
         }}>
             <Helmet>
                 <link rel="preload" as="image" href={'/assets/images/welcome-background.webp'} type="image/webp" />
@@ -164,7 +182,7 @@ const HeroSectionContent = ({
             })}
 
             <svg
-                onLoad={()=>setIsDomReady(true)}
+                onLoad={() => setIsDomReady(true)}
                 ref={heroPrimaryTextRef}
                 style={{
                     ...getHeroSectionNameStyle(winSize, height),
@@ -172,21 +190,21 @@ const HeroSectionContent = ({
                     transition: 'opacity .3s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
                     pointerEvents: 'none',
-                    strokeDashoffset:180,
-                    fill:'transparent',
+                    strokeDashoffset: 180,
+                    fill: 'transparent',
                 }}
                 // className={isPageLoaded ? "" : "draw1"}
                 viewBox="0 0 120 50"
                 id="heroTextMainPath"
             >
                 <g>
-                    <path d={heroTextPieceOne} className={(isPageLoaded && isDomReady) ? "" : "draw1"} />
-                    <path d={heroTextPieceTwo} className={(isPageLoaded && isDomReady) ? "" : "draw2"} />
-                    <path d={heroTextPieceThree} className={(isPageLoaded && isDomReady) ? "" : "draw3"} />
-                    <path d={heroTextPieceFour} className={(isPageLoaded && isDomReady) ? "" : "draw4"} />
-                    <path d={heroTextPieceFive} className={(isPageLoaded && isDomReady) ? "" : "draw5"} />
-                    <path d={heroTextPieceSix} className={(isPageLoaded && isDomReady) ? "" : "draw6"} />
-                    <path d={heroTextPieceSeven} className={(isPageLoaded && isDomReady) ? "" : "draw7"} />
+                    <path ref={heroWelcomePieceOne} d={heroTextPieceOne} className={(isPageLoaded && isDomReady) ? "" : "draw1"} />
+                    <path ref={heroWelcomePieceTwo} d={heroTextPieceTwo} className={(isPageLoaded && isDomReady) ? "" : "draw2"} />
+                    <path ref={heroWelcomePieceThree} d={heroTextPieceThree} className={(isPageLoaded && isDomReady) ? "" : "draw3"} />
+                    <path ref={heroWelcomePieceFour} d={heroTextPieceFour} className={(isPageLoaded && isDomReady) ? "" : "draw4"} />
+                    <path ref={heroWelcomePieceFive} d={heroTextPieceFive} className={(isPageLoaded && isDomReady) ? "" : "draw5"} />
+                    <path ref={heroWelcomePieceSix} d={heroTextPieceSix} className={(isPageLoaded && isDomReady) ? "" : "draw6"} />
+                    <path ref={heroWelcomePieceSeven} d={heroTextPieceSeven} className={(isPageLoaded && isDomReady) ? "" : "draw7"} />
                 </g>
             </svg>
 
