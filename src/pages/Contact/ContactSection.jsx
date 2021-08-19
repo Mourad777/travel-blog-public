@@ -142,29 +142,32 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                             <div></div>
                             <div></div>
                         </div>}
-                    <StyledInputGroup>
-                        <StyledInputLabel>Full name</StyledInputLabel>
-                        <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
-                        <StyledInputError>{!!(isFormTouched && !!errors.name) ? errors.name : ''}</StyledInputError>
-                    </StyledInputGroup>
+                    {!confirmationMessage && <Fragment>
+                        <StyledInputGroup>
+                            <StyledInputLabel>Full name</StyledInputLabel>
+                            <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                            <StyledInputError>{!!(isFormTouched && !!errors.name) ? errors.name : ''}</StyledInputError>
+                        </StyledInputGroup>
 
-                    <StyledInputGroup>
-                        <StyledInputLabel>E-mail</StyledInputLabel>
-                        <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
-                        <StyledInputError>{!!(isFormTouched && !!errors.email) ? errors.email : ''}</StyledInputError>
-                    </StyledInputGroup>
+                        <StyledInputGroup>
+                            <StyledInputLabel>E-mail</StyledInputLabel>
+                            <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                            <StyledInputError>{!!(isFormTouched && !!errors.email) ? errors.email : ''}</StyledInputError>
+                        </StyledInputGroup>
 
-                    <StyledInputGroup>
-                        <StyledInputLabel>Message</StyledInputLabel>
-                        <StyledTextareaInput disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
-                        <StyledInputError>{!!(isFormTouched && !!errors.message) ? errors.message : ''}</StyledInputError>
-                    </StyledInputGroup>
-                    <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
-                        Submit
-                    </StyledContactFormSubmitButton>
-                    <StyledContactFormSubmitButton onClick={handleOpenMessageForm}>
-                        Cancel
-                    </StyledContactFormSubmitButton>
+                        <StyledInputGroup>
+                            <StyledInputLabel>Message</StyledInputLabel>
+                            <StyledTextareaInput disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
+                            <StyledInputError>{!!(isFormTouched && !!errors.message) ? errors.message : ''}</StyledInputError>
+                        </StyledInputGroup>
+                        <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
+                            Submit
+                        </StyledContactFormSubmitButton>
+                        <StyledContactFormSubmitButton onClick={handleOpenMessageForm}>
+                            Cancel
+                        </StyledContactFormSubmitButton>
+                    </Fragment>}
+
                     <p
                         style={{
                             textAlign: 'center',
