@@ -9,18 +9,29 @@ import {
 } from '../StyledComponents'
 import { AppUrl, validateMessage } from '../utility';
 import axios from 'axios';
+import { Button } from 'semantic-ui-react';
 
-const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration }) => {
+const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration, isPageLoaded }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [isFormTouched, setIsFormTouched] = useState(false);
+    const [isMessageFormOpen, setIsMessageFormOpen] = useState(false);
+    const [confirmationMessage, setConfirmationMessage] = useState('');
 
     useEffect(() => {
         setErrors(validateMessage({ name, email, message }))
     }, [name, email, message])
+
+    const handleConfirmationMessage = (message) => {
+        setConfirmationMessage(message)
+    }
+
+    const handleOpenMessageForm = () => {
+        setIsMessageFormOpen(!isMessageFormOpen)
+    }
 
     const setNameHandler = (value) => {
         setName(value)
@@ -49,7 +60,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
         formData.append('name', name);
         formData.append('message', message);
         setIsLoading(true);
-        let messageResponse;
+        let messageResponse = {};
         try {
             messageResponse = await axios.post(`${AppUrl}api/messages/save`, formData,
                 {
@@ -66,6 +77,17 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
         setIsFormTouched(false)
         console.log('message response', messageResponse);
 
+        if (messageResponse.status === 200) {
+            setConfirmationMessage('Your message has been sent!');
+        } else {
+            setConfirmationMessage('Something went wrong');
+        }
+        setTimeout(() => {
+            setConfirmationMessage('')
+            setIsMessageFormOpen(false)
+        }, 3000)
+
+
     }
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', textAlign: 'center', marginBottom: 0 }
@@ -80,50 +102,81 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
             height: '100vh',
             backgroundColor: '#daad86',
             position: 'relative',
-            zIndex: 1,
+            zIndex: isMessageFormOpen ? 100 : 1,
             minHeight: 360,
         }}>
-            <p style={titleStyle}>Get In Touch</p>
+            {!isMessageFormOpen && <p style={titleStyle}>Get In Touch</p>}
             {!isMessagesAllowed && <p style={{ textAlign: 'center', color: 'red', fontFamily: 'Mulish' }}>Messages are disabled at the moment</p>}
-            {isLoading &&
-                <div
 
-                    className="lds-ellipsis"
-                    style={{ top: "20%", left: '50%', transform: 'translateX(-50%)', position: 'absolute', margin: "auto", display: "block" }}
-                >
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>}
-            <div style={{
-                maxWidth: 500, padding: '0 10px', margin: 'auto', left: '50%',
-                minWidth: 330,
+            <StyledContactFormSubmitButton style={{
+                maxWidth: 340,
+                position: 'absolute',
+                /* margin: auto; */
+                left: '50%',
                 top: '50%',
-                transform: 'translate(-50%,-50%)',
-                position: 'absolute'
-            }}>
-                <StyledInputGroup>
-                    <StyledInputLabel>Full name</StyledInputLabel>
-                    <StyledTextInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
-                    {!!isFormTouched && <StyledInputError>{errors.name}</StyledInputError>}
-                </StyledInputGroup>
+                transform: 'translateX(-50%)',
+            }} onClick={handleOpenMessageForm}
+                disabled={isLoading || !isMessagesAllowed}
+            >
+                Send me a message
+            </StyledContactFormSubmitButton>
+            {/* <Button onClick={handleOpenMessageForm} icon='message' content='Send me a message' /> */}
+            {isMessageFormOpen && <div style={{ background: 'rgb(0,0,0,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 }}>
+                <p style={titleStyle}>Get In Touch</p>
+                <div style={{
+                    maxWidth: 500, padding: '0 10px', margin: 'auto', left: '50%',
+                    minWidth: 330,
+                    top: '50%',
+                    transform: 'translate(-50%,-50%)',
+                    position: 'fixed'
 
-                <StyledInputGroup>
-                    <StyledInputLabel>E-mail</StyledInputLabel>
-                    <StyledTextInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
-                    {!!isFormTouched && <StyledInputError>{errors.email}</StyledInputError>}
-                </StyledInputGroup>
+                }}>
+                    {isLoading &&
+                        <div
 
-                <StyledInputGroup>
-                    <StyledInputLabel>Message</StyledInputLabel>
-                    <StyledTextareaInput onFocus="window.scrollTo(0, 0);" disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
-                    {!!isFormTouched && <StyledInputError>{errors.message}</StyledInputError>}
-                </StyledInputGroup>
-                <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
-                    Submit
-                </StyledContactFormSubmitButton>
-            </div>
+                            className="lds-ellipsis"
+                            style={{ top: "20%", left: '50%', transform: 'translateX(-50%)', position: 'absolute', margin: "auto", display: "block" }}
+                        >
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>}
+                    <StyledInputGroup>
+                        <StyledInputLabel>Full name</StyledInputLabel>
+                        <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                        <StyledInputError>{!!(isFormTouched && !!errors.name) ? errors.name : ''}</StyledInputError>
+                    </StyledInputGroup>
+
+                    <StyledInputGroup>
+                        <StyledInputLabel>E-mail</StyledInputLabel>
+                        <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                        <StyledInputError>{!!(isFormTouched && !!errors.email) ? errors.email : ''}</StyledInputError>
+                    </StyledInputGroup>
+
+                    <StyledInputGroup>
+                        <StyledInputLabel>Message</StyledInputLabel>
+                        <StyledTextareaInput disabled={isLoading || !isMessagesAllowed} value={message} onChange={(e) => setMessageHandler(e.target.value)} rows="4" />
+                        <StyledInputError>{!!(isFormTouched && !!errors.message) ? errors.message : ''}</StyledInputError>
+                    </StyledInputGroup>
+                    <StyledContactFormSubmitButton disabled={isLoading || !isMessagesAllowed} onClick={submitMessageHandler}>
+                        Submit
+                    </StyledContactFormSubmitButton>
+                    <StyledContactFormSubmitButton onClick={handleOpenMessageForm}>
+                        Cancel
+                    </StyledContactFormSubmitButton>
+                    <p
+                        style={{
+                            textAlign: 'center',
+                            fontFamily: 'Mulish',
+                            color: 'white',
+                            opacity: !!confirmationMessage ? 1 : 0,
+                            transition: 'opacity 1s ease-in',
+                            fontSize: '1.5em',
+                            marginTop: 15,
+                        }}
+                    >{confirmationMessage}</p>
+                </div></div>}
         </div  >
     )
 

@@ -322,7 +322,7 @@ const Home = (({
                     <VideosSection isVideosLoading={isVideosLoading} videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <ContactSection configuration={configuration} reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
+                    <ContactSection isPageLoaded={isPageLoaded} configuration={configuration} reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
                 </div>
 
                 {/* floating rotating icons */}
