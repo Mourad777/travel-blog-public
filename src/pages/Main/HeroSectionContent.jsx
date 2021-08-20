@@ -103,7 +103,8 @@ const HeroSectionContent = ({
     ]);
 
     useEffect(() => {
-        if (heroWelcomePieceOne.current) {
+        // if (heroWelcomePieceOne.current) {
+        if (initialDataPercentage === 100) {
             gsap.to(heroWelcomePieceOne.current, { strokeDashoffset: 0, duration: 0.9, delay: 0 });
             gsap.to(heroWelcomePieceTwo.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.2 });
             gsap.to(heroWelcomePieceThree.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.4 });
@@ -121,8 +122,13 @@ const HeroSectionContent = ({
             gsap.to(heroWelcomePieceSix.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1 });
             gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.2 });
             gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.4 });
+            // }
+            gsap.to(heroPrimaryTextRef.current, { stroke: 'rgba(255,255,255,1)', duration: 0.2, delay: 0 });
+
+
+
         }
-    }, [heroWelcomePieceOne])
+    }, [initialDataPercentage])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
@@ -187,9 +193,9 @@ const HeroSectionContent = ({
                 onLoad={() => setIsDomReady(true)}
                 ref={heroPrimaryTextRef}
                 style={{
-                    ...getHeroSectionNameStyle(winSize, height),
+                    ...getHeroSectionNameStyle(winSize, height), stroke: 'black',
                     opacity: (winSize === 1 && height < 480) || (isLargeMobileLandscape && height < 250) ? 0 : 1,
-                    transition: 'opacity .3s ease-in',
+                    transition: 'opacity .1s ease-in',
                     zIndex: isInitialLoader ? 45 : -1,
                     pointerEvents: 'none',
                     strokeDashoffset: 180,

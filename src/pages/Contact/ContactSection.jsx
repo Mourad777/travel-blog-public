@@ -121,7 +121,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                 Send me a message
             </StyledContactFormSubmitButton>
             {/* <Button onClick={handleOpenMessageForm} icon='message' content='Send me a message' /> */}
-            {isMessageFormOpen && <div style={{ background: 'rgb(0,0,0,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 }}>
+            {isMessageFormOpen && <div style={{ background: 'rgb(14,7,1,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 }}>
                 <p style={titleStyle}>Get In Touch</p>
                 <div style={{
                     maxWidth: 500, padding: '0 10px', margin: 'auto', left: '50%',
