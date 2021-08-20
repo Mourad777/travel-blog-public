@@ -103,24 +103,26 @@ const HeroSectionContent = ({
     ]);
 
     useEffect(() => {
-        gsap.to(heroWelcomePieceOne.current, { strokeDashoffset: 0, duration: 0.9,delay:0 });
-        gsap.to(heroWelcomePieceTwo.current, { strokeDashoffset: 0, duration: 0.9,delay:0.2 });
-        gsap.to(heroWelcomePieceThree.current, { strokeDashoffset: 0, duration: 0.9,delay:0.4 });
-        gsap.to(heroWelcomePieceFour.current, { strokeDashoffset: 0, duration: 0.9,delay:0.6 });
-        gsap.to(heroWelcomePieceFive.current, { strokeDashoffset: 0, duration: 0.9,delay:0.8 });
-        gsap.to(heroWelcomePieceSix.current, { strokeDashoffset: 0, duration: 0.9,delay:1 });
-        gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9,delay:1.2 });
-        gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9,delay:1.4 });
+        if (heroWelcomePieceOne.current) {
+            gsap.to(heroWelcomePieceOne.current, { strokeDashoffset: 0, duration: 0.9, delay: 0 });
+            gsap.to(heroWelcomePieceTwo.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.2 });
+            gsap.to(heroWelcomePieceThree.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.4 });
+            gsap.to(heroWelcomePieceFour.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.6 });
+            gsap.to(heroWelcomePieceFive.current, { strokeDashoffset: 0, duration: 0.9, delay: 0.8 });
+            gsap.to(heroWelcomePieceSix.current, { strokeDashoffset: 0, duration: 0.9, delay: 1 });
+            gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9, delay: 1.2 });
+            gsap.to(heroWelcomePieceSeven.current, { strokeDashoffset: 0, duration: 0.9, delay: 1.4 });
 
-        gsap.to(heroWelcomePieceOne.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0});
-        gsap.to(heroWelcomePieceTwo.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.2 });
-        gsap.to(heroWelcomePieceThree.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.4 });
-        gsap.to(heroWelcomePieceFour.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.6 });
-        gsap.to(heroWelcomePieceFive.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:0.8 });
-        gsap.to(heroWelcomePieceSix.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1});
-        gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1.2 });
-        gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5,delay:1.4 });
-    }, [])
+            gsap.to(heroWelcomePieceOne.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0 });
+            gsap.to(heroWelcomePieceTwo.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0.2 });
+            gsap.to(heroWelcomePieceThree.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0.4 });
+            gsap.to(heroWelcomePieceFour.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0.6 });
+            gsap.to(heroWelcomePieceFive.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0.8 });
+            gsap.to(heroWelcomePieceSix.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1 });
+            gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.2 });
+            gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.4 });
+        }
+    }, [heroWelcomePieceOne])
 
     const handleScroll = (ref) => {
         gsap.to(window, { duration: 3, scrollTo: ref.current });
