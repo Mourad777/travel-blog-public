@@ -123,7 +123,7 @@ const HeroSectionContent = ({
             gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.2 });
             gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.4 });
             // }
-            gsap.to(heroPrimaryTextRef.current, { stroke: 'rgba(255,255,255,1)', duration: 0.2, delay: 0 });
+            gsap.to(heroPrimaryTextRef.current, { stroke: 'rgba(255,255,255,1)', duration: 0.2, delay: 0.2 });
 
 
 
