@@ -245,7 +245,7 @@ export const getPost = async (id, setPost, setIsLoading) => {
     setIsLoading(true);
     let postResponse = {};
     try {
-        postResponse = await axios.get(`${AppUrl}api/posts/${id}`);
+        postResponse = await axios.get(`${AppUrl}api/public-posts/${id}`);
     } catch (e) {
         console.log('Fetch Post Error', e)
         setIsLoading(false)
@@ -259,7 +259,7 @@ export const getPosts = async (setPosts, setIsLoading) => {
     let res = {};
     setIsLoading(true)
     try {
-        res = await axios.get(`${AppUrl}api/posts`);
+        res = await axios.get(`${AppUrl}api/public-posts`);
 
     } catch (e) {
         console.log('Fetch posts error', e)

@@ -324,7 +324,7 @@ const Post = ({ winSize }) => {
             <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: winSize === 1 ? 'column' : 'row' }}>
 
                 {getRelatedPosts(post, posts).map(p => (
-                    <div style={{ width: '100%', height: '100%', background: '#fff', maxWidth: 400 }}>
+                    <div key={p.title + p.created_at} style={{ width: '100%', height: '100%', background: '#fff', maxWidth: 400 }}>
                         <div style={{
                             display: 'flex',
                             justifyContent: 'space-between',
