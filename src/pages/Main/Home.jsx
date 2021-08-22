@@ -15,6 +15,7 @@ import { Fragment } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { getConfiguration, getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
+import { BlogContext } from "../..";
 
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));
@@ -34,7 +35,9 @@ const Home = (({
     height,
     isPageLoaded,
     setInitialDataPercentage,
-    initialDataPercentage
+    initialDataPercentage,
+    setLastViewedSection,
+    lastViewedSection,
 }) => {
     // const refSection1 = useRef(null)
     const refSection2 = useRef(null)
@@ -69,7 +72,22 @@ const Home = (({
     }
 
 
-    const history = useHistory()
+    const history = useHistory();
+
+    useEffect(() => {
+        if (lastViewedSection === 'posts') {
+            gsap.to(window, { duration: 2, scrollTo: refSection2.current });
+        }
+        if (lastViewedSection === 'destinations') {
+            gsap.to(window, { duration: 2, scrollTo: refSection3.current });
+        }
+        if (lastViewedSection === 'photos') {
+            gsap.to(window, { duration: 2, scrollTo: refSection4.current });
+        }
+        if (lastViewedSection === 'videos') {
+            gsap.to(window, { duration: 2, scrollTo: refSection5.current });
+        }
+    }, [])
 
     useEffect(() => {
         setScrollSection(0)
@@ -99,7 +117,6 @@ const Home = (({
 
         const channel = getPusher().subscribe("my-channel");
         channel.bind("BlogUpdated", (data) => {
-            console.log('data', data)
             getInitialData();
         });
     }, []);
@@ -126,14 +143,11 @@ const Home = (({
     }
 
     useEffect(() => {
-
-
         const scrollAnimation = () => {
             if (!requestId) {
                 requestId = requestAnimationFrame(update);
             }
         }
-
         // the animation to use
         const tlPath = gsap.timeline({ paused: true });
         tlPath.to(mapPathlineRef.current, { strokeDashoffset: 2850 });
@@ -232,7 +246,10 @@ const Home = (({
                         ...transformStyles1,
 
                     }}
-                        onClick={() => history.push(`/photo/${(photos[0] || {}).id}`)}
+                        onClick={() => {
+                            history.push(`/photo/${(photos[0] || {}).id}`)
+                            setLastViewedSection(null);
+                        }}
                     >
                         <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[0] || {}).src} />
                     </div>}
@@ -251,7 +268,10 @@ const Home = (({
                         transform: 'rotate(0) scale(0)',
                         ...transformStyles2,
                     }}
-                        onClick={() => history.push(`/photo/${(photos[1] || {}).id}`)}
+                        onClick={() => {
+                            history.push(`/photo/${(photos[1] || {}).id}`)
+                            setLastViewedSection(null);
+                        }}
 
                     >
                         <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[1] || {}).src} />
@@ -271,7 +291,10 @@ const Home = (({
                         transform: 'rotate(0) scale(0)',
                         ...transformStyles3,
                     }}
-                        onClick={() => history.push(`/photo/${(photos[2] || {}).id}`)}
+                        onClick={() => {
+                            history.push(`/photo/${(photos[2] || {}).id}`)
+                            setLastViewedSection(null);
+                        }}
                     >
                         <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[2] || {}).src} />
                     </div>}
@@ -307,22 +330,82 @@ const Home = (({
                         isPageLoaded={isPageLoaded}
                         scrollSection={scrollSection}
                         initialDataPercentage={initialDataPercentage}
+                        setLastViewedSection={setLastViewedSection}
                     />
 
                     {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
                     <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
-                    <PostsSection isPostsLoading={isPostsLoading} scrollWidth={scrollWidth} height={height} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection2} postsFromDB={postsFromDB} winSize={winSize} />
-
-                    <DestinationsSection reference={refSection3} isLargeMobileLandscape={isLargeMobileLandscape} postsFromDB={postsFromDB} videos={videos} scrollWidth={scrollWidth} photos={photos} height={height} winSize={winSize} />
+                    <BlogContext.Consumer>
+                        {({ setSelectedPostsPage, selectedPostsPage }) => (
+                            <PostsSection
+                                setLastViewedSection={setLastViewedSection}
+                                isPostsLoading={isPostsLoading}
+                                scrollWidth={scrollWidth}
+                                height={height}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                reference={refSection2}
+                                postsFromDB={postsFromDB}
+                                winSize={winSize}
+                                selectedPostsPage={selectedPostsPage}
+                                setSelectedPostsPage={setSelectedPostsPage}
+                            />
+                        )}
+                    </BlogContext.Consumer>
+                    <DestinationsSection
+                        setLastViewedSection={setLastViewedSection}
+                        reference={refSection3}
+                        isLargeMobileLandscape={isLargeMobileLandscape}
+                        postsFromDB={postsFromDB}
+                        videos={videos}
+                        scrollWidth={scrollWidth}
+                        photos={photos}
+                        height={height}
+                        winSize={winSize}
+                    />
                     {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
-
-                    <PhotosSection isPhotosLoading={isPhotosLoading} photos={photos} isLargeMobileLandscape={isLargeMobileLandscape} reference={refSection4} winSize={winSize} height={height} scrollWidth={scrollWidth} />
+                    <BlogContext.Consumer>
+                        {({ setSelectedPhotosPage, selectedPhotosPage }) => (
+                            <PhotosSection
+                                setLastViewedSection={setLastViewedSection}
+                                isPhotosLoading={isPhotosLoading}
+                                photos={photos}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                reference={refSection4}
+                                winSize={winSize}
+                                height={height}
+                                scrollWidth={scrollWidth}
+                                selectedPhotosPage={selectedPhotosPage}
+                                setSelectedPhotosPage={setSelectedPhotosPage}
+                            />
+                        )}
+                    </BlogContext.Consumer>
                     {/* <PhotosSectionDetail reference={refSectionPhotos}/> */}
-
-                    <VideosSection isVideosLoading={isVideosLoading} videos={videos} isLargeMobileLandscape={isLargeMobileLandscape} height={height} reference={refSection5} scrollWidth={scrollWidth} winSize={winSize} />
+                    <BlogContext.Consumer>
+                        {({ setSelectedVideosPage, selectedVideosPage }) => (
+                            <VideosSection
+                                setLastViewedSection={setLastViewedSection}
+                                isVideosLoading={isVideosLoading}
+                                videos={videos}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                height={height}
+                                reference={refSection5}
+                                scrollWidth={scrollWidth}
+                                winSize={winSize}
+                                setSelectedVideosPage={setSelectedVideosPage}
+                                selectedVideosPage={selectedVideosPage}
+                            />
+                        )}
+                    </BlogContext.Consumer>
                     {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <ContactSection isPageLoaded={isPageLoaded} configuration={configuration} reference={refSection6} isLargeMobileLandscape={isLargeMobileLandscape} height={height} scrollWidth={scrollWidth} />
+                    <ContactSection
+                        isPageLoaded={isPageLoaded}
+                        configuration={configuration}
+                        reference={refSection6}
+                        isLargeMobileLandscape={isLargeMobileLandscape}
+                        height={height}
+                        scrollWidth={scrollWidth}
+                    />
                 </div>
 
                 {/* floating rotating icons */}

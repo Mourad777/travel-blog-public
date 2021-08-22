@@ -13,8 +13,8 @@ const PostText = ({ post, isMobile, index, isLargeMobileLandscape }) => {
                 style={{
                     width: "100%",
                     // background: "rgba(218, 173, 134,0.8)",
-                    background:primaryColor,
-                    opacity:0.8,
+                    background: primaryColor,
+                    opacity: 0.8,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
@@ -34,17 +34,25 @@ const PostText = ({ post, isMobile, index, isLargeMobileLandscape }) => {
                         background: 'transparent !important',
                         position: 'absolute',
                         top: isLargeMobileLandscape ? 5 : 30,
-                        left:isLargeMobileLandscape ?'5%' : !isMobile ? '20%' : '',
-                        transform:isLargeMobileLandscape ? 'translateX(-5%)' : !isMobile ? 'translateX(-20%)' : '',
+                        left: isLargeMobileLandscape ? '5%' : !isMobile ? '20%' : '',
+                        transform: isLargeMobileLandscape ? 'translateX(-5%)' : !isMobile ? 'translateX(-20%)' : '',
                         textAlign: 'center',
                         maxWidth: 170,
                     }}
 
                 >
                     <div >
-                        {!!post.title && <p style={{fontWeight:'bold', fontSize: isLargeMobileLandscape ? '1em' : '1.2em', fontFamily: 'Mulish' }}>{post.title}</p>}
-                        {!!post.created_at && <p style={{ fontStyle: 'italic', fontFamily: 'Mulish', fontSize: '0.7em', color: 'rgb(251,251,251)', }}>{moment(new Date(post.created_at).getTime()).format("MMMM DD YYYY")}</p>}
-                        {(!isLargeMobileLandscape && !!post.summary) && <p style={{ fontSize: '0.8em', fontFamily: 'Mulish' }}>{`${post.summary.substring(0, 100)} ${post.summary.length > 99 ? '...' : ''}`}</p>}
+                        {!!post.title && <p style={{ fontWeight: 'bold', fontSize: isLargeMobileLandscape ? '1em' : '1.2em', fontFamily: 'Mulish' }}>{post.title}</p>}
+                        {!!post.created_at && (
+                            <p style={{ fontStyle: 'italic', fontFamily: 'Mulish', fontSize: '0.7em', color: 'rgb(251,251,251)', }}>
+                                {!!post.date_written ? moment(new Date(post.date_written).getTime()).format("MMMM DD YYYY") :  moment(new Date(post.created_at).getTime()).format("MMMM DD YYYY")}
+                            </p>
+                        )}
+                        {(!isLargeMobileLandscape && !!post.summary) && (
+                            <p style={{ fontSize: '0.8em', fontFamily: 'Mulish' }}>
+                                {`${post.summary.substring(0, 100)} ${post.summary.length > 99 ? '...' : ''}`}
+                            </p>
+                        )}
                     </div>
                 </div>
 

@@ -7,9 +7,43 @@ import { Replies } from '../Posts/Post';
 import { List, TextArea, Form, Button } from 'semantic-ui-react'
 import { StyledFormTextInput, StyledBlueButton, StyledRedButton, StyledInputError } from '../StyledComponents';
 import Avatar from 'react-avatar';
-import { getComments, getVideo } from '../../api/util';
+import { getComments, getVideo, getVideos } from '../../api/util';
 import axios from 'axios';
 import Loader from '../../components/Loader/Loader';
+import moment from 'moment';
+
+const getRelatedVideos = (currentVideo, videos) => {
+    const allVideosExceptCurrent = (videos || []).filter(item => item.id !== currentVideo.id);
+    const currentVideoTags = !!currentVideo.tags ? JSON.parse(currentVideo.tags) : [];
+    const currentVideoCategoriesIds = (currentVideo.categories || []).map(item => {
+        return item.id
+    });
+    const relatedVideoIds = [];
+    allVideosExceptCurrent.forEach(video => {
+        if (!!video.tags) {
+            JSON.parse(video.tags).forEach(tag => {
+                const lowerCasedTags = currentVideoTags.map(t => t.toLowerCase())
+                if (lowerCasedTags.includes(tag.toLowerCase())) {
+                    relatedVideoIds.push(video.id)
+                }
+            })
+
+        };
+        video.categories.forEach(cat => {
+            if (currentVideoCategoriesIds.includes(cat.id)) {
+                relatedVideoIds.push(video.id)
+
+            }
+        });
+
+        if ((video.country === currentVideo.country) && !!video.country) {
+            relatedVideoIds.push(video.id)
+
+        }
+    });
+
+    return videos.filter((v, i) => relatedVideoIds.includes(v.id)).splice(0, 2)
+}
 
 const Video = ({ winSize }) => {
     const params = useParams();
@@ -17,6 +51,7 @@ const Video = ({ winSize }) => {
     const selectedVideo = params.videoId;
 
     const [video, setVideo] = useState({});
+    const [videos, setVideos] = useState([]);
     const [comments, setComments] = useState([]);
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
@@ -41,6 +76,7 @@ const Video = ({ winSize }) => {
     }, [name, email, comment])
 
     const getInitialData = async () => {
+        await getVideos(setVideos, setIsLoading);
         await getVideo(selectedVideo, setVideo, setIsLoading);
         await getComments(selectedVideo, 'video', setComments, setIsLoading);
     }
@@ -56,6 +92,7 @@ const Video = ({ winSize }) => {
         channel.bind("BlogUpdated", async (data) => {
             console.log('data', data)
             await getVideo(selectedVideo, setVideo, setIsLoading);
+            await getVideos(setVideos, setIsLoading);
         });
         channel.bind("CommentsUpdated", async (data) => {
             console.log('data', data)
@@ -249,6 +286,37 @@ const Video = ({ winSize }) => {
                         </div>
                     </Form>
                 </Fragment> : <div><h1>Comments Disabled</h1></div>}
+            </div>
+            <div style={{ background: '#fff', padding: 10, maxWidth: 800, margin: 'auto' }}>
+               {(getRelatedVideos(video, videos).length > 1) && <h1 style={{ fontFamily: 'Mulish',textAlign:'center' }}>Related Videos</h1>}
+                {getRelatedVideos(video, videos).map(v => (
+                    <div style={{ width: '100%', height: '100%', background: '#fff', maxWidth: 400,margin:'auto' }}>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            flexDirection: 'column',
+                            padding: 10,
+                            height: 400,
+                            width: '100%',
+                        }}>
+                            <div style={{ position: 'relative', height: 200, width: '100%' }}>
+                                <img onClick={() => history.push(`/video/${v.id}`)} src={v.thumbnail} style={{ objectFit: 'cover', width: '100%', height: 200, cursor: 'pointer' }} />
+                            </div>
+                            <div>
+                                <p onClick={() => history.push(`/video/${v.id}`)} style={{ fontSize: '1.5em', textAlign: 'center', fontFamily: 'Mulish', fontWeight: 'bold', margin: 0, cursor: 'pointer' }}>
+                                    {v.title}
+                                </p>
+                                <p style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10, textAlign: 'center' }}>
+                                    {moment(new Date(v.created_at).getTime()).format("MMMM DD YYYY")}
+                                </p>
+                            </div>
+
+                            <p style={{ textAlign: 'center' }}>{v.description}</p>
+
+                            <div />
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     )

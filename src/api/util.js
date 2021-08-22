@@ -267,7 +267,22 @@ export const getPosts = async (setPosts, setIsLoading) => {
     }
     console.log('Fetch posts response', res)
     const posts = res.data;
-    setPosts(posts || []);
+    if (posts) {
+
+        function compare(a, b) {
+            if ((new Date(a.date_written).getTime() || new Date(a.created_at).getTime()) < (new Date(b.date_written).getTime() || new Date(b.created_at).getTime())) {
+                return 1;
+            }
+            if ((new Date(a.date_written).getTime() || new Date(a.created_at).getTime()) > (new Date(b.date_written).getTime() || new Date(b.created_at).getTime())) {
+                return -1;
+            }
+            return 0;
+        }
+
+        // posts.sort(compare);
+
+        setPosts(posts.sort(compare));
+    }
     setIsLoading(false)
 }
 

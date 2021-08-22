@@ -3,24 +3,26 @@ import { StyledPostRow, StyledLatestPostsInnerWrapper, StyledLatestPostsOuterWra
 import OuterColumn from "./OuterColumns";
 import RowLayout from './RowLayout';
 import Paginate from '../../components/Paginate/Paginate';
-import { ScrollTrigger, gsap } from 'gsap/all'
+import { ScrollTrigger } from 'gsap/all'
 import Loader from '../../components/Loader/Loader';
 import { primaryColor } from '../utility';
-const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height, scrollWidth, isPostsLoading }) => {
 
+const Posts = ({
+    winSize,
+    isLargeMobileLandscape,
+    postsFromDB,
+    reference,
+    height,
+    scrollWidth,
+    isPostsLoading,
+    setLastViewedSection,
+    setSelectedPostsPage:setSelectedPage,
+    selectedPostsPage:selectedPage,
+}) => {
+    console.log('selected posts page',selectedPage)
     const [pageCount, setPageCount] = useState(0);
     const [posts, setPosts] = useState([]);
-    const [selectedPage, setSelectedPage] = useState(0);
-
-    // useEffect(() => {
-    //     if (winSize > 1) {
-    //         setOffset(1)
-    //     }
-    // }, [winSize])
-
-    // useEffect(() => {
-    //     getData()
-    // }, [offset, winSize, postsFromDB]);
+    // const [selectedPage, setSelectedPage] = useState(0);
 
     useEffect(() => {
         ScrollTrigger.create({
@@ -47,7 +49,6 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
     }, [selectedPage, postsFromDB]);
 
     useEffect(() => {
-        setSelectedPage(0)
         getData();
     }, [winSize])
 
@@ -84,9 +85,7 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
 
         <div style={{
             display: 'flex', background: primaryColor,
-            height:
-                // 'calc(100vh - 760px)'
-                '100%',
+            height:'100%',
             maxHeight: winSize === 1 && postsFromDB.length === 0 ? '100%' : 50,
         }}>
             {postsFromDB.length > 1 &&
@@ -97,10 +96,21 @@ const Posts = ({ winSize, isLargeMobileLandscape, postsFromDB, reference, height
             <StyledLatestPostsInnerWrapper height={height} isLargeMobileLandscape={isLargeMobileLandscape}>
 
                 {posts.map((post, index) => (
-                    <StyledPostRow isLargeMobileLandscape={isLargeMobileLandscape} key={`post[${post._id}]index[${index}]`} className="row" index={index} winSize={winSize} >
-
-                        <RowLayout isLargeMobileLandscape={isLargeMobileLandscape} offset={selectedPage} winSize={winSize} post={post} index={index} />
-
+                    <StyledPostRow
+                        isLargeMobileLandscape={isLargeMobileLandscape}
+                        key={`post[${post._id}]index[${index}]`}
+                        className="row"
+                        index={index}
+                        winSize={winSize}
+                    >
+                        <RowLayout
+                            setLastViewedSection={setLastViewedSection}
+                            isLargeMobileLandscape={isLargeMobileLandscape}
+                            offset={selectedPage}
+                            winSize={winSize}
+                            post={post}
+                            index={index}
+                        />
                     </StyledPostRow>
                 ))}
 

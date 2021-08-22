@@ -7,7 +7,40 @@ import '../global-styles/tinymceReadonly.css'
 import Avatar from 'react-avatar';
 import { useHistory, useParams } from 'react-router';
 import Loader from '../../components/Loader/Loader';
-import { getComments, getPost } from '../../api/util';
+import { getComments, getPost, getPosts } from '../../api/util';
+import { ScrollTrigger } from 'gsap/all';
+import moment from 'moment';
+
+const getRelatedPosts = (currentPost, posts) => {
+    const allPostsExceptCurrent = (posts || []).filter(item => item.id !== currentPost.id);
+    const currentPostTags = !!currentPost.tags ? JSON.parse(currentPost.tags) : [];
+    const currentPostCategoriesIds = (currentPost.categories || []).map(item => {
+        return item.id
+    });
+    const relatedPostIds = [];
+    allPostsExceptCurrent.forEach(post => {
+        if (!!post.tags) {
+            JSON.parse(post.tags).forEach(tag => {
+                const lowerCasedTags = currentPostTags.map(t => t.toLowerCase())
+                if (lowerCasedTags.includes(tag.toLowerCase())) {
+                    relatedPostIds.push(post.id)
+                }
+            })
+
+        };
+        post.categories.forEach(cat => {
+            if (currentPostCategoriesIds.includes(cat.id)) {
+                relatedPostIds.push(post.id)
+            }
+        });
+
+        if ((post.country === currentPost.country) && !!post.country) {
+            relatedPostIds.push(post.id)
+        }
+    });
+
+    return posts.filter((p, i) => relatedPostIds.includes(p.id)).splice(0, 3)
+}
 
 export const Replies = ({ comment, setReplyComment }) => {
     return (
@@ -61,11 +94,10 @@ const Post = ({ winSize }) => {
     const params = useParams();
     const selectedPost = params.postId;
 
-
-
     const postContainer = useRef(null)
     const [comments, setComments] = useState([]);
     const [post, setPost] = useState({});
+    const [posts, setPosts] = useState([]);
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
     const [email, setEmail] = useState('');
@@ -76,7 +108,14 @@ const Post = ({ winSize }) => {
 
     useEffect(() => {
         setErrors(validateMessage({ name, email, message: comment }));
-    }, [name, email, comment])
+    }, [name, email, comment]);
+
+    useEffect(() => {
+        const Alltrigger = ScrollTrigger.getAll();
+        for (let i = 0; i < Alltrigger.length; i++) {
+            Alltrigger[i].kill(true)
+        }
+    }, [])
 
     const handleName = (e) => {
         setName(e.target.value)
@@ -120,13 +159,19 @@ const Post = ({ winSize }) => {
 
     }
 
+    const getInitialData = async () => {
+        await getPost(selectedPost, setPost, setIsLoading);
+        await getPosts(setPosts, setIsLoading);
+        await getComments(selectedPost, 'post', setComments, setIsLoading)
+    }
+
     useEffect(() => {
-        getPost(selectedPost, setPost, setIsLoading)
-        getComments(selectedPost, 'post', setComments, setIsLoading)
+        getInitialData()
         const channel = getPusher().subscribe("my-channel");
         channel.bind("BlogUpdated", async (data) => {
             console.log('data', data)
             await getPost(selectedPost, setPost, setIsLoading);
+            await getPosts(setPosts, setIsLoading);
         });
         channel.bind("CommentsUpdated", async (data) => {
             console.log('data', data)
@@ -143,7 +188,7 @@ const Post = ({ winSize }) => {
         )
     }
 
-    console.log('comments abc: ', comments)
+    console.log('getRelatedPosts(post,posts)', getRelatedPosts(post || {}, posts || []))
 
     return (
         <Fragment>
@@ -160,7 +205,7 @@ const Post = ({ winSize }) => {
 
             <div ref={postContainer} style={{ width: '100%', height: '100%', background: '#fff', padding: '40px 20px', maxWidth: 600, margin: 'auto' }}>
                 <Button content='Home' onClick={() => { history.push('/') }} />
-                <p style={{ textAlign: 'center', margin: '20px 0', fontSize: '1.5em', fontFamily: "Merriweather", color: '#afafaf' }}>{!!post.created_at ? `Posted on ${new Date(post.created_at).toLocaleDateString()} ${!!post.author ? 'by ' + post.author : ''}` : ''}</p>
+                <p style={{ textAlign: 'center', margin: '20px 0', fontSize: '1.5em', fontFamily: "Merriweather", color: '#afafaf' }}>{`Posted on ${post.date_written ? new Date(post.date_written).toLocaleDateString() : new Date(post.created_at).toLocaleDateString()} ${!!post.author ? 'by ' + post.author : ''}`}</p>
                 <div dangerouslySetInnerHTML={{
                     __html: `<style>
             @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
@@ -169,6 +214,9 @@ const Post = ({ winSize }) => {
             img {
                 max-width:100%;
                 object-fit:cover;
+            }
+            span {
+                max-width:100%;
             }
             </style>` + post.content
                 }} />
@@ -271,6 +319,48 @@ const Post = ({ winSize }) => {
                 </Fragment> : <div><h1>Comments Disabled</h1></div>}
 
 
+            </div>
+            {(getRelatedPosts(post, posts).length > 1) && <h1 style={{ textAlign: 'center' }}>Related Posts</h1>}
+            <div style={{ display: 'flex', justifyContent: 'space-around', flexDirection: winSize === 1 ? 'column' : 'row' }}>
+
+                {getRelatedPosts(post, posts).map(p => (
+                    <div style={{ width: '100%', height: '100%', background: '#fff', maxWidth: 400 }}>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            flexDirection: 'column',
+                            padding: 10,
+                            height: 400,
+                            width: '100%',
+                        }}>
+                            <div style={{ position: 'relative', height: 200, width: '100%' }}>
+                                <img onClick={() => history.push(`/post/${p.id}`)} src={p.image} style={{ objectFit: 'cover', width: '100%', height: 200, cursor: 'pointer' }} />
+                            </div>
+                            <div>
+                                <p onClick={() => history.push(`/post/${p.id}`)} style={{ fontSize: '1.5em', textAlign: 'center', fontFamily: 'Mulish', fontWeight: 'bold', margin: 0, cursor: 'pointer' }}>
+                                    {p.title}
+                                </p>
+                                <p style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10, textAlign: 'center' }}>
+                                    {!!p.date_written ? moment(new Date(p.date_written).getTime()).format("MMMM DD YYYY") : moment(new Date(p.created_at).getTime()).format("MMMM DD YYYY")}
+                                </p>
+                            </div>
+
+                            <p style={{ textAlign: 'center' }}>{p.description}</p>
+
+                            <div />
+                        </div>
+                    </div>
+                ))}
+
+
+
+
+                {/* <div style={{ width: '100%', height: 300, background: 'green' }}>
+
+                </div>
+                <div style={{ width: '100%', height: 300, background: 'blue' }}>
+
+                </div> */}
             </div>
         </Fragment>)
 }

@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ReactPaginate from 'react-paginate';
 import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 import { primaryColor } from "../utility";
+import Paginate from "../../components/Paginate/Paginate";
 
 
-export default ({ reference, videos, winSize, height, isLargeMobileLandscape, scrollWidth, isVideosLoading }) => {
+export default ({
+    reference,
+    videos,
+    winSize,
+    height,
+    isLargeMobileLandscape,
+    scrollWidth,
+    isVideosLoading,
+    setLastViewedSection,
+    setSelectedVideosPage: setOffset,
+    selectedVideosPage: offset
+}) => {
+
     const history = useHistory();
-    const [offset, setOffset] = useState(0);
     const [data, setData] = useState([]);
     const [pageCount, setPageCount] = useState(0);
-    let perPage = 3;
-    let margin = '1.66%'
-    let width = '30%'
-    if (winSize === 1) {
-        width = '80%'
-        perPage = 1
-        margin = '6.66%'
-    }
-    if (winSize === 2) {
-        perPage = 2
-        width = '40%'
-        margin = '3.33%'
+
+    const getWinsizeValues = (winSize) => {
+        let perPage = 3;
+        let margin = '1.66%'
+        let width = '30%'
+        if (winSize === 1) {
+            width = '80%'
+            perPage = 1
+            margin = '6.66%'
+        }
+        if (winSize === 2) {
+            perPage = 2
+            width = '40%'
+            margin = '3.33%'
+        }
+        return {perPage,margin,width}
     }
 
     useEffect(() => {
@@ -37,22 +52,23 @@ export default ({ reference, videos, winSize, height, isLargeMobileLandscape, sc
     }, [reference])
 
     const getData = async () => {
-        const slice = videos.slice(offset === 1 || offset === 0 ? 0 : offset * perPage - perPage, offset === 0 ? perPage : offset * perPage);
+        const perPage = getWinsizeValues(winSize).perPage;
+        console.log('perPage',perPage)
+        setPageCount(Math.ceil((videos || []).length / perPage))
+        const slice = videos.slice((offset + 1) * perPage - perPage, (offset + 1) * perPage);
         setData(slice)
-        setPageCount(Math.ceil(videos.length / perPage))
     }
 
     useEffect(() => {
         getData()
     }, [offset, videos]);
+
     useEffect(() => {
         getData()
-        setOffset(1)
     }, [winSize])
 
     const handlePageClick = (e) => {
-        const selectedPage = e.selected;
-        setOffset(selectedPage + 1)
+        setOffset(e.selected)
     };
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: primaryColor, textAlign: 'center', marginBottom: 0 }
@@ -90,14 +106,15 @@ export default ({ reference, videos, winSize, height, isLargeMobileLandscape, sc
                     <div
                         key={`video-[${i + 1}]`}
                         onClick={() => {
-                            history.push(`/video/${video.id}`)
+                            history.push(`/video/${video.id}`);
+                            setLastViewedSection('videos')
                         }}
                         style={{
                             background: '#fff',
                             cursor: "pointer",
                             float: "left",
                             position: "relative",
-                            width,
+                            width:getWinsizeValues(winSize).width,
                             height: "50vh",
                             overflow: "hidden",
                             minHeight: 205,
@@ -108,23 +125,11 @@ export default ({ reference, videos, winSize, height, isLargeMobileLandscape, sc
                         <img srcSet={`${video.thumbnail || '/assets/icons/video-icon.jpg'} 400w`} src={video.thumbnail || '/assets/icons/video-icon.jpg'} style={{ maxHeight: 300, width: '100%', height: isLargeMobileLandscape ? '40vh' : '25vh', objectFit: !video.thumbnail && isLargeMobileLandscape ? 'scale-down' : 'cover' }} />
                         {!isLargeMobileLandscape && <div style={{ maxHeight: 200, height: '100%', background: '#fff' }}><p style={{ textAlign: 'center', paddingTop: 10 }}>{video.description}</p></div>}
                     </div>
-                    // </Link>
                 ))}
             </div>
 
             <div style={isLargeMobileLandscape ? mobileLandscapePaginateStyle : { display: 'flex' }}>
-                <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"} />
+            <Paginate totalPages={pageCount} page={offset} handlePageClick={handlePageClick} />
             </div>
         </div>
     )

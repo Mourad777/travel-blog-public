@@ -25,7 +25,7 @@ function useOutsideAlerter(ref, handleOutsideClick) {
     }, [ref]);
 }
 
-const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, isPageLoaded }) => {
+const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, isPageLoaded, setLastViewedSection }) => {
 
     const adjustedPhotos = photos.map(p => ({
         type: 'photo',
@@ -139,8 +139,9 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, 
         if (type === 'photo') history.push(`/photo/${selectedResult}`);
         if (type === 'video') history.push(`/video/${selectedResult}`);
         if (type === 'post') history.push(`/post/${selectedResult}`);
-        if (type === 'country') history.push(`/destination/${selectedResult}`)
-        if (type === 'category') history.push(`/category/${selectedResult}`)
+        if (type === 'country') history.push(`/destination/${selectedResult}`);
+        if (type === 'category') history.push(`/category/${selectedResult}`);
+        setLastViewedSection(null);
     }
 
 
@@ -157,7 +158,7 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, 
             ref={wrapperRef}
         >
             <div className="search-box">
-                <button className="btn-search" style={{color:'rgb(204,134,74)'}}><Icon name="search" /></button>
+                <button className="btn-search" style={{ color: 'rgb(204,134,74)' }}><Icon name="search" /></button>
                 <input value={searchValue} onChange={handleSearchValue} type="text" className="input-search" placeholder="Type to Search..."></input>
             </div>
             <div style={{
@@ -176,7 +177,7 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, 
                         filteredResultsWithoutDuplicates.map(res => {
                             let image;
                             if (res.type === 'country') {
-                                image = (countryThumbnails.find(t => t.country === res.id) || {}).image || '/assets/icons/countryZ-icon.jpg';
+                                image = (countryThumbnails.find(t => t.country === res.id) || {}).image || '/assets/icons/country-icon.jpg';
                             }
                             if (res.type === 'category') {
                                 image =

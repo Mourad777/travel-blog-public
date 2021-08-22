@@ -6,3 +6,6 @@ before storing the image in aws s3
 -moving the app from heroku to netlify resulted in a significantly faster load time
 -use react lazy
 -loadable components seams to mess up gsap animations when navigating back to a page
+
+Post
+-related posts can be associated by tags, categories or countries

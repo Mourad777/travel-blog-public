@@ -5,7 +5,17 @@ import geo from "./geo.json"
 import { ScrollTrigger } from 'gsap/all'
 import { primaryColor } from "../utility";
 
-const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos, isLargeMobileLandscape, scrollWidth }) => {
+const WorldMap = ({
+    winSize,
+    height,
+    reference,
+    postsFromDB = [],
+    photos,
+    videos,
+    isLargeMobileLandscape,
+    scrollWidth,
+    setLastViewedSection
+}) => {
     const history = useHistory();
     useEffect(() => {
         ScrollTrigger.create({
@@ -21,6 +31,7 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
         const highlightedCountries = [...postsFromDB.map(p => p.country), ...photos.map(p => p.country), ...videos.map(p => p.country)];
         if (highlightedCountries.includes(geo.ISO_A2)) {
             history.push(`/destination/${geo.ISO_A2}`)
+            setLastViewedSection('destinations')
         }
     }
     const aspectRatio = scrollWidth / height;
@@ -68,7 +79,11 @@ const WorldMap = ({ winSize, height, reference, postsFromDB = [], photos, videos
                                             : primaryColor
                                     }
                                     cursor={isHighlighted ? 'pointer' : 'default'}
-                                    onClick={handleClick(geo.properties)}
+                                    onClick={
+                                            handleClick(geo.properties)
+                                        
+
+                                    }
                                 // stroke="#840404"
                                 />
                             );

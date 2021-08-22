@@ -3,13 +3,14 @@ import Spacer from "./Spacer";
 import PostTitleImage from "./PostTitleImage";
 import PostText from "./PostText";
 
-const RowLayout = ({ winSize, isLargeMobileLandscape, post, index }) => (
+const RowLayout = ({ winSize, isLargeMobileLandscape, post, index, setLastViewedSection }) => (
     <Fragment>
         {!(winSize === 1) && <Spacer />}
 
         {winSize === 1 && (
             <Fragment>
                 <PostTitleImage
+                    setLastViewedSection={setLastViewedSection}
                     index={index} post={post} />
                 <PostText
                     isLargeMobileLandscape={isLargeMobileLandscape}
@@ -24,6 +25,7 @@ const RowLayout = ({ winSize, isLargeMobileLandscape, post, index }) => (
         {!(winSize === 1) && !!(index % 2) && (
             <Fragment>
                 <PostTitleImage
+                    setLastViewedSection={setLastViewedSection}
                     isLargeMobileLandscape={isLargeMobileLandscape}
                     index={index} post={post} />
                 <PostText
@@ -44,6 +46,7 @@ const RowLayout = ({ winSize, isLargeMobileLandscape, post, index }) => (
                     isMobile={winSize === 1}
                 />
                 <PostTitleImage
+                    setLastViewedSection={setLastViewedSection}
                     isLargeMobileLandscape={isLargeMobileLandscape}
                     index={index}
                     post={post} />

@@ -119,7 +119,9 @@ const Country = ({ winSize, height }) => {
                         <div style={{ height: '40%', background: '#e2e2e2' }}>
                             <img src={p.image} style={{ height: '100%', width: '100%', objectFit: 'cover' }} />
                         </div>
-                        <span style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10, textAlign: 'center' }}>{moment(new Date(p.created_at).getTime()).format("MMMM DD YYYY")}</span>
+                        <span style={{ fontStyle: 'italic', color: '#8b8b8b', padding: 10, textAlign: 'center' }}>
+                            {!!p.date_written ? moment(new Date(p.date_written).getTime()).format("MMMM DD YYYY") :  moment(new Date(p.created_at).getTime()).format("MMMM DD YYYY")}
+                            </span>
                         <div style={{ padding: 10 }}>
                             {!!p.summary && <p style={{ fontFamily: 'Mulish' }}> {`${p.summary.substring(0, 100)} ${p.summary.length > 99 ? '...' : ''}`}</p>}
                         </div>

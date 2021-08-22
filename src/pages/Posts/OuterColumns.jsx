@@ -34,7 +34,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                 <div
                     style={{
                         height:isLeft ? 120 : 220 ,
-                        backgroundColor: `rgb(218, 173, 134,${isLargeMobileLandscape ? 1 : 0.8})`
+                        backgroundColor: `rgb(229, 170, 112,${isLargeMobileLandscape ? 1 : 0.8})`
                     }}
                 ></div>
                 <div
@@ -84,7 +84,7 @@ export default ({ isLeft,isLargeMobileLandscape }) => (
                 <div
                     style={{
                         height:isLeft ? 200 : 100,
-                        backgroundColor: `rgb(218, 173, 134,${isLargeMobileLandscape ? 1 : 0.8})`
+                        backgroundColor: `rgb(229, 170, 112,${isLargeMobileLandscape ? 1 : 0.8})`
                     }}
                 ></div>
                 <div

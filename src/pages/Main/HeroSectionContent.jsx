@@ -30,6 +30,7 @@ const HeroSectionContent = ({
     isPageLoaded,
     scrollSection,
     initialDataPercentage,
+    setLastViewedSection,
 }) => {
     const heroPicMainRef = useRef(null);
     const heroPicPieceOneRef = useRef(null);
@@ -155,6 +156,7 @@ const HeroSectionContent = ({
                 winSize={winSize}
                 countryThumbnails={countryThumbnails}
                 isPageLoaded={isPageLoaded}
+                setLastViewedSection={setLastViewedSection}
             />
 
             <img

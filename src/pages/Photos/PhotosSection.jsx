@@ -4,13 +4,24 @@ import Paginate from "../../components/Paginate/Paginate";
 import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 import { primaryColor } from "../utility";
+import { BlogContext } from "../..";
 
-export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobileLandscape, isPhotosLoading }) => {
-
+export default ({
+    reference,
+    photos,
+    winSize,
+    scrollWidth,
+    height,
+    isLargeMobileLandscape,
+    isPhotosLoading,
+    setSelectedPhotosPage:setSelectedPage,
+    selectedPhotosPage:selectedPage,
+}) => {
+    console.log('photo selectedPage',selectedPage)
     const [data, setData] = useState([]);
     const perPage = winSize > 1 && height < 640 ? 3 : 9;
     const [pageCount, setPageCount] = useState(0);
-    const [selectedPage, setSelectedPage] = useState(0);
+    // const [selectedPage, setSelectedPage] = useState(0);
     const [gridWidth, setGridWidth] = useState(0);
     const history = useHistory();
 
@@ -25,10 +36,17 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
         });
     }, [reference])
 
+    // const getData = async () => {
+    //     const slice = photos.slice((selectedPage + 1) * perPage - perPage, (selectedPage + 1) * perPage);
+    //     setData(slice)
+    //     setPageCount(Math.ceil(photos.length / perPage))
+    // }
+
+
     const getData = async () => {
+        setPageCount(Math.ceil((photos || []).length / perPage))
         const slice = photos.slice((selectedPage + 1) * perPage - perPage, (selectedPage + 1) * perPage);
         setData(slice)
-        setPageCount(Math.ceil(photos.length / perPage))
     }
 
     useEffect(() => {
@@ -36,7 +54,7 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
     }, [selectedPage, photos]);
 
     useEffect(() => {
-        setSelectedPage(0)
+        // setSelectedPage(0)
         getData();
     }, [winSize, height])
 
@@ -44,73 +62,82 @@ export default ({ reference, photos, winSize, scrollWidth, height, isLargeMobile
         setSelectedPage(e.selected);
     };
 
+    console.log('win size: ',winSize)
+
+
     const gridContainerReference = useRef(null);
     useEffect(() => {
         setGridWidth(gridContainerReference.current.scrollWidth);
-    }, [gridContainerReference, scrollWidth]);
+    }, [scrollWidth,photos]);
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-60px' }
     }
+    console.log('grid width: ',gridWidth)
     return (
-        <div style={{ height: '100vh', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative', minHeight: 360, }} ref={reference}>
-            {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
+        <BlogContext.Consumer>
+            {({ setLastViewedSection }) => (
+                <div style={{ height: '100vh', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative', minHeight: 360, }} ref={reference}>
+                    {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
-            <p style={titleStyle}>Photos</p>
+                    <p style={titleStyle}>Photos</p>
 
-            <div
-                style={{
-                    overflow: "hidden",
-                    maxWidth: 650,
-                    paddingTop: 55,
-                    margin: "auto",
-                    width: winSize === 1 ? '100%' : '70%',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%,-50%)',
-                    position: 'absolute'
+                    <div
+                        style={{
+                            overflow: "hidden",
+                            maxWidth: 650,
+                            margin: "auto",
+                            width: winSize === 1 ? '100%' : '70%',
+                            left: '50%',
+                            top: '55%',
+                            transform: 'translate(-50%,-50%)',
+                            position: 'absolute'
 
-                }}
-            >
+                        }}
+                    >
 
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, minmax(100px, 293px))',
-                    justifyContent: 'center',
-                    gridGap: 3,
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, minmax(100px, 293px))',
+                            justifyContent: 'center',
+                            gridGap: 3,
 
-                }}
-                    ref={gridContainerReference}
-                >
-                    {data.map((p, i) => (
-                        <div
-                            key={`photo-grid-item[${i + 1}]`}
-                            onClick={() => history.push(`/photo/${p.id}`)}
-                            style={{
-                                position: 'relative',
-                                display: 'block',
-                                height: !!gridWidth ? (gridWidth - 6) / 3 : '',
-                                cursor: 'pointer'
-
-                            }}>
-                            <figure style={{ margin: 0, height: '100%' }}>
-                                <img loading="lazy"
-                                    srcSet={`${p.src} 100w`}
+                        }}
+                            ref={gridContainerReference}
+                        >
+                            {data.map((p, i) => (
+                                <div
+                                    key={`photo-grid-item[${i + 1}]`}
+                                    onClick={() => {
+                                        history.push(`/photo/${p.id}`);
+                                        setLastViewedSection('photos');
+                                    }}
                                     style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        verticalAlign: 'top',
-                                        objectFit: 'cover'
-                                    }} src={p.src} alt="" />
-                            </figure>
+                                        position: 'relative',
+                                        display: 'block',
+                                        height: !!gridWidth ? (gridWidth - 6) / 3 : '',
+                                        cursor: 'pointer'
+
+                                    }}>
+                                    <figure style={{ margin: 0, height: '100%' }}>
+                                        <img loading="lazy"
+                                            srcSet={`${p.src} 100w`}
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                verticalAlign: 'top',
+                                                objectFit: 'cover'
+                                            }} src={p.src} alt="" />
+                                    </figure>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </div>
-            {!isPhotosLoading && <div style={{ display: 'flex' }}>
-                <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
-            </div>}
-        </div >
+                    </div>
+                    {!isPhotosLoading && <div style={{ display: 'flex' }}>
+                        <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
+                    </div>}
+                </div >)}
+        </BlogContext.Consumer>
     );
 };
