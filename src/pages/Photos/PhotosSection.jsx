@@ -14,10 +14,9 @@ export default ({
     height,
     isLargeMobileLandscape,
     isPhotosLoading,
-    setSelectedPhotosPage:setSelectedPage,
-    selectedPhotosPage:selectedPage,
+    setSelectedPhotosPage: setSelectedPage,
+    selectedPhotosPage: selectedPage,
 }) => {
-    console.log('photo selectedPage',selectedPage)
     const [data, setData] = useState([]);
     const perPage = winSize > 1 && height < 640 ? 3 : 9;
     const [pageCount, setPageCount] = useState(0);
@@ -36,13 +35,6 @@ export default ({
         });
     }, [reference])
 
-    // const getData = async () => {
-    //     const slice = photos.slice((selectedPage + 1) * perPage - perPage, (selectedPage + 1) * perPage);
-    //     setData(slice)
-    //     setPageCount(Math.ceil(photos.length / perPage))
-    // }
-
-
     const getData = async () => {
         setPageCount(Math.ceil((photos || []).length / perPage))
         const slice = photos.slice((selectedPage + 1) * perPage - perPage, (selectedPage + 1) * perPage);
@@ -51,30 +43,21 @@ export default ({
 
     useEffect(() => {
         getData()
-    }, [selectedPage, photos]);
-
-    useEffect(() => {
-        // setSelectedPage(0)
-        getData();
-    }, [winSize, height])
+    }, [selectedPage, photos, height, winSize]);
 
     const handlePageClick = (e) => {
         setSelectedPage(e.selected);
     };
 
-    console.log('win size: ',winSize)
-
-
     const gridContainerReference = useRef(null);
     useEffect(() => {
         setGridWidth(gridContainerReference.current.scrollWidth);
-    }, [scrollWidth,photos]);
+    }, [scrollWidth, photos]);
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-60px' }
     }
-    console.log('grid width: ',gridWidth)
     return (
         <BlogContext.Consumer>
             {({ setLastViewedSection }) => (

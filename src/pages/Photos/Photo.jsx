@@ -180,7 +180,7 @@ const Photo = ({ winSize }) => {
                                 <Checkbox disabled={!shouldDisplay} checked={isHideCameraInfo} onChange={handleCameraInfo} toggle />
                                 <span style={{ color: '#fff', marginLeft: 10, fontSize: '1.2em' }}>Hide camera info</span>
                             </div>
-                            <div
+                            {/* <div
                                 style={{
                                     display: "flex",
                                     width: 200,
@@ -192,7 +192,7 @@ const Photo = ({ winSize }) => {
                                 <p style={{ marginLeft: 33, fontSize: '1.2em' }}>
                                     <a style={{ color: '#fff' }} href={photo.src} download >Download</a>
                                 </p>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

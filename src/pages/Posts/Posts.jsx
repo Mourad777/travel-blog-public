@@ -19,7 +19,7 @@ const Posts = ({
     setSelectedPostsPage:setSelectedPage,
     selectedPostsPage:selectedPage,
 }) => {
-    console.log('selected posts page',selectedPage)
+
     const [pageCount, setPageCount] = useState(0);
     const [posts, setPosts] = useState([]);
     // const [selectedPage, setSelectedPage] = useState(0);

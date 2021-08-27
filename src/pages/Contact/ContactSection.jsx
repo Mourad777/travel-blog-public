@@ -142,7 +142,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                             <div></div>
                             <div></div>
                         </div>}
-                    {!confirmationMessage && <Fragment>
+                    {!confirmationMessage && (<Fragment>
                         <StyledInputGroup>
                             <StyledInputLabel>Full name</StyledInputLabel>
                             <StyledTextInput disabled={isLoading || !isMessagesAllowed} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
@@ -166,7 +166,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                         <StyledContactFormSubmitButton onClick={handleOpenMessageForm}>
                             Cancel
                         </StyledContactFormSubmitButton>
-                    </Fragment>}
+                    </Fragment>)}
 
                     <p
                         style={{

@@ -4,10 +4,15 @@ import 'semantic-ui-css/semantic.min.css'
 import "./Home.module.css";
 import Loader from "./Loader";
 import { gsap, ScrollTrigger, ScrollToPlugin } from 'gsap/all'
-import { getPusher } from '../utility'
+import { AppUrl, getPusher, validateMessage, validateSubscription } from '../utility'
 import { getMapPosition } from "../utility";
 import {
+    StyledContactFormSubmitButton,
+    StyledInputError,
+    StyledInputGroup,
+    StyledInputLabel,
     StyledMap,
+    StyledTextInput,
 } from '../StyledComponents'
 import MapPath from "./MapPath";
 import { useRef } from "react";
@@ -16,6 +21,7 @@ import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { getConfiguration, getCountryThumbnails, getPhotos, getPosts, getVideos } from "../../api/util";
 import { BlogContext } from "../..";
+import axios from "axios";
 
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));
@@ -62,17 +68,29 @@ const Home = (({
     const [isPostsLoading, setIsPostsLoading] = useState(false);
     const [isPhotosLoading, setIsPhotosLoading] = useState(false);
     const [isVideosLoading, setIsVideosLoading] = useState(false);
+    const [isSubscribingLoading, setIsSubscribingLoading] = useState(false);
     const [isCountryThumbnailsLoading, setIsCountryThumbnailsLoading] = useState(false);
     const [isConfigurationIsLoading, setIsConfigurationIsLoading] = useState(false);
     const [countryThumbnails, setCountryThumbnails] = useState([])
-    const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false)
+    const [isInitialDataLoaded, setIsInitialDataLoaded] = useState(false);
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [errors, setErrors] = useState({});
+    const [isFormTouched, setIsFormTouched] = useState(false);
+    const [isNewsletterFormOpen, setIsNewsletterFormOpen] = useState(false);
+    const [confirmationMessage, setConfirmationMessage] = useState('');
 
     const handleScrollPosition = (value) => {
-        setScrollPostion(value)
+        setScrollPostion(value);
     }
 
 
     const history = useHistory();
+
+    useEffect(() => {
+        setErrors(validateMessage({ name, email }))
+    }, [name, email])
 
     useEffect(() => {
         if (lastViewedSection === 'posts') {
@@ -87,7 +105,18 @@ const Home = (({
         if (lastViewedSection === 'videos') {
             gsap.to(window, { duration: 2, scrollTo: refSection5.current });
         }
+
     }, [])
+
+    useEffect(() => {
+        if (isInitialDataLoaded) {
+            console.log('isInitialDataLoaded', isInitialDataLoaded)
+            setTimeout(() => {
+                handleOpenNewsletterForm(true)
+            }, 3000)
+        }
+
+    }, [isInitialDataLoaded]);
 
     useEffect(() => {
         setScrollSection(0)
@@ -172,6 +201,65 @@ const Home = (({
         refSection2, refSection3, refSection4, refSection5,
         refSectionX])
 
+    const handleOpenNewsletterForm = (value) => {
+        if (!value) {
+            setIsNewsletterFormOpen(false)
+        }
+        if (!!value) {
+            setIsNewsletterFormOpen(true)
+        }
+    }
+
+    const setNameHandler = (value) => {
+        setName(value)
+    }
+
+    const setEmailHandler = (value) => {
+        setEmail(value)
+    }
+
+    const subscribeHandler = async (e) => {
+        e.preventDefault();
+        setIsFormTouched(true);
+        const errors = validateSubscription({ name, email });
+        setErrors(errors);
+        if (errors.name || errors.email) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('first_name', name);
+        setIsSubscribingLoading(true);
+        let messageResponse = {};
+        try {
+            messageResponse = await axios.post(`${AppUrl}api/subscribe`, formData,
+                {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+        } catch (e) {
+            setIsSubscribingLoading(false);
+            console.log('message error response', messageResponse);
+        }
+        setIsSubscribingLoading(false);
+        setName('');
+        setEmail('');
+        setIsFormTouched(false)
+        console.log('message response', messageResponse);
+
+        if (messageResponse.status === 200 || messageResponse.status === 201) {
+            setConfirmationMessage('You have successfully subscribed!');
+        } else {
+            setConfirmationMessage('Something went wrong');
+        }
+        setTimeout(() => {
+            setConfirmationMessage('')
+            setIsNewsletterFormOpen(false)
+        }, 3000)
+
+
+    }
+
     const transformStyles1 = scrollPosition >= 100 && scrollPosition < 1000 ? {
         opacity: 1,
         scale: 1,
@@ -200,6 +288,68 @@ const Home = (({
 
     return (
         <Fragment>
+            {isNewsletterFormOpen && <div style={{
+                zIndex: 1000,
+                background: '#d28e4a',
+                position: 'fixed',
+                top: '5%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                maxHeight: '95vh',
+                minHeight: 320,
+                width: isLargeMobileLandscape ? 600 : winSize === 1 ? 320 : 400,
+                padding: 20,
+                overflow:'hidden'
+
+            }}>
+                <img style={{cursor:'pointer', position:'absolute',top:8,right:8,width:30}} src="/assets/icons/x-icon.png" onClick={() => handleOpenNewsletterForm(false)}/>
+                {!confirmationMessage && <Fragment>
+                    <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'Mulish', color: '#fff',margin:'0 0 10px 0' }}>Join my Newsletter!</h1>
+
+                    <div style={{ display: 'flex', flexDirection: isLargeMobileLandscape ? 'row' : 'column' }}>
+                        <div style={{ padding: 5 }}>
+                            <p style={{ fontFamily: 'Mulish', fontSize: '1.2em', color: '#fff' }}>Get travel news, updates, and great travel stories from around the world.</p>
+                            {/* <div style={{ background: 'yellow', height: 140, width: '100%' }}></div> */}
+                            <img src='/assets/images/coco-ride.webp' style={{ height:isLargeMobileLandscape || winSize === 1 ? 151 : 200, width: '100%',objectFit: 'cover' }} />
+                            {/* {isLargeMobileLandscape && (
+                                <Fragment>
+                                    <StyledContactFormSubmitButton onClick={() => handleOpenNewsletterForm(false)}>
+                                        Cancel
+                                    </StyledContactFormSubmitButton>
+                                </Fragment>
+                            )} */}
+                        </div>
+                        <div style={{ padding: 5 }}>
+                            <StyledInputGroup style={{ paddingTop: 0 }}>
+                                <StyledInputLabel>First name</StyledInputLabel>
+                                <StyledTextInput disabled={isSubscribingLoading} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                                {!!(isFormTouched && !!errors.name) && <StyledInputError style={{paddingTop:2}}>{errors.name}</StyledInputError>}
+                            </StyledInputGroup>
+
+                            <StyledInputGroup style={{ paddingTop: 10 }}>
+                                <StyledInputLabel>E-mail</StyledInputLabel>
+                                <StyledTextInput disabled={isSubscribingLoading} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                                {!!(isFormTouched && !!errors.email) && <StyledInputError style={{paddingTop:2}}>{errors.email}</StyledInputError>}
+                            </StyledInputGroup>
+                            <StyledContactFormSubmitButton disabled={isSubscribingLoading} onClick={subscribeHandler}>
+                                Submit
+                            </StyledContactFormSubmitButton>
+                        </div>
+                    </div>
+
+                </Fragment>}
+                <p
+                    style={{
+                        textAlign: 'center',
+                        fontFamily: 'Mulish',
+                        color: 'white',
+                        opacity: !!confirmationMessage ? 1 : 0,
+                        transition: 'opacity 1s ease-in',
+                        fontSize: '1.5em',
+                        marginTop: 15,
+                    }}
+                >{confirmationMessage}</p>
+            </div>}
             <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
                 <Loader
                     initialDataPercentage={initialDataPercentage}
