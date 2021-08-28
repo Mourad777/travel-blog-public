@@ -103,7 +103,8 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
             backgroundColor: primaryColor,
             position: 'relative',
             zIndex: isMessageFormOpen ? 100 : 1,
-            minHeight: 360,
+            // minHeight: 360,
+            minHeight:'calc(100vh - 56px)',
         }}>
             {!isMessageFormOpen && <p style={titleStyle}>Get In Touch</p>}
             {!isMessagesAllowed && <p style={{ textAlign: 'center', color: 'red', fontFamily: 'Mulish' }}>Messages are disabled at the moment</p>}

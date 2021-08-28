@@ -478,7 +478,7 @@ const Home = (({
                             />
 
                             {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
-                            <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
+                            <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh',minHeight:'calc(100vh - 56px)', zIndex: -10 }} ref={refSectionX} />
                             <PostsSection
                                 setLastViewedSection={setLastViewedSection}
                                 isPostsLoading={isPostsLoading}

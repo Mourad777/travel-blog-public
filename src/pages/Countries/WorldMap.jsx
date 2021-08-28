@@ -51,7 +51,10 @@ const WorldMap = ({
 
 
     return (
-        <div style={{ paddingTop: isLargeMobileLandscape ? 0 : 30, background: '#ece7e2', height: '100vh', width: '100%', zIndex: 1, overflow: 'hidden', position: 'relative', minHeight: 360, }} ref={reference}>
+        <div style={{ paddingTop: isLargeMobileLandscape ? 0 : 30, background: '#ece7e2', height: '100vh', width: '100%', zIndex: 1, overflow: 'hidden', position: 'relative',
+        //  minHeight: 360,
+        minHeight:'calc(100vh - 56px)',
+          }} ref={reference}>
             <p style={titleStyle}>Destinations</p>
             <ComposableMap
                 style={

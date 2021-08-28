@@ -63,7 +63,9 @@ export default ({
     return (
         <BlogContext.Consumer>
             {({ setLastViewedSection }) => (
-                <div style={{ height: '100vh', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative', minHeight: 360, }} ref={reference}>
+                <div style={{ height: '100vh',minHeight:'calc(100vh - 56px)', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative', 
+                // minHeight: 360,
+                 }} ref={reference}>
                     {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
                     <p style={titleStyle}>Photos</p>

@@ -140,7 +140,8 @@ const HeroSectionContent = ({
         <div style={{
             height: '100vh',
             position: 'relative',
-            minHeight: 360,
+            // minHeight: 360,
+            minHeight:'calc(100vh - 56px)',
         }}>
             <Helmet>
                 <link rel="preload" as="image" href={'/assets/images/welcome-background.webp'} type="image/webp" />

@@ -80,7 +80,8 @@ const Posts = ({
     }
 
     return (<div ref={reference} style={{
-        height: '100vh', overflow: 'hidden', zIndex: 6, position: 'relative', minHeight: 360,
+        height: '100vh',minHeight:'calc(100vh - 56px)', overflow: 'hidden', zIndex: 6, position: 'relative',
+        //  minHeight: 360,
     }}>
         {isPostsLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
         <p style={titleStyle}>Posts</p>
