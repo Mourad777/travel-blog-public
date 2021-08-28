@@ -114,7 +114,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                 position: 'absolute',
                 /* margin: auto; */
                 left: '50%',
-                top: '50%',
+                top: '20%',
                 transform: 'translateX(-50%)',
             }} onClick={handleOpenMessageForm}
                 disabled={isLoading || !isMessagesAllowed}
