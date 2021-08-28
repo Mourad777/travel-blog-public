@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import geo from "./geo.json"
 import { ScrollTrigger } from 'gsap/all'
 import { primaryColor } from "../utility";
+import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
 
 const WorldMap = ({
     winSize,
@@ -14,7 +15,8 @@ const WorldMap = ({
     videos,
     isLargeMobileLandscape,
     scrollWidth,
-    setLastViewedSection
+    setLastViewedSection,
+    scrollSection,
 }) => {
     const history = useHistory();
     useEffect(() => {
@@ -80,8 +82,8 @@ const WorldMap = ({
                                     }
                                     cursor={isHighlighted ? 'pointer' : 'default'}
                                     onClick={
-                                            handleClick(geo.properties)
-                                        
+                                        handleClick(geo.properties)
+
 
                                     }
                                 // stroke="#840404"
@@ -91,6 +93,7 @@ const WorldMap = ({
                     }
                 </Geographies>
             </ComposableMap>
+            <AnimatedDivider imgPath={"/assets/images/earth-png.png"} isAnimating={scrollSection === 3} isBlue />
         </div>
     );
 };

@@ -158,10 +158,64 @@ iteration-count | direction | fill-mode | play-state | name */
 }
 
 
-/* .draw1 {
-  animation: draw-animation-one ease-out 2s forwards;
+
+@keyframes animate-line-1 {
+  0% { 
+    stroke-dashoffset: -233;
+   }
+
+  100% { 
+    stroke-dashoffset: 0;
+  }
 }
 
+@keyframes unanimate-line-1 {
+  0% { 
+    stroke-dashoffset: 0;
+   }
+
+  100% { 
+    stroke-dashoffset: -233;
+  }
+}
+
+@keyframes animate-ball {
+  0% { 
+    transform: translateX(-600%);
+   }
+
+  100% { 
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes unanimate-ball {
+  0% { 
+    transform: translateX(-50%);
+   }
+
+  100% { 
+    transform: translateX(-600%);
+  }
+}
+
+.ball-appear {
+  animation: animate-ball ease-out 5s forwards;
+}
+
+.ball-dissappear {
+  animation: unanimate-ball ease-out 5s forwards;
+}
+
+
+ .line-1-appear {
+  animation: animate-line-1 ease-out 5s forwards;
+}
+
+.line-1-dissappear {
+  animation: unanimate-line-1 ease-out 5s forwards;
+}
+/*
 .draw2 {
   animation: draw-animation-two ease-out 2s forwards;
 }

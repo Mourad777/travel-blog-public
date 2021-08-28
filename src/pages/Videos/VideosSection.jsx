@@ -4,6 +4,8 @@ import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 import { primaryColor } from "../utility";
 import Paginate from "../../components/Paginate/Paginate";
+import { dashedLineOne } from "../svgs";
+import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
 
 
 export default ({
@@ -16,7 +18,8 @@ export default ({
     isVideosLoading,
     setLastViewedSection,
     setSelectedVideosPage: setOffset,
-    selectedVideosPage: offset
+    selectedVideosPage: offset,
+    scrollSection,
 }) => {
 
     const history = useHistory();
@@ -37,7 +40,7 @@ export default ({
             width = '40%'
             margin = '3.33%'
         }
-        return {perPage,margin,width}
+        return { perPage, margin, width }
     }
 
     useEffect(() => {
@@ -53,7 +56,7 @@ export default ({
 
     const getData = async () => {
         const perPage = getWinsizeValues(winSize).perPage;
-        console.log('perPage',perPage)
+        console.log('perPage', perPage)
         setPageCount(Math.ceil((videos || []).length / perPage))
         const slice = videos.slice((offset + 1) * perPage - perPage, (offset + 1) * perPage);
         setData(slice)
@@ -114,7 +117,7 @@ export default ({
                             cursor: "pointer",
                             float: "left",
                             position: "relative",
-                            width:getWinsizeValues(winSize).width,
+                            width: getWinsizeValues(winSize).width,
                             height: "50vh",
                             overflow: "hidden",
                             minHeight: 205,
@@ -129,8 +132,9 @@ export default ({
             </div>
 
             <div style={isLargeMobileLandscape ? mobileLandscapePaginateStyle : { display: 'flex' }}>
-            <Paginate totalPages={pageCount} page={offset} handlePageClick={handlePageClick} />
+                <Paginate totalPages={pageCount} page={offset} handlePageClick={handlePageClick} />
             </div>
+            <AnimatedDivider imgPath={"/assets/images/earth-png.png"} isAnimating={scrollSection === 5} isBlue />
         </div>
     )
 };

@@ -280,213 +280,205 @@ const Home = (({
         transform: 'rotate(-10deg) scale(1)',
     } : {};
 
-    let isLargeMobileLandscape = false;
-    if (winSize === 2 && height < 420) {
-        isLargeMobileLandscape = true
-    }
 
 
     return (
-        <Fragment>
-            {isNewsletterFormOpen && <div style={{
-                zIndex: 1000,
-                background: '#d28e4a',
-                position: 'fixed',
-                top: '5%',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                maxHeight: '95vh',
-                minHeight: 320,
-                width: isLargeMobileLandscape ? 600 : winSize === 1 ? 320 : 400,
-                padding: 20,
-                overflow:'hidden'
+        <BlogContext.Consumer>
+            {({
+                isLargeMobileLandscape,
+                setSelectedVideosPage,
+                selectedVideosPage,
+                setSelectedPhotosPage,
+                selectedPhotosPage,
+                setSelectedPostsPage,
+                selectedPostsPage
+            }) => (
+                <Fragment>
 
-            }}>
-                <img style={{cursor:'pointer', position:'absolute',top:8,right:8,width:30}} src="/assets/icons/x-icon.png" onClick={() => handleOpenNewsletterForm(false)}/>
-                {!confirmationMessage && <Fragment>
-                    <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'Mulish', color: '#fff',margin:'0 0 10px 0' }}>Join my Newsletter!</h1>
-
-                    <div style={{ display: 'flex', flexDirection: isLargeMobileLandscape ? 'row' : 'column' }}>
-                        <div style={{ padding: 5 }}>
-                            <p style={{ fontFamily: 'Mulish', fontSize: '1.2em', color: '#fff' }}>Get travel news, updates, and great travel stories from around the world.</p>
-                            {/* <div style={{ background: 'yellow', height: 140, width: '100%' }}></div> */}
-                            <img src='/assets/images/coco-ride.webp' style={{ height:isLargeMobileLandscape || winSize === 1 ? 151 : 200, width: '100%',objectFit: 'cover' }} />
-                            {/* {isLargeMobileLandscape && (
-                                <Fragment>
-                                    <StyledContactFormSubmitButton onClick={() => handleOpenNewsletterForm(false)}>
-                                        Cancel
-                                    </StyledContactFormSubmitButton>
-                                </Fragment>
-                            )} */}
-                        </div>
-                        <div style={{ padding: 5 }}>
-                            <StyledInputGroup style={{ paddingTop: 0 }}>
-                                <StyledInputLabel>First name</StyledInputLabel>
-                                <StyledTextInput disabled={isSubscribingLoading} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
-                                {!!(isFormTouched && !!errors.name) && <StyledInputError style={{paddingTop:2}}>{errors.name}</StyledInputError>}
-                            </StyledInputGroup>
-
-                            <StyledInputGroup style={{ paddingTop: 10 }}>
-                                <StyledInputLabel>E-mail</StyledInputLabel>
-                                <StyledTextInput disabled={isSubscribingLoading} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
-                                {!!(isFormTouched && !!errors.email) && <StyledInputError style={{paddingTop:2}}>{errors.email}</StyledInputError>}
-                            </StyledInputGroup>
-                            <StyledContactFormSubmitButton disabled={isSubscribingLoading} onClick={subscribeHandler}>
-                                Submit
-                            </StyledContactFormSubmitButton>
-                        </div>
-                    </div>
-
-                </Fragment>}
-                <p
-                    style={{
-                        textAlign: 'center',
-                        fontFamily: 'Mulish',
-                        color: 'white',
-                        opacity: !!confirmationMessage ? 1 : 0,
-                        transition: 'opacity 1s ease-in',
-                        fontSize: '1.5em',
-                        marginTop: 15,
-                    }}
-                >{confirmationMessage}</p>
-            </div>}
-            <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
-                <Loader
-                    initialDataPercentage={initialDataPercentage}
-                    isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded}
-                    isLargeMobileLandscape={isLargeMobileLandscape}
-                    winSize={winSize}
-                />
-                {(winSize > 1 && !isLargeMobileLandscape) && (
-                    <Navigation
-                        // getInitialData={getInitialData}
-                        scrollSection={scrollSection}
-                        componentReferences={
-                            {
-                                welcome: mainContainerRef,
-                                posts: refSection2,
-                                destinations: refSection3,
-                                photos: refSection4,
-                                videos: refSection5,
-                                contact: refSection6
-                            }
-                        }
-                    />
-                )}
-
-                {/* must use a lower resolution map for mobile devices */}
-                <div ref={mapsPicsContainerRef} style={{ zIndex: 1, position: 'fixed', height: '100vh', width: '100%' }}>
-
-                    {(photos[0] || {}).src && <div id="hero-pic-1" style={{
-                        position: 'absolute',
-                        top: isLargeMobileLandscape ? '20%' : '42%',
-                        left: isLargeMobileLandscape ? '40%' : '32%',
-                        transform: 'translateX(-50%) translateY(-50%)',
-                        // top: winSize === 1 ? 270 : 300,
-                        // left: winSize === 1 ? 15 : 100,
-                        height: 100,
-                        width: 100,
-                        cursor: 'pointer',
-                        border: '5px solid #e7c5a2',
-                        zIndex: 4,
-                        transition: '0.3s all ease-in',
-                        opacity: 0,
-                        scale: 0,
-                        transform: 'rotate(0) scale(0)',
-                        ...transformStyles1,
-
-                    }}
-                        onClick={() => {
-                            history.push(`/photo/${(photos[0] || {}).id}`)
-                            setLastViewedSection(null);
-                        }}
-                    >
-                        <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[0] || {}).src} />
-                    </div>}
-                    {(photos[1] || {}).src && <div id="hero-pic-2" style={{
-                        position: 'absolute',
-                        top: isLargeMobileLandscape ? '50%' : '62%',
-                        left: isLargeMobileLandscape ? '20%' : winSize <= 2 ? '7%' : '35%',
-                        height: 100,
-                        width: 100,
-                        cursor: 'pointer',
-                        border: '5px solid #e7c5a2',
-                        zIndex: 4,
-                        transition: '0.3s all ease-in',
-                        opacity: 0,
-                        scale: 0,
-                        transform: 'rotate(0) scale(0)',
-                        ...transformStyles2,
-                    }}
-                        onClick={() => {
-                            history.push(`/photo/${(photos[1] || {}).id}`)
-                            setLastViewedSection(null);
-                        }}
-
-                    >
-                        <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[1] || {}).src} />
-                    </div>}
-                    {(photos[2] || {}).src && <div id="hero-pic-3" style={{
-                        position: 'absolute',
-                        top: '58%',
+                    {isNewsletterFormOpen && <div style={{
+                        zIndex: 1000,
+                        background: '#d28e4a',
+                        position: 'fixed',
+                        top: '5%',
                         left: '50%',
-                        height: 100,
-                        width: 100,
-                        cursor: 'pointer',
-                        border: '5px solid #e7c5a2',
-                        zIndex: 4,
-                        transition: '0.3s all ease-in',
-                        opacity: 0,
-                        scale: 0,
-                        transform: 'rotate(0) scale(0)',
-                        ...transformStyles3,
-                    }}
-                        onClick={() => {
-                            history.push(`/photo/${(photos[2] || {}).id}`)
-                            setLastViewedSection(null);
-                        }}
-                    >
-                        <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[2] || {}).src} />
+                        transform: 'translateX(-50%)',
+                        maxHeight: '95vh',
+                        minHeight: 320,
+                        width: isLargeMobileLandscape ? 600 : winSize === 1 ? 320 : 400,
+                        padding: 20,
+                        overflow: 'hidden'
+
+                    }}>
+                        <img style={{ cursor: 'pointer', position: 'absolute', top: 8, right: 8, width: 30 }} src="/assets/icons/x-icon.png" onClick={() => handleOpenNewsletterForm(false)} />
+                        {!confirmationMessage && <Fragment>
+                            <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontFamily: 'Mulish', color: '#fff', margin: '0 0 10px 0' }}>Join my Newsletter!</h1>
+
+                            <div style={{ display: 'flex', flexDirection: isLargeMobileLandscape ? 'row' : 'column' }}>
+                                <div style={{ padding: 5 }}>
+                                    <p style={{ fontFamily: 'Mulish', fontSize: '1.2em', color: '#fff' }}>Get travel news, updates, and great travel stories from around the world.</p>
+                                    {/* <div style={{ background: 'yellow', height: 140, width: '100%' }}></div> */}
+                                    <img src='/assets/images/coco-ride.webp' style={{ height: isLargeMobileLandscape || winSize === 1 ? 151 : 200, width: '100%', objectFit: 'cover' }} />
+                                </div>
+                                <div style={{ padding: 5 }}>
+                                    <StyledInputGroup style={{ paddingTop: 0 }}>
+                                        <StyledInputLabel>First name</StyledInputLabel>
+                                        <StyledTextInput disabled={isSubscribingLoading} value={name} onChange={(e) => setNameHandler(e.target.value)} type="text" />
+                                        {!!(isFormTouched && !!errors.name) && <StyledInputError style={{ paddingTop: 2 }}>{errors.name}</StyledInputError>}
+                                    </StyledInputGroup>
+
+                                    <StyledInputGroup style={{ paddingTop: 10 }}>
+                                        <StyledInputLabel>E-mail</StyledInputLabel>
+                                        <StyledTextInput disabled={isSubscribingLoading} value={email} onChange={(e) => setEmailHandler(e.target.value)} type="text" />
+                                        {!!(isFormTouched && !!errors.email) && <StyledInputError style={{ paddingTop: 2 }}>{errors.email}</StyledInputError>}
+                                    </StyledInputGroup>
+                                    <StyledContactFormSubmitButton disabled={isSubscribingLoading} onClick={subscribeHandler}>
+                                        Submit
+                                    </StyledContactFormSubmitButton>
+                                </div>
+                            </div>
+
+                        </Fragment>}
+                        <p
+                            style={{
+                                textAlign: 'center',
+                                fontFamily: 'Mulish',
+                                color: 'white',
+                                opacity: !!confirmationMessage ? 1 : 0,
+                                transition: 'opacity 1s ease-in',
+                                fontSize: '1.5em',
+                                marginTop: 15,
+                            }}
+                        >{confirmationMessage}</p>
                     </div>}
-                </div>
+                    <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
+                        <Loader
+                            initialDataPercentage={initialDataPercentage}
+                            isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded}
+                            isLargeMobileLandscape={isLargeMobileLandscape}
+                            winSize={winSize}
+                        />
+                        {(winSize > 1 && !isLargeMobileLandscape) && (
+                            <Navigation
+                                // getInitialData={getInitialData}
+                                scrollSection={scrollSection}
+                                componentReferences={
+                                    {
+                                        welcome: mainContainerRef,
+                                        posts: refSection2,
+                                        destinations: refSection3,
+                                        photos: refSection4,
+                                        videos: refSection5,
+                                        contact: refSection6
+                                    }
+                                }
+                            />
+                        )}
 
-                <div id="container" style={{ position: "relative" }}>
-                    <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
-                        <div style={{ position: 'relative', height: '100vh' }}>
+                        {/* must use a lower resolution map for mobile devices */}
+                        <div ref={mapsPicsContainerRef} style={{ zIndex: 1, position: 'fixed', height: '100vh', width: '100%' }}>
 
-                            < StyledMap className={isPageLoaded ? "" : "fade-in"} ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
+                            {(photos[0] || {}).src && <div id="hero-pic-1" style={{
+                                position: 'absolute',
+                                top: isLargeMobileLandscape ? '20%' : '42%',
+                                left: isLargeMobileLandscape ? '40%' : '32%',
+                                transform: 'translateX(-50%) translateY(-50%)',
+                                // top: winSize === 1 ? 270 : 300,
+                                // left: winSize === 1 ? 15 : 100,
+                                height: 100,
+                                width: 100,
+                                cursor: 'pointer',
+                                border: '5px solid #e7c5a2',
+                                zIndex: 4,
+                                transition: '0.3s all ease-in',
+                                opacity: 0,
+                                scale: 0,
+                                transform: 'rotate(0) scale(0)',
+                                ...transformStyles1,
 
+                            }}
+                                onClick={() => {
+                                    history.push(`/photo/${(photos[0] || {}).id}`)
+                                    setLastViewedSection(null);
+                                }}
+                            >
+                                <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[0] || {}).src} />
+                            </div>}
+                            {(photos[1] || {}).src && <div id="hero-pic-2" style={{
+                                position: 'absolute',
+                                top: isLargeMobileLandscape ? '50%' : '62%',
+                                left: isLargeMobileLandscape ? '20%' : winSize <= 2 ? '7%' : '35%',
+                                height: 100,
+                                width: 100,
+                                cursor: 'pointer',
+                                border: '5px solid #e7c5a2',
+                                zIndex: 4,
+                                transition: '0.3s all ease-in',
+                                opacity: 0,
+                                scale: 0,
+                                transform: 'rotate(0) scale(0)',
+                                ...transformStyles2,
+                            }}
+                                onClick={() => {
+                                    history.push(`/photo/${(photos[1] || {}).id}`)
+                                    setLastViewedSection(null);
+                                }}
 
-                            <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />
-
+                            >
+                                <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[1] || {}).src} />
+                            </div>}
+                            {(photos[2] || {}).src && <div id="hero-pic-3" style={{
+                                position: 'absolute',
+                                top: '58%',
+                                left: '50%',
+                                height: 100,
+                                width: 100,
+                                cursor: 'pointer',
+                                border: '5px solid #e7c5a2',
+                                zIndex: 4,
+                                transition: '0.3s all ease-in',
+                                opacity: 0,
+                                scale: 0,
+                                transform: 'rotate(0) scale(0)',
+                                ...transformStyles3,
+                            }}
+                                onClick={() => {
+                                    history.push(`/photo/${(photos[2] || {}).id}`)
+                                    setLastViewedSection(null);
+                                }}
+                            >
+                                <img style={{ objectFit: 'cover', width: '100%', height: '100%' }} src={(photos[2] || {}).src} />
+                            </div>}
                         </div>
-                    </div>
 
+                        <div id="container" style={{ position: "relative" }}>
+                            <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
+                                <div style={{ position: 'relative', height: '100vh' }}>
+                                    < StyledMap className={isPageLoaded ? "" : "fade-in"} ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />
+                                    <MapPath mapPathlineRef={mapPathlineRef} winSize={winSize} />
+                                </div>
+                            </div>
+                            <HeroSection
+                                height={height}
+                                posts={postsFromDB}
+                                photos={photos}
+                                videos={videos}
+                                countryThumbnails={countryThumbnails}
+                                tags={[]}
+                                categories={[]}
+                                winSize={winSize}
+                                refPosts={refSection2}
+                                refVideos={refSection5}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                isInitialLoader={isInitialLoader}
+                                mainContainerRef={mainContainerRef}
+                                isPageLoaded={isPageLoaded}
+                                scrollSection={scrollSection}
+                                initialDataPercentage={initialDataPercentage}
+                                setLastViewedSection={setLastViewedSection}
+                            />
 
-                    <HeroSection
-                        height={height}
-                        posts={postsFromDB}
-                        photos={photos}
-                        videos={videos}
-                        countryThumbnails={countryThumbnails}
-                        tags={[]}
-                        categories={[]}
-                        winSize={winSize}
-                        refPosts={refSection2}
-                        refVideos={refSection5}
-                        isLargeMobileLandscape={isLargeMobileLandscape}
-                        isInitialLoader={isInitialLoader}
-                        mainContainerRef={mainContainerRef}
-                        isPageLoaded={isPageLoaded}
-                        scrollSection={scrollSection}
-                        initialDataPercentage={initialDataPercentage}
-                        setLastViewedSection={setLastViewedSection}
-                    />
-
-                    {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
-                    <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
-                    <BlogContext.Consumer>
-                        {({ setSelectedPostsPage, selectedPostsPage }) => (
+                            {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
+                            <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', zIndex: -10 }} ref={refSectionX} />
                             <PostsSection
                                 setLastViewedSection={setLastViewedSection}
                                 isPostsLoading={isPostsLoading}
@@ -498,23 +490,21 @@ const Home = (({
                                 winSize={winSize}
                                 selectedPostsPage={selectedPostsPage}
                                 setSelectedPostsPage={setSelectedPostsPage}
+                                scrollSection={scrollSection}
                             />
-                        )}
-                    </BlogContext.Consumer>
-                    <DestinationsSection
-                        setLastViewedSection={setLastViewedSection}
-                        reference={refSection3}
-                        isLargeMobileLandscape={isLargeMobileLandscape}
-                        postsFromDB={postsFromDB}
-                        videos={videos}
-                        scrollWidth={scrollWidth}
-                        photos={photos}
-                        height={height}
-                        winSize={winSize}
-                    />
-                    {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
-                    <BlogContext.Consumer>
-                        {({ setSelectedPhotosPage, selectedPhotosPage }) => (
+                            <DestinationsSection
+                                setLastViewedSection={setLastViewedSection}
+                                reference={refSection3}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                postsFromDB={postsFromDB}
+                                videos={videos}
+                                scrollWidth={scrollWidth}
+                                photos={photos}
+                                height={height}
+                                winSize={winSize}
+                                scrollSection={scrollSection}
+                            />
+                            {/* <Country reference={refSectionDestination} postsFromDB={postsFromDB} /> */}
                             <PhotosSection
                                 setLastViewedSection={setLastViewedSection}
                                 isPhotosLoading={isPhotosLoading}
@@ -526,12 +516,10 @@ const Home = (({
                                 scrollWidth={scrollWidth}
                                 selectedPhotosPage={selectedPhotosPage}
                                 setSelectedPhotosPage={setSelectedPhotosPage}
+                                scrollSection={scrollSection}
                             />
-                        )}
-                    </BlogContext.Consumer>
-                    {/* <PhotosSectionDetail reference={refSectionPhotos}/> */}
-                    <BlogContext.Consumer>
-                        {({ setSelectedVideosPage, selectedVideosPage }) => (
+
+                            {/* <PhotosSectionDetail reference={refSectionPhotos}/> */}
                             <VideosSection
                                 setLastViewedSection={setLastViewedSection}
                                 isVideosLoading={isVideosLoading}
@@ -543,23 +531,24 @@ const Home = (({
                                 winSize={winSize}
                                 setSelectedVideosPage={setSelectedVideosPage}
                                 selectedVideosPage={selectedVideosPage}
+                                scrollSection={scrollSection}
                             />
-                        )}
-                    </BlogContext.Consumer>
-                    {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                    <ContactSection
-                        isPageLoaded={isPageLoaded}
-                        configuration={configuration}
-                        reference={refSection6}
-                        isLargeMobileLandscape={isLargeMobileLandscape}
-                        height={height}
-                        scrollWidth={scrollWidth}
-                    />
-                </div>
+                            {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
-                {/* floating rotating icons */}
-                {/* {[
+                            <ContactSection
+                                isPageLoaded={isPageLoaded}
+                                configuration={configuration}
+                                reference={refSection6}
+                                isLargeMobileLandscape={isLargeMobileLandscape}
+                                height={height}
+                                scrollWidth={scrollWidth}
+                                scrollSection={scrollSection}
+                            />
+                        </div>
+
+                        {/* floating rotating icons */}
+                        {/* {[
                 { style: getCompassStyle(winSize), path: compass },
                 { style: getPlaneStyle(winSize), path: airplane },
                 { style: getFeetStyle(winSize), path: footPrints }
@@ -576,9 +565,11 @@ const Home = (({
                     </svg>
             ))} */}
 
-            </div>
-            {/* </Transition> */}
-        </Fragment>
+                    </div>
+                    {/* </Transition> */}
+                </Fragment>)}
+        </BlogContext.Consumer>
+
 
     );
 });

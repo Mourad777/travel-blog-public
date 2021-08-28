@@ -6,6 +6,7 @@ import Paginate from '../../components/Paginate/Paginate';
 import { ScrollTrigger } from 'gsap/all'
 import Loader from '../../components/Loader/Loader';
 import { primaryColor } from '../utility';
+import AnimatedDivider from '../../components/AnimatedDivider/AnimatedDivider';
 
 const Posts = ({
     winSize,
@@ -16,8 +17,9 @@ const Posts = ({
     scrollWidth,
     isPostsLoading,
     setLastViewedSection,
-    setSelectedPostsPage:setSelectedPage,
-    selectedPostsPage:selectedPage,
+    setSelectedPostsPage: setSelectedPage,
+    selectedPostsPage: selectedPage,
+    scrollSection,
 }) => {
 
     const [pageCount, setPageCount] = useState(0);
@@ -85,7 +87,7 @@ const Posts = ({
 
         <div style={{
             display: 'flex', background: primaryColor,
-            height:'100%',
+            height: '100%',
             maxHeight: winSize === 1 && postsFromDB.length === 0 ? '100%' : 50,
         }}>
             {postsFromDB.length > 1 &&
@@ -123,6 +125,7 @@ const Posts = ({
             background: primaryColor,
         }}>
         </div>
+        <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 2} />
     </div>)
 }
 

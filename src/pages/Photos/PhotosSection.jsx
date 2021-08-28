@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 import { primaryColor } from "../utility";
 import { BlogContext } from "../..";
+import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
 
 export default ({
     reference,
@@ -16,6 +17,7 @@ export default ({
     isPhotosLoading,
     setSelectedPhotosPage: setSelectedPage,
     selectedPhotosPage: selectedPage,
+    scrollSection,
 }) => {
     const [data, setData] = useState([]);
     const perPage = winSize > 1 && height < 640 ? 3 : 9;
@@ -120,6 +122,7 @@ export default ({
                     {!isPhotosLoading && <div style={{ display: 'flex' }}>
                         <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
                     </div>}
+                    <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 4} />
                 </div >)}
         </BlogContext.Consumer>
     );

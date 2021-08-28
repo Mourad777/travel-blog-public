@@ -9,9 +9,9 @@ import {
 } from '../StyledComponents'
 import { AppUrl, primaryColor, validateMessage } from '../utility';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
+import AnimatedDivider from '../../components/AnimatedDivider/AnimatedDivider';
 
-const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration, isPageLoaded }) => {
+const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration, scrollSection, }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -121,7 +121,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                 Send me a message
             </StyledContactFormSubmitButton>
             {/* <Button onClick={handleOpenMessageForm} icon='message' content='Send me a message' /> */}
-            {isMessageFormOpen && <div style={{ background: 'rgb(14,7,1,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 }}>
+            {isMessageFormOpen && <div style={{ background: 'rgb(14,7,1,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 ,zIndex:1}}>
                 <p style={titleStyle}>Get In Touch</p>
                 <div style={{
                     maxWidth: 500, padding: '0 10px', margin: 'auto', left: '50%',
@@ -180,6 +180,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                         }}
                     >{confirmationMessage}</p>
                 </div></div>}
+            <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 6} />
         </div  >
     )
 

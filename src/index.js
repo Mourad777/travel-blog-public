@@ -87,6 +87,11 @@ const App = () => {
         </div>
     )
 
+    let isLargeMobileLandscape = false;
+    if (winSize === 2 && height < 420) {
+        isLargeMobileLandscape = true
+    }
+
     return (
         <BrowserRouter>
             {/* <ScrollToTop /> */}
@@ -107,6 +112,7 @@ const App = () => {
                         setLastViewedSection,
                         initialDataPercentage,
                         setInitialDataPercentage,
+                        isLargeMobileLandscape,
                     }}
                 >
 
@@ -160,77 +166,3 @@ ReactDOM.render(
 reportWebVitals();
 
 //////////////////
-
-
-
-
-// // TodoPage.js
-// export const TodoContext = createContext({});
-
-// class TodoPage extends React.Component {
-//     state = {
-//         todos: [
-//             { id: 1, desc: 'Check email', completed: false },
-//             { id: 2, desc: 'Write blog post', completed: false },
-//         ],
-//         user: { name: 'John', canDelete: true },
-//     };
-
-//     handleDelete = todo => {
-//         const todos = this.state.todos.filter(t => t.id !== todo.id);
-//         this.setState({ todos });
-//     };
-
-//     render() {
-//         const { todos, user } = this.state;
-//         return (
-//             <TodoContext.Provider
-//                 value={{ canDelete: user.canDelete, onDelete: this.handleDelete }}
-//             >
-//                 <div>
-//                     <TodoList todos={todos} />
-//                 </div>
-//             </TodoContext.Provider>
-//         );
-//     }
-// }
-
-
-// // TodoList.js
-// const TodoList = ({ todos }) => {
-//     return (
-//         <div>
-//             <Title value="Todo List" />
-//             <div>
-//                 {todos.map(todo => (
-//                     <TodoItem key={todo.id} todo={todo} />
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-// TodoList.propTypes = {
-//     todos: PropTypes.array,
-// };
-
-
-// // TodoItem.js
-// const TodoItem = ({ todo }) => {
-//     return (
-//         <TodoContext.Consumer>
-//             {({ onDelete, canDelete }) => (
-//                 <div>
-//                     <div>{todo.desc}</div>
-//                     <div>
-//                         <button disabled={!canDelete} onClick={() => onDelete(todo)} />
-//                     </div>
-//                 </div>
-//             )}
-//         </TodoContext.Consumer>
-//     );
-// };
-
-// TodoItem.propTypes = {
-//     todo: PropTypes.object,
-// };
