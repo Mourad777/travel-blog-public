@@ -96,7 +96,7 @@ const WorldMap = ({
                     }
                 </Geographies>
             </ComposableMap>
-            <AnimatedDivider imgPath={"/assets/images/earth-png.png"} isAnimating={scrollSection === 3} isBlue />
+            <AnimatedDivider imgPath={"/assets/images/earth-png.webp"} isAnimating={scrollSection === 3} isBlue />
         </div>
     );
 };

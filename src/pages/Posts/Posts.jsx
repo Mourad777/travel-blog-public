@@ -126,7 +126,7 @@ const Posts = ({
             background: primaryColor,
         }}>
         </div>
-        <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 2} />
+        <AnimatedDivider imgPath={"/assets/images/note-pad-sketch-white.webp"} widthFactor={1.3} isAnimating={scrollSection === 2} />
     </div>)
 }
 

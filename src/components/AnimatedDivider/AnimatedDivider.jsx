@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { BlogContext } from '../..';
 import { dashedLineOne } from '../../pages/svgs';
 
-const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
+const AnimatedDivider = ({ isAnimating, imgPath, isBlue, widthFactor = 1, offsetImageVertical = 0 }) => (
     <BlogContext.Consumer>
         {({ isPageLoaded, isLargeMobileLandscape, winSize }) => (
             <Fragment>
@@ -15,6 +15,7 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                                 width: 1000,
+                                pointerEvents: 'none'
                             }}
                             viewBox="70 -20 300 50"
                         >
@@ -33,8 +34,8 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                                     fill: 'transparent',
                                     strokeDasharray: 250,
                                     strokeDashoffset: isAnimating && isPageLoaded ? 0 : -250,
-                                    transition: 'all 3s linear',
-                                    stroke: isBlue ? "#16a9ff" : '#fff',
+                                    transition: 'all 2s linear',
+                                    stroke: isBlue ? "#9b0808" : '#fff',
                                     strokeWidth: -1,
                                     strokeMiterlimit: 10,
                                 }}
@@ -43,11 +44,13 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                         <img
                             style={{
                                 position: 'absolute',
-                                bottom: winSize === 1 ? 56 : 0,
+                                bottom: winSize === 1 ? 56 + offsetImageVertical : 0 + offsetImageVertical,
                                 left: '50%',
                                 transform: isAnimating && isPageLoaded ? 'translateX(-50%) rotate(700deg)' : 'translateX(-600%) rotate(0deg)',
-                                transition: 'all 3s linear',
-                                width: 80
+                                opacity: isAnimating && isPageLoaded ? 1 : 0,
+                                transition: 'all 2s linear',
+                                width: 80 * widthFactor,
+                                pointerEvents: 'none'
                             }}
                             // className={isAnimating && isPageLoaded ? 'ball-appear' : 'ball-dissappear'}
                             src={imgPath} />
@@ -58,6 +61,7 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                                 right: '50%',
                                 transform: 'translateX(50%)',
                                 width: 1000,
+                                pointerEvents: 'none',
                             }}
                             viewBox="-160 -20 300 50"
                         ><g>
@@ -78,10 +82,10 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                                         {
                                             fill: 'transparent',
                                             strokeDasharray: 250,
-                                            transition: 'all 3s linear',
+                                            transition: 'all 2s linear',
                                             // transitionDelay: '3s',
                                             strokeDashoffset: isAnimating && isPageLoaded ? 0 : 250,
-                                            stroke: isBlue ? "#16a9ff" : '#fff',
+                                            stroke: isBlue ? "#9b0808" : '#fff',
                                             strokeWidth: -1,
                                             strokeMiterlimit: 10,
                                         }

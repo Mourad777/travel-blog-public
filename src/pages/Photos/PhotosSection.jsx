@@ -63,9 +63,10 @@ export default ({
     return (
         <BlogContext.Consumer>
             {({ setLastViewedSection }) => (
-                <div style={{ height: '100vh',minHeight:'calc(100vh - 56px)', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative', 
-                // minHeight: 360,
-                 }} ref={reference}>
+                <div style={{
+                    height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative',
+                    // minHeight: 360,
+                }} ref={reference}>
                     {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
                     <p style={titleStyle}>Photos</p>
@@ -121,10 +122,10 @@ export default ({
                             ))}
                         </div>
                     </div>
-                    {!isPhotosLoading && <div style={{ display: 'flex' }}>
+                    {(!isPhotosLoading && data.length > 0) && <div style={{ display: 'flex' }}>
                         <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
                     </div>}
-                    <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 4} />
+                    <AnimatedDivider imgPath={"/assets/images/camera-sketch.webp"} widthFactor={2.6} isAnimating={scrollSection === 4} />
                 </div >)}
         </BlogContext.Consumer>
     );

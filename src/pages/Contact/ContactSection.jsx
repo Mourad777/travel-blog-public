@@ -126,7 +126,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                 position: 'absolute',
                 /* margin: auto; */
                 left: '50%',
-                top: '70%',
+                top: '40%',
                 transform: 'translateX(-50%)',
             }} onClick={() => handleOpenNewsletterForm(true)}
             >
@@ -192,7 +192,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                         }}
                     >{confirmationMessage}</p>
                 </div></div>}
-            <AnimatedDivider imgPath={"/assets/images/earth-png-white.png"} isAnimating={scrollSection === 6} />
+            <AnimatedDivider imgPath={"/assets/images/mail-sketch-white.webp"} isAnimating={scrollSection === 6} />
         </div  >
     )
 

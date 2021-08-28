@@ -87,9 +87,10 @@ export default ({
     }
 
     return (
-        <div style={{ paddingTop: 50, height: '100vh',minHeight:'calc(100vh - 56px)', zIndex: 1, background: 'rgb(236, 231, 226)', width: '100%', position: 'relative',
-        //  minHeight: 360,
-         }} ref={reference}>
+        <div style={{
+            paddingTop: 50, height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: 'rgb(236, 231, 226)', width: '100%', position: 'relative',
+            //  minHeight: 360,
+        }} ref={reference}>
             {isVideosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
 
             <p style={titleStyle}>Videos</p>
@@ -133,10 +134,10 @@ export default ({
                 ))}
             </div>
 
-            <div style={isLargeMobileLandscape ? mobileLandscapePaginateStyle : { display: 'flex' }}>
+            {data.length > 0 && <div style={isLargeMobileLandscape ? mobileLandscapePaginateStyle : { display: 'flex' }}>
                 <Paginate totalPages={pageCount} page={offset} handlePageClick={handlePageClick} />
-            </div>
-            <AnimatedDivider imgPath={"/assets/images/earth-png.png"} isAnimating={scrollSection === 5} isBlue />
+            </div>}
+            <AnimatedDivider imgPath={"/assets/images/video-film-sketch.webp"} isAnimating={scrollSection === 5} isBlue offsetImageVertical={17} widthFactor={1.25} />
         </div>
     )
 };
