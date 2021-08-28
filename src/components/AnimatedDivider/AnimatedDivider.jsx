@@ -4,14 +4,14 @@ import { dashedLineOne } from '../../pages/svgs';
 
 const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
     <BlogContext.Consumer>
-        {({ isPageLoaded, isLargeMobileLandscape }) => (
+        {({ isPageLoaded, isLargeMobileLandscape, winSize }) => (
             <Fragment>
                 {!isLargeMobileLandscape && (
                     <Fragment>
                         <svg
                             style={{
                                 position: 'absolute',
-                                bottom: 0,
+                                bottom: winSize === 1 ? 56 : 0,
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                                 width: 1000,
@@ -43,7 +43,7 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                         <img
                             style={{
                                 position: 'absolute',
-                                bottom: 0,
+                                bottom: winSize === 1 ? 56 : 0,
                                 left: '50%',
                                 transform: isAnimating && isPageLoaded ? 'translateX(-50%) rotate(700deg)' : 'translateX(-600%) rotate(0deg)',
                                 transition: 'all 3s linear',
@@ -54,7 +54,7 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue }) => (
                         <svg
                             style={{
                                 position: 'absolute',
-                                bottom: 0,
+                                bottom: winSize === 1 ? 30 : -30,
                                 right: '50%',
                                 transform: 'translateX(50%)',
                                 width: 1000,
