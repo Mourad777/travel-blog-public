@@ -11,7 +11,7 @@ import { AppUrl, primaryColor, validateMessage } from '../utility';
 import axios from 'axios';
 import AnimatedDivider from '../../components/AnimatedDivider/AnimatedDivider';
 
-const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration, scrollSection, }) => {
+const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, configuration, scrollSection, handleOpenNewsletterForm }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -104,7 +104,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
             position: 'relative',
             zIndex: isMessageFormOpen ? 100 : 1,
             // minHeight: 360,
-            minHeight:'calc(100vh - 56px)',
+            minHeight: 'calc(100vh - 56px)',
         }}>
             {!isMessageFormOpen && <p style={titleStyle}>Get In Touch</p>}
             {!isMessagesAllowed && <p style={{ textAlign: 'center', color: 'red', fontFamily: 'Mulish' }}>Messages are disabled at the moment</p>}
@@ -121,8 +121,19 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
             >
                 Send me a message
             </StyledContactFormSubmitButton>
+            <StyledContactFormSubmitButton style={{
+                maxWidth: 340,
+                position: 'absolute',
+                /* margin: auto; */
+                left: '50%',
+                top: '70%',
+                transform: 'translateX(-50%)',
+            }} onClick={() => handleOpenNewsletterForm(true)}
+            >
+                Subscribe to my Newsletter
+            </StyledContactFormSubmitButton>
             {/* <Button onClick={handleOpenMessageForm} icon='message' content='Send me a message' /> */}
-            {isMessageFormOpen && <div style={{ background: 'rgb(14,7,1,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0 ,zIndex:1}}>
+            {isMessageFormOpen && <div style={{ background: 'rgb(14,7,1,0.9)', height: '100vh', width: '100%', position: 'fixed', top: 0, left: 0, zIndex: 1 }}>
                 <p style={titleStyle}>Get In Touch</p>
                 <div style={{
                     maxWidth: 500, padding: '0 10px', margin: 'auto', left: '50%',

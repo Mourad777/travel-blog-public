@@ -110,10 +110,11 @@ const Home = (({
 
     useEffect(() => {
         if (isInitialDataLoaded) {
-            console.log('isInitialDataLoaded', isInitialDataLoaded)
-            setTimeout(() => {
-                handleOpenNewsletterForm(true)
-            }, 3000)
+            if (localStorage.getItem('isNewsletterShowed') !== 'true') {
+                setTimeout(() => {
+                    handleOpenNewsletterForm(true);
+                }, 30000)
+            }
         }
 
     }, [isInitialDataLoaded]);
@@ -204,6 +205,7 @@ const Home = (({
     const handleOpenNewsletterForm = (value) => {
         if (!value) {
             setIsNewsletterFormOpen(false)
+            localStorage.setItem('isNewsletterShowed','true')
         }
         if (!!value) {
             setIsNewsletterFormOpen(true)
@@ -249,6 +251,7 @@ const Home = (({
 
         if (messageResponse.status === 200 || messageResponse.status === 201) {
             setConfirmationMessage('You have successfully subscribed!');
+            localStorage.setItem('isNewsletterShowed','true')
         } else {
             setConfirmationMessage('Something went wrong');
         }
@@ -478,7 +481,7 @@ const Home = (({
                             />
 
                             {/* the spacer section is so that gsap will snap to latest post section if the top part of that section is in view port */}
-                            <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh',minHeight:'calc(100vh - 56px)', zIndex: -10 }} ref={refSectionX} />
+                            <div id="spacer" style={{ overflow: 'hidden', width: '100%', height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: -10 }} ref={refSectionX} />
                             <PostsSection
                                 setLastViewedSection={setLastViewedSection}
                                 isPostsLoading={isPostsLoading}
@@ -537,6 +540,7 @@ const Home = (({
                             {/* <VideosSectionDetail reference={refSectionVideos}/> */}
 
                             <ContactSection
+                                handleOpenNewsletterForm={handleOpenNewsletterForm}
                                 isPageLoaded={isPageLoaded}
                                 configuration={configuration}
                                 reference={refSection6}
