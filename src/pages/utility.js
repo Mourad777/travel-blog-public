@@ -657,8 +657,8 @@ export const cameraInfoToBeDisplayed = (photo) => {
 export const primaryColor = 'rgb(229, 170, 112)';
 // export const primaryColor = 'rgb(218, 160, 109)';
 
-export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
-// export let AppUrl = 'http://localhost:8000/';
+// export let AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
+export let AppUrl = 'http://localhost:8000/';
 // if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
 //     // AppUrl = 'http://localhost:8000/';
 //     AppUrl = 'https://stormy-forest-71570.herokuapp.com/';
