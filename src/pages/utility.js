@@ -18,7 +18,7 @@ const heroSectionButtonBaseStyle = {
     background: 'rgb(255,255,255,0.9)',
     padding: 10,
     fontFamily: 'Mulish',
-    color: 'rgb(216,161,114)',
+    color: 'rgb(204, 134, 74)',
     borderRadius: '50px',
     border: 'none',
     margin: '0 10px',
@@ -45,8 +45,11 @@ export const getHeroSectionButtonOneStyle = (windowWidth, windowHeight) => {
         bottom = 265;
     }
     if (windowWidth === 2) {
-        right = 400;
-        bottom = 370;
+        right = 440;
+        bottom = 470;
+        width = 150;
+        height = 50;
+        fontSize = '1.1em';
     }
     if (windowWidth > 2) {
         right = 900;
@@ -93,7 +96,10 @@ export const getHeroSectionButtonTwoStyle = (windowWidth, windowHeight) => {
     }
     if (windowWidth === 2) {
         right = 120;
-        bottom = 100;
+        bottom = 340;
+        width = 150;
+        height = 50;
+        fontSize = '1.1em';
     }
     if (windowWidth > 2) {
         right = 270;

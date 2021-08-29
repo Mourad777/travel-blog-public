@@ -141,7 +141,7 @@ const HeroSectionContent = ({
             height: '100vh',
             position: 'relative',
             // minHeight: 360,
-            minHeight:'calc(100vh - 56px)',
+            minHeight: 'calc(100vh - 56px)',
         }}>
             <Helmet>
                 <link rel="preload" as="image" href={'/assets/images/welcome-background.webp'} type="image/webp" />
@@ -149,16 +149,62 @@ const HeroSectionContent = ({
                 <link rel="preload" as="image" href={'/assets/images/welcome-section-piece-2.webp'} type="image/webp" />
                 <link rel="preload" as="image" href={'/assets/images/welcome-section-piece-3.webp'} type="image/webp" />
             </Helmet>
+            <div style={{
+                display: 'flex',
+                margin: 'auto',
+                transform: 'translateX(-50%)',
+                left: '50%',
+                top:10,
+                position: 'absolute',
+                zIndex: 10,
+                justifyContent: 'space-evenly',
+            }}>
+                <span style={{
+                    padding: 10,
+                    fontFamily: 'Mulish',
+                    color: '#fff',
+                    borderRadius: '50px',
+                    border: 'none',
+                    margin: '0 10px',
+                    zIndex: 10,
+                    height: 50,
+                    fontSize: winSize === 1 ? '0.8em' : '1.1em',
+                    fontWeight: 'bold',
+                    minWidth:190,
+                    letterSpacing:4,
+                    textAlign:'right',
+                    alignItems:'center',
+                    display:'inline-flex',
+                    justifyContent:'flex-end'
+                }}>H  I  T  C  H  I  N  G</span>
+                <Search
+                    photos={photos}
+                    videos={videos}
+                    posts={posts}
+                    winSize={winSize}
+                    countryThumbnails={countryThumbnails}
+                    isPageLoaded={isPageLoaded}
+                    setLastViewedSection={setLastViewedSection}
+                />
+                <span style={{
+                    padding: 10,
+                    fontFamily: 'Mulish',
+                    color: '#fff',
+                    borderRadius: '50px',
+                    border: 'none',
+                    margin: '0 10px',
+                    zIndex: 10,
+                    height: 50,
+                    fontSize:winSize === 1 ? '0.8em' : '1.1em',
+                    fontWeight: 'bold',
+                    minWidth:190,
+                    letterSpacing:4,
+                    alignItems:'center',
+                    display:'inline-flex',
+                    justifyContent:'flex-start'
+                }}>H  O  R  I  Z  O  N  S</span>
+            </div>
 
-            <Search
-                photos={photos}
-                videos={videos}
-                posts={posts}
-                winSize={winSize}
-                countryThumbnails={countryThumbnails}
-                isPageLoaded={isPageLoaded}
-                setLastViewedSection={setLastViewedSection}
-            />
 
             <img
                 src='/assets/images/welcome-background.webp'
@@ -171,9 +217,15 @@ const HeroSectionContent = ({
                 }} />
             {["One", "Two", "One"].map((piece, i) => {
                 let image;
-                if (i + 1 === 1) image = '/assets/images/welcome-section-piece-1.webp';
-                if (i + 1 === 2) image = '/assets/images/welcome-section-piece-2.webp';
-                if (i + 1 === 3) image = '/assets/images/welcome-section-piece-3.webp';
+                if (i + 1 === 1) image =
+                // '/assets/images/hero-section-pic-piece-1-black-and-white.png'
+                '/assets/images/welcome-section-piece-1.webp';
+                if (i + 1 === 2) image =
+                // '/assets/images/hero-section-pic-piece-2-black-and-white.png';
+                 '/assets/images/welcome-section-piece-2.webp';
+                if (i + 1 === 3) image = 
+                '/assets/images/welcome-section-piece-3.webp';
+                // '/assets/images/hero-section-pic-piece-3-black-and-white.png';
                 let ref;
                 if (i === 0) ref = heroPicPieceOneRef;
                 if (i === 1) ref = heroPicPieceTwoRef;
@@ -227,7 +279,8 @@ const HeroSectionContent = ({
                     fontFamily: 'Mulish,sans-serif',
                     borderRadius: 5,
                     padding: 10,
-                    background: 'rgb(123,123,123,0.2)',
+                    background: 'rgb(12,12,12,0.2)',
+                    fontWeight:'bold',
                 }} >
                     I'm Mourad - Adventure travel photographer,
                     videographer, blogger, and digital nomad. Join me as

@@ -147,14 +147,7 @@ const Search = React.memo(({ posts, photos, videos, countryThumbnails, winSize, 
 
     return (
         <div
-            style={{
-                margin: 'auto',
-                transform: 'translateX(-50%)',
-                left: '50%',
-                position: 'absolute',
-                ...getSearchInputStyle(winSize),
-                zIndex: 10
-            }}
+            style={getSearchInputStyle(winSize)}
             ref={wrapperRef}
         >
             <div className="search-box">
