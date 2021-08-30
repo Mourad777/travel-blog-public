@@ -5,7 +5,7 @@ import { primaryColor } from "../utility";
 const PostTitleImage = ({ post, index, isLargeMobileLandscape, setLastViewedSection }) => {
     const history = useHistory();
     return (
-        <div style={{ padding: 0, zIndex: 0 }} className="col-12 col-sm-6">
+        <div style={{ padding: 0, zIndex: 1 }} className="col-12 col-sm-6">
 
             <div className={`post-image-${index + 1}`}
                 style={{ background: "#cc9764" }}>

@@ -74,9 +74,9 @@ export default ({
                     <div
                         style={{
                             overflow: "hidden",
-                            maxWidth: 650,
+                            maxWidth: 550,
                             margin: "auto",
-                            width: winSize === 1 ? '100%' : '70%',
+                            width: winSize === 1 ? '100%' : '60%',
                             left: '50%',
                             top: '55%',
                             transform: 'translate(-50%,-50%)',

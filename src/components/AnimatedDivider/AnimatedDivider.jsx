@@ -15,7 +15,8 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue, widthFactor = 1, offset
                                 left: '50%',
                                 transform: 'translateX(-50%)',
                                 width: 1000,
-                                pointerEvents: 'none'
+                                pointerEvents: 'none',
+                                zIndex:1,
                             }}
                             viewBox="70 -20 300 50"
                         >
@@ -50,7 +51,8 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue, widthFactor = 1, offset
                                 opacity: isAnimating && isPageLoaded ? 1 : 0,
                                 transition: 'all 2s linear',
                                 width: 80 * widthFactor,
-                                pointerEvents: 'none'
+                                pointerEvents: 'none',
+                                zIndex:1,
                             }}
                             // className={isAnimating && isPageLoaded ? 'ball-appear' : 'ball-dissappear'}
                             src={imgPath} />
@@ -62,6 +64,7 @@ const AnimatedDivider = ({ isAnimating, imgPath, isBlue, widthFactor = 1, offset
                                 transform: 'translateX(50%)',
                                 width: 1000,
                                 pointerEvents: 'none',
+                                zIndex:1,
                             }}
                             viewBox="-160 -20 300 50"
                         ><g>
