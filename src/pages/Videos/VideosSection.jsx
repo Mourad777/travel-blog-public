@@ -88,7 +88,7 @@ export default ({
 
     return (
         <div style={{
-            paddingTop: 50, height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: 'rgb(236, 231, 226)', width: '100%', position: 'relative',
+          height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: 'rgb(236, 231, 226)', width: '100%', position: 'relative',
             //  minHeight: 360,
         }} ref={reference}>
             {isVideosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
