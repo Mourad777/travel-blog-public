@@ -81,14 +81,8 @@ const HeroSectionContent = ({
                 }
             );
 
-            console.log('animations', animations)
-
             animate(animations)
-
-
         }
-
-
 
     }, [mainContainerRef,
         heroPicMainRef,
@@ -122,7 +116,7 @@ const HeroSectionContent = ({
             gsap.to(heroWelcomePieceFive.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 0.8 });
             gsap.to(heroWelcomePieceSix.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1 });
             gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.2 });
-            gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.4 });
+            gsap.to(heroWelcomePieceSeven.current, { fill: 'rgba(255,255,255,1)', duration: 0.5, delay: 1.4, });
             // }
             gsap.to(heroPrimaryTextRef.current, { stroke: 'rgba(255,255,255,1)', duration: 0.2, delay: 0.2 });
 
@@ -208,7 +202,7 @@ const HeroSectionContent = ({
 
             <img
                 src='/assets/images/welcome-background.webp'
-                id="hero-pic-main"
+                // id="hero-pic-main"
                 ref={heroPicMainRef}
                 // className={isPageLoaded ? "" : "fade-in"}
                 style={{
@@ -234,7 +228,7 @@ const HeroSectionContent = ({
                     <img
                         ref={ref}
                         src={image}
-                        className={`HeroPicPiece${piece}`}
+                        // className={`HeroPicPiece${piece}`}
                         key={`[Heropic]${i}`}
                         style={{ ...getHeroSectionPicPiecesStyle(winSize, height, i + 1) }
                         }

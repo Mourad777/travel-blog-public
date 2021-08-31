@@ -33,6 +33,7 @@ const Posts = ({
             scrub: 0.5,
             snap: true,
             pin: false,
+            
 
         });
     }, [reference])

@@ -151,6 +151,12 @@ const Home = (({
         });
     }, []);
 
+    useEffect(() => {
+        if (initialDataPercentage !== 100) {
+            gsap.to(window, { duration: 1, scrollTo: mainContainerRef.current });
+        }
+    }, [])
+
 
     const getInitialData = async () => {
         setIsPostsLoading(true)
@@ -205,7 +211,7 @@ const Home = (({
     const handleOpenNewsletterForm = (value) => {
         if (!value) {
             setIsNewsletterFormOpen(false)
-            localStorage.setItem('isNewsletterShowed','true')
+            localStorage.setItem('isNewsletterShowed', 'true')
         }
         if (!!value) {
             setIsNewsletterFormOpen(true)
@@ -251,7 +257,7 @@ const Home = (({
 
         if (messageResponse.status === 200 || messageResponse.status === 201) {
             setConfirmationMessage('You have successfully subscribed!');
-            localStorage.setItem('isNewsletterShowed','true')
+            localStorage.setItem('isNewsletterShowed', 'true')
         } else {
             setConfirmationMessage('Something went wrong');
         }
@@ -353,7 +359,7 @@ const Home = (({
                             }}
                         >{confirmationMessage}</p>
                     </div>}
-                    <div id="main" ref={mainContainerRef} style={{ overflow: 'hidden' }}>
+                    <div style={{ overflow: 'hidden' }}>
                         <Loader
                             initialDataPercentage={initialDataPercentage}
                             isInitialDataLoaded={isInitialDataLoaded} reference={initialLoaderRef} isPageLoaded={isPageLoaded}
@@ -453,7 +459,7 @@ const Home = (({
                             </div>}
                         </div>
 
-                        <div id="container" style={{ position: "relative" }}>
+                        <div ref={mainContainerRef} id="container" style={{ position: "relative", }}>
                             <div id="map-container" style={{ position: 'fixed', height: '100%', width: '100%', top: getMapPosition(winSize, height).top, zIndex: -1 }}>
                                 <div style={{ position: 'relative', height: '100vh' }}>
                                     < StyledMap className={isPageLoaded ? "" : "fade-in"} ref={notePadMapRef} windowWidth={winSize} width={getMapPosition(winSize, height).width} lowRes src='/assets/images/notepad.webp' />

@@ -31,8 +31,10 @@ export const heroSectionAnimations = ({
         {
             target: scrollIconsWrapperRef.current,
             trigger: mainContainerRef.current,
+           
             properties: {
                 opacity: -30,
+                
             }
         },
         {
@@ -64,7 +66,7 @@ export const heroSectionAnimations = ({
             trigger: mainContainerRef.current,
             properties: {
                 yPercent: -100,
-                opacity: -5,
+                opacity: -2,
             }
         },
         {
@@ -72,7 +74,7 @@ export const heroSectionAnimations = ({
             trigger: mainContainerRef.current,
             properties: {
                 yPercent: 100,
-                opacity: -5,
+                opacity: -2,
             }
         },
         {
@@ -80,7 +82,7 @@ export const heroSectionAnimations = ({
             trigger: mainContainerRef.current,
             properties: {
                 yPercent: 100,
-                opacity: -5,
+                opacity: -2,
             }
         },
         {
