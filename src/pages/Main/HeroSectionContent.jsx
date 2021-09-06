@@ -120,8 +120,6 @@ const HeroSectionContent = ({
             // }
             gsap.to(heroPrimaryTextRef.current, { stroke: 'rgba(255,255,255,1)', duration: 0.2, delay: 0.2 });
 
-
-
         }
     }, [initialDataPercentage])
 
