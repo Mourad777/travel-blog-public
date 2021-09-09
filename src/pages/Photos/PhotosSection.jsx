@@ -87,7 +87,7 @@ export default ({
 
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: `repeat(${winSize === 1 ? 1 : 3}, minmax(100px, 293px))`,
+                            gridTemplateColumns: `repeat(3, minmax(100px, 293px))`,
                             justifyContent: 'center',
                             gridGap: 3,
 
