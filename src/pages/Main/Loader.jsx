@@ -37,7 +37,7 @@ export default ({ reference, isPageLoaded, isInitialDataLoaded, initialDataPerce
             className={isInitialDataLoaded ? isPageLoaded ? "" : "fade-out" : ""}
         >
             <div
-                style={{ bottom: `${bottom}%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+                style={{ top: `50%`, margin: "auto", display: "block", width: isLargeMobileLandscape ? 100 : 200, position: 'absolute', left: '50%', transform: 'translate(-50%,-50%)' }}
             >
                 <Circle
                     progress={percentageLoaded}
