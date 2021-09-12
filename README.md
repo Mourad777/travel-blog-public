@@ -1,3 +1,8 @@
+Design using the Greensock library
+-animating the stroke-dash-offset css property on a path element based on scroll to create an effect where a dashed line gets drawn as the user scrolls down, the path coordinates are
+generated using a custom drawn line in adobe illustrator
+-snapping the main page sections on scroll
+
 Performance management
 -converted all images to webp
 -jpegs are allowed to be uploaded on the admin panel but are converted to webp by the laravel server
