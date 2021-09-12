@@ -193,7 +193,7 @@ const ContactForm = ({ isLargeMobileLandscape, scrollWidth, height, reference, c
                     >{confirmationMessage}</p>
                 </div></div>}
             <AnimatedDivider imgPath={"/assets/images/mail-sketch-white.webp"} isAnimating={scrollSection === 6} />
-            <div style={{pointer:'cursor', position:'absolute',bottom:'20%',left:'35%',transform:'translateX(-50%)',display:'flex',justifyContent:'space-around',width:300}}>
+            <div style={{pointer:'cursor', position:'absolute',bottom:'35%',left:'50%',transform:'translateX(-50%)',display:'flex',justifyContent:'space-around',width:300}}>
                 <a href="https://www.facebook.com/mourad.bouka/">
                 <img src="/assets/icons/facebook.png" style={{objectFit:'cover',width:30}} />
                 </a>
