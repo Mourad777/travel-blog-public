@@ -146,7 +146,7 @@ const HeroSectionContent = ({
                 margin: 'auto',
                 transform: 'translateX(-50%)',
                 left: '50%',
-                top:10,
+                top: 10,
                 position: 'absolute',
                 zIndex: 10,
                 justifyContent: 'space-evenly',
@@ -162,12 +162,12 @@ const HeroSectionContent = ({
                     height: 50,
                     fontSize: winSize === 1 ? '0.8em' : '1.1em',
                     fontWeight: 'bold',
-                    minWidth:190,
-                    letterSpacing:4,
-                    textAlign:'right',
-                    alignItems:'center',
-                    display:'inline-flex',
-                    justifyContent:'flex-end'
+                    minWidth: 190,
+                    letterSpacing: 4,
+                    textAlign: 'right',
+                    alignItems: 'center',
+                    display: 'inline-flex',
+                    justifyContent: 'flex-end'
                 }}>H  I  T  C  H  I  N  G</span>
                 <Search
                     photos={photos}
@@ -187,13 +187,13 @@ const HeroSectionContent = ({
                     margin: '0 10px',
                     zIndex: 10,
                     height: 50,
-                    fontSize:winSize === 1 ? '0.8em' : '1.1em',
+                    fontSize: winSize === 1 ? '0.8em' : '1.1em',
                     fontWeight: 'bold',
-                    minWidth:190,
-                    letterSpacing:4,
-                    alignItems:'center',
-                    display:'inline-flex',
-                    justifyContent:'flex-start'
+                    minWidth: 190,
+                    letterSpacing: 4,
+                    alignItems: 'center',
+                    display: 'inline-flex',
+                    justifyContent: 'flex-start'
                 }}>H  O  R  I  Z  O  N  S</span>
             </div>
 
@@ -210,13 +210,13 @@ const HeroSectionContent = ({
             {["One", "Two", "One"].map((piece, i) => {
                 let image;
                 if (i + 1 === 1) image =
-                // '/assets/images/hero-section-pic-piece-1-black-and-white.png'
-                '/assets/images/welcome-section-piece-1.webp';
+                    // '/assets/images/hero-section-pic-piece-1-black-and-white.png'
+                    '/assets/images/welcome-section-piece-1.webp';
                 if (i + 1 === 2) image =
-                // '/assets/images/hero-section-pic-piece-2-black-and-white.png';
-                 '/assets/images/welcome-section-piece-2.webp';
-                if (i + 1 === 3) image = 
-                '/assets/images/welcome-section-piece-3.webp';
+                    // '/assets/images/hero-section-pic-piece-2-black-and-white.png';
+                    '/assets/images/welcome-section-piece-2.webp';
+                if (i + 1 === 3) image =
+                    '/assets/images/welcome-section-piece-3.webp';
                 // '/assets/images/hero-section-pic-piece-3-black-and-white.png';
                 let ref;
                 if (i === 0) ref = heroPicPieceOneRef;
@@ -268,11 +268,11 @@ const HeroSectionContent = ({
                 opacity: (winSize === 1 && height < 430) || (isLargeMobileLandscape && height < 200) ? 0 : 1, transition: 'opacity 0.3s ease-in'
             }} >
                 <p id="heroTextSecondary" style={{
-                    fontFamily: 'Mulish,sans-serif',
+                    fontFamily: 'Mulish',
                     borderRadius: 5,
                     padding: 10,
                     background: 'rgb(12,12,12,0.2)',
-                    fontWeight:'bold',
+                    // fontWeight: 'bold',
                 }} >
                     I'm Mourad - Adventure travel photographer,
                     videographer, blogger, and digital nomad. Join me as
@@ -293,15 +293,12 @@ const HeroSectionContent = ({
 
 
             }}>Watch my Videos</button>
-            <div ref={scrollIconsWrapperRef}>
+            {!isLargeMobileLandscape && <div ref={scrollIconsWrapperRef}>
                 <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, left: isLargeMobileLandscape ? '15%' : '50%', transform: `translateX(${isLargeMobileLandscape ? -15 : -50}%)`, height: 70 }}>
                     <ScrollDownArrow />
                 </div>
 
-                {isLargeMobileLandscape && <div className="scroll-down-arrow" style={{ position: 'absolute', bottom: 200, right: '15%', transform: 'translateX(15%)', height: 70 }}>
-                    <ScrollDownArrow />
-                </div>}
-            </div>
+            </div>}
         </div>
     )
 }
