@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
-import Paginate from "../../components/Paginate/Paginate";
+import Paginate from "../../../components/Paginate/Paginate";
 import { ScrollTrigger } from 'gsap/all'
-import Loader from "../../components/Loader/Loader";
-import { primaryColor } from "../utility";
-import { BlogContext } from "../..";
-import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
+import Loader from "../../../components/Loader/Loader";
+import { BlogContext } from "../../..";
+import AnimatedDivider from "../../../components/AnimatedDivider/AnimatedDivider";
+import { StyledLoaderWrapper } from "../../StyledComponents";
+import {
+    StyledFigure,
+    StyledGrid,
+    StyledGridWrapper,
+    StyledImage,
+    StyledImageWrapper,
+    StyledSectionContainer
+} from './styles';
 
 export default ({
     reference,
@@ -63,70 +71,36 @@ export default ({
     return (
         <BlogContext.Consumer>
             {({ setLastViewedSection }) => (
-                <div style={{
-                    height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: primaryColor, width: '100%', overflow: 'hidden', position: 'relative',
-                    // minHeight: 360,
-                }} ref={reference}>
-                    {isPhotosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
+                <StyledSectionContainer ref={reference}>
+                    {isPhotosLoading && <StyledLoaderWrapper><Loader /></StyledLoaderWrapper>}
 
                     <p style={titleStyle}>Photos</p>
 
-                    <div
-                        style={{
-                            overflow: "hidden",
-                            maxWidth: 550,
-                            margin: "auto",
-                            width: winSize === 1 ? '100%' : '60%',
-                            left: '50%',
-                            top: '55%',
-                            transform: 'translate(-50%,-50%)',
-                            position: 'absolute'
-
-                        }}
-                    >
-
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: `repeat(3, minmax(100px, 293px))`,
-                            justifyContent: 'center',
-                            gridGap: 3,
-
-                        }}
-                            ref={gridContainerReference}
-                        >
+                    <StyledGridWrapper winSize={winSize}>
+                        <StyledGrid>
                             {data.map((p, i) => (
-                                <div
+                                <StyledImageWrapper
+                                    gridWidth={gridWidth}
                                     key={`photo-grid-item[${i + 1}]`}
                                     onClick={() => {
                                         history.push(`/photo/${p.id}`);
                                         setLastViewedSection('photos');
-                                    }}
-                                    style={{
-                                        position: 'relative',
-                                        display: 'block',
-                                        height: !!gridWidth ? (gridWidth - 6) / 3 : '',
-                                        cursor: 'pointer'
-
                                     }}>
-                                    <figure style={{ margin: 0, height: '100%' }}>
-                                        <img loading="lazy"
+                                    <StyledFigure>
+                                        <StyledImage
+                                            loading="lazy"
                                             srcSet={`${p.src} 100w`}
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                verticalAlign: 'top',
-                                                objectFit: 'cover'
-                                            }} src={p.src} alt="" />
-                                    </figure>
-                                </div>
+                                            src={p.src} alt="" />
+                                    </StyledFigure>
+                                </StyledImageWrapper>
                             ))}
-                        </div>
-                    </div>
+                        </StyledGrid>
+                    </StyledGridWrapper>
                     {(!isPhotosLoading && data.length > 0) && <div style={{ display: 'flex' }}>
                         <Paginate totalPages={pageCount} page={selectedPage} handlePageClick={handlePageClick} />
                     </div>}
                     <AnimatedDivider imgPath={"/assets/images/camera-sketch.webp"} widthFactor={2.6} isAnimating={scrollSection === 4} />
-                </div >)}
+                </StyledSectionContainer >)}
         </BlogContext.Consumer>
     );
 };

@@ -26,7 +26,7 @@ import axios from "axios";
 const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));
 const DestinationsSection = React.lazy(() => import('../Countries/WorldMap'));
-const PhotosSection = React.lazy(() => import('../Photos/PhotosSection'));
+const PhotosSection = React.lazy(() => import('../Photos/PhotoSection/PhotosSection'));
 const VideosSection = React.lazy(() => import('../Videos/VideosSection'));
 const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
 

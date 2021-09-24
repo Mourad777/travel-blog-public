@@ -14,7 +14,7 @@ export const BlogContext = createContext({});
 
 const Post = React.lazy(() => import("./pages/Posts/Post"));
 const Category = React.lazy(() => import("./pages/Category/Category"));
-const Photo = React.lazy(() => import("./pages/Photos/Photo"));
+const Photo = React.lazy(() => import("./pages/Photos/Photo/Photo"));
 const Video = React.lazy(() => import("./pages/Videos/Video"));
 
 

@@ -349,3 +349,11 @@ export const StyledLoader = styled.div`
   }
   
 `
+
+
+export const StyledLoaderWrapper = styled.div`
+position: absolute;
+top: 30%;
+left: 50%;
+transform: translate(-50%);
+`
