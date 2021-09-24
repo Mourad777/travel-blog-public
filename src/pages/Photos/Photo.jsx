@@ -176,7 +176,7 @@ const Photo = ({ winSize }) => {
                             }}
                             className="photo-icon-container"
                         >
-                            <div style={{ marginTop: 20, display: 'flex' }}>
+                            <div style={{ marginTop: 20, display: 'flex',alignItems:'center' }}>
                                 <Checkbox disabled={!shouldDisplay} checked={isHideCameraInfo} onChange={handleCameraInfo} toggle />
                                 <span style={{ color: '#fff', marginLeft: 10, fontSize: '1.2em' }}>Hide camera info</span>
                             </div>
