@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import { primaryColor } from '../../utility'
 
 export const StyledSectionContainer = styled.div`
-height: 100vh, 
-min-height: calc(100vh - 56px), 
-z-index: 1, 
-background: ${primaryColor}, 
-width: 100%, 
-overflow: hidden, 
-position: relative,
+height: 100vh; 
+min-height: calc(100vh - 56px); 
+z-index: 1; 
+background: ${primaryColor}; 
+width: 100%; 
+overflow: hidden; 
+position: relative;
 `
 
 export const StyledImage = styled.img`

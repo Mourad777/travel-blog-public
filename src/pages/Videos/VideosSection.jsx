@@ -4,8 +4,9 @@ import { ScrollTrigger } from 'gsap/all'
 import Loader from "../../components/Loader/Loader";
 import { primaryColor } from "../utility";
 import Paginate from "../../components/Paginate/Paginate";
-import { dashedLineOne } from "../svgs";
 import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
+import { StyledSectionContainer, StyledVideosContainer, StyledVideoWrapper,StyledThumbnail, StyledTitle, StyledTitleWrapper } from "./VideoSection/styles";
+import { StyledLoaderWrapper } from "../StyledComponents";
 
 
 export default ({
@@ -87,57 +88,34 @@ export default ({
     }
 
     return (
-        <div style={{
-          height: '100vh', minHeight: 'calc(100vh - 56px)', zIndex: 1, background: 'rgb(236, 231, 226)', width: '100%', position: 'relative',
-            //  minHeight: 360,
-        }} ref={reference}>
-            {isVideosLoading && <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%)' }}><Loader /></div>}
-
+        <StyledSectionContainer ref={reference}>
+            {isVideosLoading && <StyledLoaderWrapper><Loader /></StyledLoaderWrapper>}
             <p style={titleStyle}>Videos</p>
-            <div
-                style={{
-                    overflow: "hidden",
-                    width: "85vw",
-                    maxWidth: 900,
-                    margin: "auto",
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%,-50%)',
-                    position: 'absolute'
-                }}
-            >
+            <StyledVideosContainer>
                 {data.map((video, i) => (
-                    <div
+                    <StyledVideoWrapper
                         key={`video-[${i + 1}]`}
                         onClick={() => {
                             history.push(`/video/${video.id}`);
-                            setLastViewedSection('videos')
+                            setLastViewedSection('videos');
                         }}
-                        style={{
-                            background: '#fff',
-                            cursor: "pointer",
-                            float: "left",
-                            position: "relative",
-                            width: getWinsizeValues(winSize).width,
-                            height: "50vh",
-                            overflow: "hidden",
-                            minHeight: 205,
-                            maxHeight: 600,
-                        }}
+                        width={getWinsizeValues(winSize).width}
                     >
-                        <div style={{ minHeight: 60, maxHeight: 100, height: '10vh', background: '#fff' }}><p style={{ textAlign: 'center', paddingTop: 10, fontFamily: 'Mulish', fontWeight: 'bold', fontSize: '1.2em' }}>{video.title}</p></div>
-                        <img srcSet={`${video.thumbnail || '/assets/icons/video-icon.jpg'} 400w`} src={video.thumbnail || '/assets/icons/video-icon.jpg'} style={{ maxHeight: 300, width: '100%', height: isLargeMobileLandscape ? '40vh' : '25vh', objectFit: !video.thumbnail && isLargeMobileLandscape ? 'scale-down' : 'cover' }} />
+                        <StyledTitleWrapper><StyledTitle>{video.title}</StyledTitle></StyledTitleWrapper>
+                        <StyledThumbnail
+                            video={video}
+                            isLargeMobileLandscape={isLargeMobileLandscape}
+                            srcSet={`${video.thumbnail || '/assets/icons/video-icon.jpg'} 400w`}
+                            src={video.thumbnail || '/assets/icons/video-icon.jpg'} />
                         {!isLargeMobileLandscape && <div style={{ maxHeight: 200, height: '100%', background: '#fff' }}><p style={{ textAlign: 'center', paddingTop: 10 }}>{video.description}</p></div>}
-                    </div>
+                    </StyledVideoWrapper>
                 ))}
-            </div>
+            </StyledVideosContainer>
 
             {data.length > 0 && <div style={isLargeMobileLandscape ? mobileLandscapePaginateStyle : { display: 'flex' }}>
                 <Paginate totalPages={pageCount} page={offset} handlePageClick={handlePageClick} />
             </div>}
             <AnimatedDivider imgPath={"/assets/images/video-film-sketch.webp"} isAnimating={scrollSection === 5} isBlue offsetImageVertical={17} widthFactor={1.25} />
-        </div>
+        </StyledSectionContainer>
     )
 };

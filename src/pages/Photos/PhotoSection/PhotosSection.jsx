@@ -30,7 +30,6 @@ export default ({
     const [data, setData] = useState([]);
     const perPage = winSize > 1 && height < 640 ? 3 : 9;
     const [pageCount, setPageCount] = useState(0);
-    // const [selectedPage, setSelectedPage] = useState(0);
     const [gridWidth, setGridWidth] = useState(0);
     const history = useHistory();
 
@@ -61,7 +60,9 @@ export default ({
 
     const gridContainerReference = useRef(null);
     useEffect(() => {
-        setGridWidth(gridContainerReference.current.scrollWidth);
+        if(gridContainerReference.current){
+            setGridWidth(gridContainerReference.current.scrollWidth);
+        }
     }, [scrollWidth, photos]);
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', textAlign: 'center', marginBottom: 0 }
