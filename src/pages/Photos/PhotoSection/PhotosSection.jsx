@@ -60,15 +60,18 @@ export default ({
 
     const gridContainerReference = useRef(null);
     useEffect(() => {
+        console.log('gridContainerReference.current',gridContainerReference.current)
         if(gridContainerReference.current){
             setGridWidth(gridContainerReference.current.scrollWidth);
         }
     }, [scrollWidth, photos]);
+    console.log('scrollWidth',scrollWidth)
     const aspectRatio = scrollWidth / height;
     let titleStyle = { fontFamily: 'Mulish, sans-serif', fontSize: '4em', color: '#fff', textAlign: 'center', marginBottom: 0 }
     if (isLargeMobileLandscape || aspectRatio > 1.9) {
         titleStyle = { ...titleStyle, position: 'absolute', transform: 'translateY(-50%) rotate(-90deg)', top: '50%', left: '-60px' }
     }
+    console.log('grid width',gridWidth)
     return (
         <BlogContext.Consumer>
             {({ setLastViewedSection }) => (
@@ -78,7 +81,7 @@ export default ({
                     <p style={titleStyle}>Photos</p>
 
                     <StyledGridWrapper winSize={winSize}>
-                        <StyledGrid>
+                        <StyledGrid ref={gridContainerReference}>
                             {data.map((p, i) => (
                                 <StyledImageWrapper
                                     gridWidth={gridWidth}

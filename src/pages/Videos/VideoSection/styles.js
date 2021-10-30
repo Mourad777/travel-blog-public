@@ -28,7 +28,7 @@ background: #fff;
 cursor: pointer;
 float: left;
 position: relative;
-width: ${props=>props.width}px;
+width: ${props=>props.width};
 height: 50vh;
 overflow: hidden;
 min-height: 205px;

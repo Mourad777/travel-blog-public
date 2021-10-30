@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { ScrollTrigger } from 'gsap/all'
-import Loader from "../../components/Loader/Loader";
-import { primaryColor } from "../utility";
-import Paginate from "../../components/Paginate/Paginate";
-import AnimatedDivider from "../../components/AnimatedDivider/AnimatedDivider";
-import { StyledSectionContainer, StyledVideosContainer, StyledVideoWrapper,StyledThumbnail, StyledTitle, StyledTitleWrapper } from "./VideoSection/styles";
-import { StyledLoaderWrapper } from "../StyledComponents";
+import Loader from "../../../components/Loader/Loader";
+import { primaryColor } from "../../utility";
+import Paginate from "../../../components/Paginate/Paginate";
+import AnimatedDivider from "../../../components/AnimatedDivider/AnimatedDivider";
+import { StyledSectionContainer, StyledVideosContainer, StyledVideoWrapper,StyledThumbnail, StyledTitle, StyledTitleWrapper } from "./styles";
+import { StyledLoaderWrapper } from "../../StyledComponents";
 
 
 export default ({

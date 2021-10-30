@@ -27,7 +27,7 @@ const HeroSection = React.lazy(() => import('./HeroSectionContent'));
 const PostsSection = React.lazy(() => import('../Posts/Posts'));
 const DestinationsSection = React.lazy(() => import('../Countries/WorldMap'));
 const PhotosSection = React.lazy(() => import('../Photos/PhotoSection/PhotosSection'));
-const VideosSection = React.lazy(() => import('../Videos/VideosSection'));
+const VideosSection = React.lazy(() => import('../Videos/VideoSection/VideosSection'));
 const ContactSection = React.lazy(() => import('../Contact/ContactSection'));
 
 
@@ -326,7 +326,7 @@ const Home = (({
                                 <div style={{ padding: 5 }}>
                                     <p style={{ fontFamily: 'Mulish', fontSize: '1.2em', color: '#fff' }}>Get travel news, updates, and great travel stories from around the world.</p>
                                     {/* <div style={{ background: 'yellow', height: 140, width: '100%' }}></div> */}
-                                    <img src='/assets/images/coco-ride.webp' style={{ height: isLargeMobileLandscape || winSize === 1 ? 151 : 200, width: '100%', objectFit: 'cover' }} />
+                                    <img src='/assets/images/frog.webp' style={{ height: isLargeMobileLandscape || winSize === 1 ? 151 : 200, width: '100%', objectFit: 'cover' }} />
                                 </div>
                                 <div style={{ padding: 5 }}>
                                     <StyledInputGroup style={{ paddingTop: 0 }}>

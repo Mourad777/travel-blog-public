@@ -156,7 +156,6 @@ const Post = ({ winSize }) => {
         setEmail('');
         setReplyComment('');
         setIsFormTouched(false);
-
     }
 
     const getInitialData = async () => {
